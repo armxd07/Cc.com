@@ -3,92 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CCShop - Premium Cards Instant Delivery</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>CCShop - Premium Credit Cards Marketplace</title>
     <style>
-        :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --secondary: #10b981;
-            --black: #111827;
-            --gray: #6b7280;
-            --light-gray: #f3f4f6;
-            --white: #ffffff;
-            --red: #ef4444;
-            --yellow: #f59e0b;
-            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            line-height: 1.6;
-            color: var(--black);
-            background-color: var(--light-gray);
-            overflow-x: hidden;
+        :root {
+            --primary: #FF6B35;
+            --secondary: #004E89;
+            --dark: #1A1A2E;
+            --light: #F5F5F5;
+            --gray: #6C757D;
+            --success: #28A745;
+            --danger: #DC3545;
+            --warning: #FFC107;
+            --info: #17A2B8;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #F8F9FA;
         }
 
         /* Header Styles */
-        header {
-            background: var(--white);
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+        #header {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 15px 0;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
-            padding: 15px 0;
         }
 
-        nav {
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
-            font-size: 1.8rem;
-            font-weight: 800;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 24px;
+            font-weight: bold;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-        }
-
-        .nav-link {
-            color: var(--gray);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-            position: relative;
-        }
-
-        .nav-link:hover, .nav-link.active {
+        .logo i {
             color: var(--primary);
         }
 
-        .nav-link.active::after {
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--primary);
+        }
+
+        nav a.active::after {
             content: '';
             position: absolute;
             bottom: -5px;
@@ -100,194 +94,165 @@
 
         .nav-actions {
             display: flex;
-            gap: 15px;
             align-items: center;
+            gap: 15px;
         }
 
         .cart-icon {
             position: relative;
             cursor: pointer;
-            padding: 8px;
-            border-radius: 50%;
-            transition: background 0.3s ease;
+            font-size: 20px;
+            transition: transform 0.3s;
         }
 
         .cart-icon:hover {
-            background: var(--light-gray);
+            transform: scale(1.1);
+        }
+
+        .cart-icon.bounce {
+            animation: bounce 0.5s;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
         }
 
         .cart-count {
             position: absolute;
-            top: 0;
-            right: 0;
-            background: var(--red);
-            color: var(--white);
-            font-size: 0.75rem;
-            padding: 2px 6px;
-            border-radius: 10px;
-            min-width: 20px;
-            text-align: center;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.95rem;
-        }
-
-        .btn-black {
-            background: var(--black);
-            color: var(--white);
-        }
-
-        .btn-black:hover {
-            background: #1f2937;
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-
-        .btn-primary {
+            top: -8px;
+            right: -8px;
             background: var(--primary);
-            color: var(--white);
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
+            color: white;
             border-radius: 50%;
-            background: var(--gradient);
-            color: var(--white);
+            width: 18px;
+            height: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 600;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            transition: transform 0.3s ease;
+            font-weight: bold;
+            transition: transform 0.3s;
         }
 
         .user-avatar:hover {
             transform: scale(1.1);
         }
 
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .page-section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* Hero Section */
         .hero {
-            margin-top: 80px;
-            padding: 60px 0;
-            background: var(--gradient);
-            color: var(--white);
-            position: relative;
-            overflow: hidden;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,138.7C960,139,1056,117,1152,112C1248,107,1344,117,1392,122.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
-            background-size: cover;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-        }
-
-        .hero-text h1 {
-            font-size: 3rem;
+        .hero h1 {
+            font-size: 48px;
             margin-bottom: 20px;
-            line-height: 1.2;
+            animation: slideInLeft 0.8s;
         }
 
-        .hero-text p {
-            font-size: 1.2rem;
+        .hero p {
+            font-size: 20px;
             margin-bottom: 30px;
             opacity: 0.9;
+            animation: slideInRight 0.8s;
         }
 
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
-        .hero-image {
-            display: flex;
-            justify-content: center;
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
             align-items: center;
+            gap: 8px;
+            font-size: 16px;
         }
 
-        .hero-card {
-            width: 350px;
-            height: 220px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 20px;
-            padding: 30px;
+        .btn-primary {
+            background: var(--primary);
             color: white;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            transform: perspective(1000px) rotateY(-10deg);
-            transition: transform 0.3s ease;
-            position: relative;
-            overflow: hidden;
         }
 
-        .hero-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        .btn-primary:hover {
+            background: #E55A2B;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 53, 0.3);
         }
 
-        .hero-card:hover {
-            transform: perspective(1000px) rotateY(0deg);
+        .btn-black {
+            background: var(--dark);
+            color: white;
         }
 
-        .hero-card-chip {
-            width: 50px;
-            height: 40px;
-            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-            border-radius: 8px;
-            margin-bottom: 20px;
+        .btn-black:hover {
+            background: #2D2D47;
+            transform: translateY(-2px);
         }
 
-        .hero-card-number {
-            font-size: 1.4rem;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
         }
 
-        .hero-card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
+        .btn-outline:hover {
+            background: white;
+            color: var(--secondary);
         }
 
-        /* Features Section */
-        .features {
-            padding: 80px 0;
-            background: var(--white);
+        /* Cards Section */
+        .cards-section {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .section-header {
@@ -296,112 +261,35 @@
         }
 
         .section-header h2 {
-            font-size: 2.5rem;
+            font-size: 36px;
             margin-bottom: 15px;
+            color: var(--dark);
         }
 
         .section-header p {
-            font-size: 1.1rem;
+            font-size: 18px;
             color: var(--gray);
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .feature-card {
-            padding: 30px;
-            background: var(--white);
-            border-radius: 16px;
-            box-shadow: var(--shadow);
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .feature-icon {
-            width: 70px;
-            height: 70px;
-            margin: 0 auto 20px;
-            background: var(--gradient);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-size: 1.8rem;
-        }
-
-        .feature-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-        }
-
-        .feature-card p {
-            color: var(--gray);
-        }
-
-        /* Cards Section */
-        .cards-section {
-            padding: 80px 0;
-            background: var(--light-gray);
-        }
-
-        .filters {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .filter-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .filter-group label {
-            font-weight: 500;
-            color: var(--gray);
-        }
-
-        .filter-group input, .filter-group select {
-            padding: 8px 15px;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            transition: border-color 0.3s ease;
-        }
-
-        .filter-group input:focus, .filter-group select:focus {
-            outline: none;
-            border-color: var(--primary);
         }
 
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 30px;
+            margin-bottom: 40px;
         }
 
         .card-product {
-            background: var(--white);
-            border-radius: 16px;
+            background: white;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            position: relative;
         }
 
         .card-product:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
 
         .card-image {
@@ -415,35 +303,39 @@
         }
 
         .card-image-content {
-            text-align: center;
-            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 15px;
             width: 100%;
+            color: white;
+            text-align: center;
         }
 
         .card-brand {
-            font-size: 0.9rem;
+            font-size: 12px;
             opacity: 0.8;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
         .card-chip {
             width: 40px;
             height: 30px;
-            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-            border-radius: 6px;
-            margin: 0 auto 15px;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            border-radius: 5px;
+            margin: 10px auto;
         }
 
         .delivery-badge {
             position: absolute;
             top: 10px;
             right: 10px;
-            background: var(--secondary);
+            background: var(--success);
             color: white;
             padding: 5px 10px;
             border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
+            font-size: 12px;
+            font-weight: bold;
             display: flex;
             align-items: center;
             gap: 5px;
@@ -453,16 +345,16 @@
             position: absolute;
             top: 10px;
             left: 10px;
-            background: var(--primary);
+            background: var(--success);
             color: white;
             padding: 5px 10px;
             border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
+            font-size: 12px;
+            font-weight: bold;
         }
 
         .stock-badge.out-of-stock {
-            background: var(--red);
+            background: var(--danger);
         }
 
         .card-details {
@@ -470,20 +362,21 @@
         }
 
         .card-name {
-            font-size: 1.2rem;
-            font-weight: 700;
+            font-size: 20px;
+            font-weight: bold;
             margin-bottom: 10px;
+            color: var(--dark);
         }
 
         .card-number {
             color: var(--gray);
-            font-size: 0.9rem;
+            font-size: 14px;
             margin-bottom: 5px;
         }
 
         .card-price {
-            font-size: 1.5rem;
-            font-weight: 700;
+            font-size: 24px;
+            font-weight: bold;
             color: var(--primary);
             margin: 15px 0;
         }
@@ -495,36 +388,31 @@
 
         .card-actions .btn {
             flex: 1;
+            padding: 10px;
+            font-size: 14px;
             justify-content: center;
-            padding: 8px 15px;
-            font-size: 0.9rem;
         }
 
         /* Cart Section */
         .cart-section {
-            padding: 80px 0;
-            background: var(--white);
-            min-height: 60vh;
-        }
-
-        .cart-container {
-            display: grid;
-            grid-template-columns: 1fr 350px;
-            gap: 40px;
+            padding: 40px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
         .cart-items {
-            background: var(--white);
-            border-radius: 16px;
+            background: white;
+            border-radius: 15px;
             padding: 30px;
-            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         .cart-item {
             display: flex;
             gap: 20px;
             padding: 20px 0;
-            border-bottom: 1px solid var(--light-gray);
+            border-bottom: 1px solid #E5E7EB;
         }
 
         .cart-item:last-child {
@@ -534,14 +422,14 @@
         .cart-item-image {
             width: 80px;
             height: 80px;
-            background: var(--gradient);
-            border-radius: 12px;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 1.5rem;
-            font-weight: 700;
+            font-size: 24px;
+            font-weight: bold;
         }
 
         .cart-item-details {
@@ -549,18 +437,20 @@
         }
 
         .cart-item-name {
-            font-weight: 600;
+            font-size: 18px;
+            font-weight: bold;
             margin-bottom: 5px;
         }
 
         .cart-item-info {
             color: var(--gray);
-            font-size: 0.9rem;
+            font-size: 14px;
             margin-bottom: 10px;
         }
 
         .cart-item-price {
-            font-weight: 700;
+            font-size: 20px;
+            font-weight: bold;
             color: var(--primary);
             margin-bottom: 10px;
         }
@@ -575,67 +465,78 @@
         .quantity-btn {
             width: 30px;
             height: 30px;
-            border: 2px solid var(--light-gray);
-            background: var(--white);
-            border-radius: 6px;
+            border: 1px solid #DDD;
+            background: white;
+            border-radius: 5px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
         }
 
         .quantity-btn:hover {
+            background: var(--primary);
+            color: white;
             border-color: var(--primary);
-            color: var(--primary);
         }
 
         .quantity-value {
-            font-weight: 600;
+            font-weight: bold;
             min-width: 30px;
             text-align: center;
         }
 
         .cart-summary {
-            background: var(--white);
-            border-radius: 16px;
+            background: white;
+            border-radius: 15px;
             padding: 30px;
-            box-shadow: var(--shadow);
-            height: fit-content;
-            position: sticky;
-            top: 100px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         .summary-row {
             display: flex;
             justify-content: space-between;
             margin-bottom: 15px;
+            font-size: 16px;
         }
 
         .summary-row.total {
-            font-size: 1.2rem;
-            font-weight: 700;
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary);
             padding-top: 15px;
-            border-top: 2px solid var(--light-gray);
+            border-top: 2px solid #E5E7EB;
+        }
+
+        .cart-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .cart-actions .btn {
+            flex: 1;
         }
 
         /* Checkout Section */
         .checkout-section {
-            padding: 80px 0;
-            background: var(--light-gray);
+            padding: 40px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
         .checkout-container {
             display: grid;
-            grid-template-columns: 1fr 350px;
-            gap: 40px;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
         }
 
-        .checkout-form {
-            background: var(--white);
-            border-radius: 16px;
+        .checkout-form, .checkout-summary {
+            background: white;
+            border-radius: 15px;
             padding: 30px;
-            box-shadow: var(--shadow);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         .form-group {
@@ -645,16 +546,17 @@
         .form-group label {
             display: block;
             margin-bottom: 8px;
-            font-weight: 500;
+            font-weight: 600;
+            color: var(--dark);
         }
 
         .form-group input, .form-group select {
             width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e5e7eb;
+            padding: 12px;
+            border: 1px solid #DDD;
             border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
+            font-size: 16px;
+            transition: border-color 0.3s;
         }
 
         .form-group input:focus, .form-group select:focus {
@@ -665,7 +567,7 @@
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 15px;
         }
 
         .payment-methods {
@@ -676,47 +578,50 @@
         }
 
         .payment-method {
+            border: 2px solid #E5E7EB;
+            border-radius: 10px;
             padding: 20px;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
         }
 
         .payment-method:hover {
             border-color: var(--primary);
-            background: var(--light-gray);
+            background: #FFF8F5;
         }
 
         .payment-method.selected {
             border-color: var(--primary);
-            background: rgba(99, 102, 241, 0.1);
+            background: var(--primary);
+            color: white;
         }
 
         .payment-method i {
-            font-size: 2rem;
+            font-size: 30px;
             margin-bottom: 10px;
-            color: var(--primary);
+            display: block;
         }
 
         /* Orders Section */
         .orders-section {
-            padding: 80px 0;
-            background: var(--white);
-        }
-
-        .orders-grid {
-            display: grid;
-            gap: 20px;
+            padding: 40px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
         .order-card {
-            background: var(--white);
-            border-radius: 16px;
+            background: white;
+            border-radius: 15px;
             padding: 25px;
-            box-shadow: var(--shadow);
-            border-left: 4px solid var(--primary);
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .order-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
         }
 
         .order-header {
@@ -727,23 +632,29 @@
         }
 
         .order-id {
-            font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--dark);
         }
 
         .order-status {
-            padding: 5px 15px;
+            padding: 8px 15px;
             border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
+            font-size: 14px;
+            font-weight: bold;
             display: flex;
             align-items: center;
             gap: 5px;
         }
 
         .status-delivered {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--secondary);
+            background: #D4EDDA;
+            color: #155724;
+        }
+
+        .status-processing {
+            background: #FFF3CD;
+            color: #856404;
         }
 
         .order-details {
@@ -753,58 +664,82 @@
         }
 
         .order-detail {
-            color: var(--gray);
+            font-size: 14px;
         }
 
         .order-detail span {
-            color: var(--black);
-            font-weight: 500;
+            font-weight: bold;
+            color: var(--dark);
         }
 
         /* Dashboard Section */
         .dashboard-section {
-            padding: 80px 0;
-            background: var(--light-gray);
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-bottom: 50px;
+            gap: 20px;
+            margin-bottom: 40px;
         }
 
         .stat-card {
-            background: var(--white);
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: var(--shadow);
-            text-align: center;
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
         }
 
         .stat-icon {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 20px;
-            background: var(--gradient);
-            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--white);
-            font-size: 1.5rem;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .stat-icon.orders {
+            background: #E3F2FD;
+            color: #2196F3;
+        }
+
+        .stat-icon.cards {
+            background: #F3E5F5;
+            color: #9C27B0;
+        }
+
+        .stat-icon.spent {
+            background: #E8F5E9;
+            color: #4CAF50;
+        }
+
+        .stat-icon.saved {
+            background: #FFF3E0;
+            color: #FF9800;
         }
 
         .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 10px;
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--dark);
+            margin-bottom: 5px;
         }
 
         .stat-label {
             color: var(--gray);
-            font-weight: 500;
+            font-size: 14px;
         }
 
         /* Auth Modal */
@@ -820,7 +755,7 @@
             align-items: center;
             justify-content: center;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s;
         }
 
         .modal.active {
@@ -828,14 +763,14 @@
         }
 
         .modal-content {
-            background: var(--white);
+            background: white;
             border-radius: 20px;
             padding: 40px;
-            width: 90%;
             max-width: 400px;
+            width: 90%;
             position: relative;
             transform: scale(0.9);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s;
         }
 
         .modal.active .modal-content {
@@ -846,16 +781,14 @@
             position: absolute;
             top: 20px;
             right: 20px;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--gray);
+            font-size: 24px;
             cursor: pointer;
-            transition: color 0.3s ease;
+            color: var(--gray);
+            transition: color 0.3s;
         }
 
         .modal-close:hover {
-            color: var(--black);
+            color: var(--danger);
         }
 
         .auth-header {
@@ -864,7 +797,7 @@
         }
 
         .auth-header h2 {
-            font-size: 2rem;
+            color: var(--dark);
             margin-bottom: 10px;
         }
 
@@ -880,275 +813,105 @@
 
         .auth-toggle a {
             color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
             cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
         }
 
         .auth-toggle a:hover {
             text-decoration: underline;
         }
 
-        /* Chat Widget */
-        .chat-widget {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 999;
-        }
-
-        .chat-button {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: var(--gradient);
-            color: white;
-            border: none;
-            cursor: pointer;
-            box-shadow: var(--shadow-lg);
-            font-size: 1.5rem;
-            transition: transform 0.3s ease;
-        }
-
-        .chat-button:hover {
-            transform: scale(1.1);
-        }
-
-        .chat-window {
-            position: absolute;
-            bottom: 80px;
-            right: 0;
-            width: 350px;
-            height: 450px;
-            background: white;
-            border-radius: 16px;
-            box-shadow: var(--shadow-lg);
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .chat-window.active {
-            display: flex;
-        }
-
-        .chat-header {
-            background: var(--gradient);
-            color: white;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .chat-messages {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .chat-message {
-            display: flex;
-            gap: 10px;
-        }
-
-        .chat-message.user {
-            flex-direction: row-reverse;
-        }
-
-        .message-bubble {
-            max-width: 70%;
-            padding: 10px 15px;
-            border-radius: 18px;
-            background: var(--light-gray);
-        }
-
-        .chat-message.user .message-bubble {
-            background: var(--primary);
-            color: white;
-        }
-
-        .chat-input {
-            padding: 15px;
-            border-top: 1px solid var(--light-gray);
-            display: flex;
-            gap: 10px;
-        }
-
-        .chat-input input {
-            flex: 1;
-            padding: 10px 15px;
-            border: 1px solid var(--light-gray);
-            border-radius: 25px;
-            outline: none;
-        }
-
-        .chat-input button {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: none;
-            background: var(--primary);
-            color: white;
-            cursor: pointer;
-        }
-
-        /* Toast Notifications */
-        .toast-container {
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            z-index: 3000;
-        }
-
-        .toast {
-            background: white;
-            padding: 15px 20px;
-            border-radius: 10px;
-            box-shadow: var(--shadow-lg);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            min-width: 300px;
-            transform: translateX(400px);
-            transition: transform 0.3s ease;
-        }
-
-        .toast.show {
-            transform: translateX(0);
-        }
-
-        .toast-icon {
-            font-size: 1.5rem;
-        }
-
-        .toast.success .toast-icon {
-            color: var(--secondary);
-        }
-
-        .toast.error .toast-icon {
-            color: var(--red);
-        }
-
-        .toast.warning .toast-icon {
-            color: var(--yellow);
-        }
-
-        .toast-content {
-            flex: 1;
-        }
-
-        .toast-title {
-            font-weight: 600;
-            margin-bottom: 2px;
-        }
-
-        .toast-message {
-            font-size: 0.9rem;
-            color: var(--gray);
-        }
-
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--gray);
-        }
-
-        .empty-state i {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            opacity: 0.3;
-        }
-
-        .empty-state h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: var(--black);
-        }
-
         /* Payment Modal */
         .payment-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 3000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .payment-modal.active {
-            display: flex;
-        }
-
-        .payment-content {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
             max-width: 500px;
-            width: 90%;
-            text-align: center;
-            position: relative;
         }
 
-        .payment-qr {
-            width: 250px;
-            height: 250px;
-            margin: 20px auto;
-            background: var(--light-gray);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .payment-header {
+            text-align: center;
+            margin-bottom: 30px;
         }
 
         .payment-amount {
-            font-size: 2rem;
-            font-weight: 700;
+            font-size: 36px;
+            font-weight: bold;
             color: var(--primary);
             margin: 20px 0;
         }
 
-        .payment-upi {
+        .upi-details {
+            background: #F8F9FA;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            background: white;
+            border: 2px solid #E5E7EB;
+            border-radius: 10px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .upi-id {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--dark);
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            margin: 20px 0;
-            padding: 15px;
-            background: var(--light-gray);
-            border-radius: 10px;
+        }
+
+        .copy-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: #E55A2B;
+        }
+
+        .copy-btn.copied {
+            background: var(--success);
         }
 
         .payment-status {
-            margin: 20px 0;
+            text-align: center;
             padding: 15px;
             border-radius: 10px;
-            font-weight: 600;
+            margin-bottom: 20px;
+            font-weight: bold;
         }
 
         .payment-status.waiting {
-            background: rgba(245, 158, 11, 0.1);
-            color: var(--yellow);
+            background: #FFF3CD;
+            color: #856404;
         }
 
         .payment-status.success {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--secondary);
+            background: #D4EDDA;
+            color: #155724;
         }
 
         .payment-actions {
             display: flex;
             gap: 15px;
-            margin-top: 30px;
         }
 
         .payment-actions .btn {
@@ -1162,117 +925,274 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: white;
-            z-index: 4000;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--secondary) 100%);
+            z-index: 3000;
             display: none;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
         .fullscreen-payment.active {
             display: flex;
+            opacity: 1;
         }
 
-        .fullscreen-qr {
-            width: 300px;
-            height: 300px;
-            background: var(--light-gray);
-            border-radius: 15px;
-            margin-bottom: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .fullscreen-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            transform: scale(0.9);
+            transition: transform 0.3s;
+        }
+
+        .fullscreen-payment.active .fullscreen-content {
+            transform: scale(1);
         }
 
         .fullscreen-amount {
-            font-size: 2.5rem;
-            font-weight: 700;
+            font-size: 48px;
+            font-weight: bold;
             color: var(--primary);
-            margin-bottom: 20px;
+            margin: 20px 0;
         }
 
-        .fullscreen-upi {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 30px;
-            padding: 15px 25px;
-            background: var(--light-gray);
-            border-radius: 10px;
-            font-size: 1.1rem;
+        /* Chat Widget */
+        .chat-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1500;
         }
 
-        .copy-btn {
-            padding: 8px 15px;
+        .chat-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
             background: var(--primary);
             color: white;
             border: none;
-            border-radius: 6px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            font-size: 24px;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+            transition: all 0.3s;
         }
 
-        .copy-btn:hover {
-            background: var(--primary-dark);
+        .chat-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.4);
         }
 
-        .copy-btn.copied {
-            background: var(--secondary);
-        }
-
-        /* Page Sections */
-        .page-section {
+        .chat-window {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 350px;
+            height: 450px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
             display: none;
-            min-height: calc(100vh - 80px);
-            padding-top: 100px;
+            flex-direction: column;
+            overflow: hidden;
+            transform: scale(0.9);
+            opacity: 0;
+            transition: all 0.3s;
         }
 
-        .page-section.active {
-            display: block;
+        .chat-window.active {
+            display: flex;
+            transform: scale(1);
+            opacity: 1;
         }
 
-        /* Animations */
-        @keyframes bounce {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
+        .chat-header {
+            background: var(--primary);
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .bounce {
-            animation: bounce 0.5s ease;
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #F8F9FA;
+        }
+
+        .chat-message {
+            margin-bottom: 15px;
+            display: flex;
+            animation: slideInUp 0.3s;
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chat-message.user {
+            justify-content: flex-end;
+        }
+
+        .message-bubble {
+            max-width: 70%;
+            padding: 10px 15px;
+            border-radius: 15px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-message.user .message-bubble {
+            background: var(--primary);
+            color: white;
+        }
+
+        .chat-input {
+            padding: 15px;
+            border-top: 1px solid #E5E7EB;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #DDD;
+            border-radius: 25px;
+            font-size: 14px;
+        }
+
+        .chat-input button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .chat-input button:hover {
+            background: #E55A2B;
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 4000;
+        }
+
+        .toast {
+            background: white;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            min-width: 300px;
+            transform: translateX(400px);
+            transition: all 0.3s;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast-icon {
+            font-size: 24px;
+        }
+
+        .toast.success .toast-icon {
+            color: var(--success);
+        }
+
+        .toast.error .toast-icon {
+            color: var(--danger);
+        }
+
+        .toast.warning .toast-icon {
+            color: var(--warning);
+        }
+
+        .toast.info .toast-icon {
+            color: var(--info);
+        }
+
+        .toast-content {
+            flex: 1;
+        }
+
+        .toast-title {
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+
+        .toast-message {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray);
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .empty-state p {
+            margin-bottom: 20px;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
             }
 
-            .hero-content {
-                grid-template-columns: 1fr;
-                text-align: center;
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
             }
 
-            .hero-text h1 {
-                font-size: 2rem;
+            .hero h1 {
+                font-size: 32px;
             }
 
-            .hero-card {
-                width: 280px;
-                height: 180px;
+            .hero p {
+                font-size: 16px;
             }
 
-            .cart-container,
-            .checkout-container {
-                grid-template-columns: 1fr;
-            }
-
-            .cart-summary {
-                position: static;
-            }
-
-            .features-grid,
             .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .checkout-container {
                 grid-template-columns: 1fr;
             }
 
@@ -1288,175 +1208,181 @@
                 width: 300px;
                 height: 400px;
             }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Confirmation Dialog */
+        .confirm-dialog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2500;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .confirm-dialog.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .confirm-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            transform: scale(0.9);
+            transition: transform 0.3s;
+        }
+
+        .confirm-dialog.active .confirm-content {
+            transform: scale(1);
+        }
+
+        .confirm-icon {
+            font-size: 48px;
+            color: var(--warning);
+            margin-bottom: 20px;
+        }
+
+        .confirm-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .confirm-message {
+            color: var(--gray);
+            margin-bottom: 25px;
+        }
+
+        .confirm-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .confirm-actions .btn {
+            flex: 1;
         }
     </style>
 </head>
 <body>
     <!-- Header -->
     <header id="header">
-        <nav class="container">
+        <div class="header-container">
             <div class="logo">
                 <i class="fas fa-credit-card"></i>
                 CCShop
             </div>
-            <div class="nav-links">
-                <a href="#" class="nav-link active" onclick="showPage('home')">Home</a>
-                <a href="#" class="nav-link" onclick="showPage('cards')">Cards</a>
-                <a href="#" class="nav-link" onclick="showPage('dashboard')">Dashboard</a>
-                <a href="#" class="nav-link" onclick="showPage('orders')">Orders</a>
-            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="nav-link active" onclick="showPage('home')">Home</a></li>
+                    <li><a href="#" class="nav-link" onclick="showPage('cards')">Cards</a></li>
+                    <li><a href="#" class="nav-link" onclick="showPage('dashboard')">Dashboard</a></li>
+                    <li><a href="#" class="nav-link" onclick="showPage('orders')">Orders</a></li>
+                </ul>
+            </nav>
             <div class="nav-actions">
                 <div class="cart-icon" onclick="showPage('cart')">
                     <i class="fas fa-shopping-cart" id="cartIcon"></i>
                     <span class="cart-count" id="cartCount">0</span>
                 </div>
                 <div class="user-avatar" id="userAvatar" onclick="toggleUserDropdown()">G</div>
-                <button class="btn btn-black" onclick="toggleUserDropdown()">
-                    <i class="fas fa-user"></i>
-                    <span id="authButtonText">Sign In</span>
-                </button>
             </div>
-        </nav>
+        </div>
     </header>
 
-    <!-- Home Page -->
-    <section id="homePage" class="page-section active">
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="container">
-                <div class="hero-content">
-                    <div class="hero-text">
-                        <h1>Premium Credit Cards Instant Delivery</h1>
-                        <p>Get verified credit cards with high limits delivered instantly to your email after payment</p>
-                        <div class="hero-buttons">
-                            <button class="btn btn-primary" style="background: white; color: var(--primary);" onclick="showPage('cards')">
-                                <i class="fas fa-shopping-bag"></i>
-                                Browse Cards
-                            </button>
-                            <button class="btn btn-black" style="background: rgba(255,255,255,0.2); border: 2px solid white;" onclick="showPage('dashboard')">
-                                <i class="fas fa-tachometer-alt"></i>
-                                Dashboard
-                            </button>
-                        </div>
-                    </div>
-                    <div class="hero-image">
-                        <div class="hero-card">
-                            <div class="hero-card-chip"></div>
-                            <div class="hero-card-number">5354 •••• •••• 7165</div>
-                            <div class="hero-card-footer">
-                                <div>PREMIUM</div>
-                                <div>VALID THRU 12/31</div>
-                            </div>
-                        </div>
-                    </div>
+    <!-- Main Content -->
+    <main>
+        <!-- Home Page -->
+        <section id="homePage" class="page-section active">
+            <div class="hero">
+                <h1>Premium Credit Cards Marketplace</h1>
+                <p>Instant delivery • 100% verified cards • Secure payment</p>
+                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn btn-primary" onclick="showPage('cards')">
+                        <i class="fas fa-credit-card"></i> Browse Cards
+                    </button>
+                    <button class="btn btn-outline" onclick="showPage('dashboard')">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </button>
                 </div>
             </div>
-        </section>
 
-        <!-- Features Section -->
-        <section class="features">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Why Choose CCShop?</h2>
-                    <p>We provide the best credit card solutions with instant delivery</p>
-                </div>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-bolt"></i>
-                        </div>
-                        <h3>Instant Delivery</h3>
-                        <p>Get your credit card details delivered to your email instantly after payment confirmation</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <h3>100% Verified</h3>
-                        <p>All our credit cards are fully verified and guaranteed to work for online transactions</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-undo"></i>
-                        </div>
-                        <h3>Instant Replacement</h3>
-                        <p>If any card doesn't work, we provide instant replacement without any questions</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Featured Cards -->
-        <section class="cards-section">
-            <div class="container">
+            <div class="cards-section">
                 <div class="section-header">
                     <h2>Featured Cards</h2>
-                    <p>Our most popular credit cards with instant delivery</p>
+                    <p>Hand-picked premium cards with instant delivery</p>
                 </div>
                 <div class="cards-grid" id="featuredCards">
-                    <!-- Cards will be loaded here -->
+                    <!-- Cards will be dynamically loaded here -->
                 </div>
-                <div style="text-align: center; margin-top: 40px;">
+                <div style="text-align: center;">
                     <button class="btn btn-primary" onclick="showPage('cards')">
-                        <i class="fas fa-arrow-right"></i>
-                        View All Cards
+                        View All Cards <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
             </div>
         </section>
-    </section>
 
-    <!-- Cards Page -->
-    <section id="cardsPage" class="page-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>All Credit Cards</h2>
-                <p>Browse our complete collection of premium credit cards</p>
-            </div>
-            <div class="filters">
-                <div class="filter-group">
-                    <label>Search:</label>
-                    <input type="text" id="searchInput" placeholder="Search cards..." oninput="filterCards()">
+        <!-- Cards Page -->
+        <section id="cardsPage" class="page-section">
+            <div class="cards-section">
+                <div class="section-header">
+                    <h2>All Cards</h2>
+                    <p>Choose from our wide selection of premium cards</p>
                 </div>
-                <div class="filter-group">
-                    <label>Category:</label>
-                    <select id="categoryFilter" onchange="filterCards()">
+                
+                <!-- Filters -->
+                <div style="display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap;">
+                    <input type="text" id="searchInput" placeholder="Search cards..." onkeyup="filterCards()" style="flex: 1; min-width: 200px; padding: 10px; border: 1px solid #DDD; border-radius: 8px;">
+                    <select id="categoryFilter" onchange="filterCards()" style="padding: 10px; border: 1px solid #DDD; border-radius: 8px;">
                         <option value="">All Categories</option>
                         <option value="visa">Visa</option>
                         <option value="mastercard">Mastercard</option>
                         <option value="amex">American Express</option>
                         <option value="discover">Discover</option>
                     </select>
-                </div>
-                <div class="filter-group">
-                    <label>Sort by:</label>
-                    <select id="sortFilter" onchange="sortCards()">
-                        <option value="">Featured</option>
+                    <select id="sortFilter" onchange="sortCards()" style="padding: 10px; border: 1px solid #DDD; border-radius: 8px;">
+                        <option value="">Sort By</option>
                         <option value="price-low">Price: Low to High</option>
                         <option value="price-high">Price: High to Low</option>
                         <option value="limit-high">Limit: High to Low</option>
                     </select>
                 </div>
-            </div>
-            <div class="cards-grid" id="cardsGrid">
-                <!-- Cards will be loaded here -->
-            </div>
-        </div>
-    </section>
 
-    <!-- Cart Page -->
-    <section id="cartPage" class="page-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>Shopping Cart</h2>
-                <p>Review your selected credit cards</p>
-            </div>
-            <div class="cart-container">
-                <div class="cart-items" id="cartItems">
-                    <!-- Cart items will be loaded here -->
+                <div class="cards-grid" id="cardsGrid">
+                    <!-- Cards will be dynamically loaded here -->
                 </div>
+            </div>
+        </section>
+
+        <!-- Cart Page -->
+        <section id="cartPage" class="page-section">
+            <div class="cart-section">
+                <div class="section-header">
+                    <h2>Shopping Cart</h2>
+                    <p>Review your selected cards</p>
+                </div>
+                
+                <div class="cart-items" id="cartItems">
+                    <!-- Cart items will be dynamically loaded here -->
+                </div>
+                
                 <div class="cart-summary">
-                    <h3>Order Summary</h3>
+                    <h3 style="margin-bottom: 20px;">Order Summary</h3>
                     <div class="summary-row">
                         <span>Subtotal:</span>
                         <span id="subtotal">$0.00</span>
@@ -1473,184 +1399,203 @@
                         <span>Total:</span>
                         <span id="total">$0.00</span>
                     </div>
-                    <button class="btn btn-primary" style="width: 100%; margin-top: 20px;" onclick="proceedToCheckout()">
-                        <i class="fas fa-lock"></i>
-                        Proceed to Checkout
-                    </button>
-                    <button class="btn btn-black" style="width: 100%; margin-top: 10px;" onclick="clearCart()">
-                        <i class="fas fa-trash"></i>
-                        Clear Cart
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Checkout Page -->
-    <section id="checkoutPage" class="page-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>Checkout</h2>
-                <p>Complete your order for instant delivery</p>
-            </div>
-            <div class="checkout-container">
-                <div class="checkout-form">
-                    <h3>Shipping Information</h3>
-                    <form id="checkoutForm" onsubmit="processCheckout(event)">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>First Name</label>
-                                <input type="text" id="firstName" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Last Name</label>
-                                <input type="text" id="lastName" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Email Address</label>
-                            <input type="email" id="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Phone Number</label>
-                            <input type="tel" id="phone" required>
-                        </div>
-                        
-                        <h3 style="margin-top: 30px;">Payment Method</h3>
-                        <div class="payment-methods">
-                            <div class="payment-method" onclick="selectPayment(this, 'upi')">
-                                <i class="fas fa-qrcode"></i>
-                                <div>UPI Payment</div>
-                            </div>
-                            <div class="payment-method" onclick="selectPayment(this, 'crypto')">
-                                <i class="fas fa-bitcoin"></i>
-                                <div>Crypto Payment</div>
-                            </div>
-                        </div>
-                        
-                        <div id="checkoutItems" style="margin: 20px 0; padding: 20px; background: var(--light-gray); border-radius: 10px;">
-                            <!-- Order items will be shown here -->
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">
-                            <i class="fas fa-check"></i>
-                            Complete Order
+                    
+                    <div class="cart-actions">
+                        <button class="btn btn-black" onclick="clearCart()">
+                            <i class="fas fa-trash"></i> Clear Cart
                         </button>
-                    </form>
-                </div>
-                <div class="cart-summary">
-                    <h3>Order Summary</h3>
-                    <div class="summary-row">
-                        <span>Subtotal:</span>
-                        <span id="checkoutSubtotal">$0.00</span>
-                    </div>
-                    <div class="summary-row">
-                        <span>Processing Fee (2%):</span>
-                        <span id="checkoutProcessingFee">$0.00</span>
-                    </div>
-                    <div class="summary-row">
-                        <span>Tax (8%):</span>
-                        <span id="checkoutTax">$0.00</span>
-                    </div>
-                    <div class="summary-row total">
-                        <span>Total:</span>
-                        <span id="checkoutTotal">$0.00</span>
+                        <button class="btn btn-primary" onclick="proceedToCheckout()">
+                            <i class="fas fa-lock"></i> Proceed to Checkout
+                        </button>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Dashboard Page -->
-    <section id="dashboardPage" class="page-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>Dashboard</h2>
-                <p>Manage your orders and account</p>
-            </div>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-shopping-bag"></i>
-                    </div>
-                    <div class="stat-value" id="totalOrders">0</div>
-                    <div class="stat-label">Total Orders</div>
+        <!-- Checkout Page -->
+        <section id="checkoutPage" class="page-section">
+            <div class="checkout-section">
+                <div class="section-header">
+                    <h2>Checkout</h2>
+                    <p>Complete your order details</p>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-credit-card"></i>
+                
+                <div class="checkout-container">
+                    <div class="checkout-form">
+                        <h3 style="margin-bottom: 20px;">Shipping Information</h3>
+                        <form id="checkoutForm" onsubmit="processCheckout(event)">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>First Name</label>
+                                    <input type="text" id="firstName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Last Name</label>
+                                    <input type="text" id="lastName" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input type="email" id="email" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input type="tel" id="phone" required>
+                            </div>
+                            
+                            <h3 style="margin: 30px 0 20px;">Payment Method</h3>
+                            <div class="payment-methods">
+                                <div class="payment-method" onclick="selectPayment(this, 'upi')">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    <div>UPI Payment</div>
+                                </div>
+                                <div class="payment-method" onclick="selectPayment(this, 'crypto')">
+                                    <i class="fab fa-bitcoin"></i>
+                                    <div>Crypto</div>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 20px;">
+                                <i class="fas fa-lock"></i> Complete Order
+                            </button>
+                        </form>
                     </div>
-                    <div class="stat-value" id="activeCards">0</div>
-                    <div class="stat-label">Active Cards</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-dollar-sign"></i>
+                    
+                    <div class="checkout-summary">
+                        <h3 style="margin-bottom: 20px;">Order Summary</h3>
+                        <div id="checkoutItems">
+                            <!-- Items will be loaded here -->
+                        </div>
+                        
+                        <div style="margin-top: 20px; padding-top: 20px; border-top: 2px solid #E5E7EB;">
+                            <div class="summary-row">
+                                <span>Subtotal:</span>
+                                <span id="checkoutSubtotal">$0.00</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Processing Fee (2%):</span>
+                                <span id="checkoutProcessingFee">$0.00</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Tax (8%):</span>
+                                <span id="checkoutTax">$0.00</span>
+                            </div>
+                            <div class="summary-row total">
+                                <span>Total:</span>
+                                <span id="checkoutTotal">$0.00</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="stat-value" id="totalSpent">$0</div>
-                    <div class="stat-label">Total Spent</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-piggy-bank"></i>
-                    </div>
-                    <div class="stat-value" id="savedAmount">$0</div>
-                    <div class="stat-label">Saved (10%)</div>
                 </div>
             </div>
-            <div class="section-header">
-                <h3>Recent Orders</h3>
-            </div>
-            <div class="orders-grid" id="recentOrders">
-                <!-- Recent orders will be loaded here -->
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Orders Page -->
-    <section id="ordersPage" class="page-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>Your Orders</h2>
-                <p>Track all your credit card orders</p>
+        <!-- Orders Page -->
+        <section id="ordersPage" class="page-section">
+            <div class="orders-section">
+                <div class="section-header">
+                    <h2>Your Orders</h2>
+                    <p>Track your order history</p>
+                </div>
+                
+                <div id="allOrders">
+                    <!-- Orders will be dynamically loaded here -->
+                </div>
             </div>
-            <div class="orders-grid" id="allOrders">
-                <!-- Orders will be loaded here -->
+        </section>
+
+        <!-- Dashboard Page -->
+        <section id="dashboardPage" class="page-section">
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <h2>Dashboard</h2>
+                    <p>Welcome back! Here's your account overview</p>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon orders">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                        <div class="stat-value" id="totalOrders">0</div>
+                        <div class="stat-label">Total Orders</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon cards">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <div class="stat-value" id="activeCards">0</div>
+                        <div class="stat-label">Active Cards</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon spent">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-value" id="totalSpent">$0</div>
+                        <div class="stat-label">Total Spent</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon saved">
+                            <i class="fas fa-piggy-bank"></i>
+                        </div>
+                        <div class="stat-value" id="savedAmount">$0</div>
+                        <div class="stat-label">Amount Saved</div>
+                    </div>
+                </div>
+                
+                <div style="background: white; border-radius: 15px; padding: 30px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);">
+                    <h3 style="margin-bottom: 20px;">Recent Orders</h3>
+                    <div id="recentOrders">
+                        <!-- Recent orders will be loaded here -->
+                    </div>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <!-- Auth Modal -->
-    <div class="modal" id="authModal">
+    <div id="authModal" class="modal">
         <div class="modal-content">
-            <button class="modal-close" onclick="closeAuthModal()">
+            <span class="modal-close" onclick="closeAuthModal()">
                 <i class="fas fa-times"></i>
-            </button>
+            </span>
+            
             <div class="auth-header">
                 <h2 id="authTitle">Sign In</h2>
                 <p id="authSubtitle">Access your account to continue</p>
             </div>
+            
             <form id="authForm" onsubmit="handleAuth(event)">
                 <div class="form-group" id="signupFields" style="display: none;">
                     <label>Full Name</label>
                     <input type="text" id="authFullName" placeholder="Enter your full name">
                 </div>
+                
                 <div class="form-group">
                     <label>Email Address</label>
                     <input type="email" id="authEmail" placeholder="Enter your email" required>
                 </div>
-                <div class="form-group" id="phoneField" style="display: none;">
-                    <label>Phone Number</label>
-                    <input type="tel" id="authPhone" placeholder="Enter your phone number">
-                </div>
+                
                 <div class="form-group">
                     <label>Password</label>
                     <input type="password" id="authPassword" placeholder="Enter your password" required>
                 </div>
+                
+                <div class="form-group" id="phoneField" style="display: none;">
+                    <label>Phone Number</label>
+                    <input type="tel" id="authPhone" placeholder="Enter your phone number">
+                </div>
+                
                 <button type="submit" class="btn btn-primary" style="width: 100%;" id="authSubmitBtn">
                     Sign In
                 </button>
             </form>
+            
             <div class="auth-toggle">
                 <span id="authToggleText">Don't have an account?</span>
                 <a id="authToggleLink" onclick="toggleAuthMode()">Sign Up</a>
@@ -1659,27 +1604,40 @@
     </div>
 
     <!-- Payment Modal -->
-    <div class="payment-modal" id="paymentModal">
-        <div class="payment-content">
-            <button class="modal-close" onclick="closePaymentModal()">
+    <div id="paymentModal" class="modal">
+        <div class="modal-content payment-modal">
+            <span class="modal-close" onclick="closePaymentModal()">
                 <i class="fas fa-times"></i>
-            </button>
-            <h3>Complete Your Payment</h3>
-            <div class="payment-qr">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=viralchauhan457-1@okhdfcbank&pn=CCShop&am=1&cu=INR" alt="UPI QR Code">
+            </span>
+            
+            <div class="payment-header">
+                <h2>Complete Payment</h2>
+                <p>Pay using UPI for instant delivery</p>
             </div>
-            <div class="payment-amount">₹<span id="modalAmount">0.00</span></div>
-            <div class="payment-upi">
-                <span>viralchauhan457-1@okhdfcbank</span>
-                <button class="copy-btn" id="copyBtn" onclick="copyUpiId()">
-                    <i class="fas fa-copy"></i> Copy
-                </button>
+            
+            <div class="payment-amount">
+                ₹<span id="modalAmount">0.00</span>
             </div>
+            
+            <div class="upi-details">
+                <div class="qr-code">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=viralchauhan457-1@okhdfcbank&pn=CCShop&am=0" alt="QR Code" style="width: 100%; height: 100%; object-fit: contain;">
+                </div>
+                
+                <div class="upi-id">
+                    viralchauhan457-1@okhdfcbank
+                    <button class="copy-btn" id="copyBtn" onclick="copyUpiId()">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </div>
+            </div>
+            
             <div class="payment-status waiting" id="paymentStatus">
                 <i class="fas fa-clock"></i> Waiting for payment...
             </div>
+            
             <div class="payment-actions">
-                <button class="btn btn-black" onclick="closePaymentModal()">
+                <button class="btn btn-black" onclick="cancelPayment()">
                     <i class="fas fa-times"></i> Cancel
                 </button>
                 <button class="btn btn-primary" id="confirmPaymentBtn" onclick="confirmPayment()">
@@ -1690,21 +1648,49 @@
     </div>
 
     <!-- Full Screen Payment -->
-    <div class="fullscreen-payment" id="fullscreenPayment">
-        <h2 style="font-size: 2rem; margin-bottom: 20px;">Complete Payment</h2>
-        <div class="fullscreen-qr">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=viralchauhan457-1@okhdfcbank&pn=CCShop&am=1&cu=INR" alt="UPI QR Code">
-        </div>
-        <div class="fullscreen-amount">₹<span id="fullscreenAmount">0.00</span></div>
-        <div class="fullscreen-upi">
-            <span>viralchauhan457-1@okhdfcbank</span>
-            <button class="copy-btn" onclick="copyUpiId()">
-                <i class="fas fa-copy"></i> Copy
+    <div id="fullscreenPayment" class="fullscreen-payment">
+        <div class="fullscreen-content">
+            <h2>Quick Payment</h2>
+            <div class="fullscreen-amount">
+                ₹<span id="fullscreenAmount">0.00</span>
+            </div>
+            
+            <div class="upi-details">
+                <div class="qr-code">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=viralchauhan457-1@okhdfcbank&pn=CCShop&am=0" alt="QR Code" style="width: 100%; height: 100%; object-fit: contain;">
+                </div>
+                
+                <div class="upi-id">
+                    viralchauhan457-1@okhdfcbank
+                    <button class="copy-btn" onclick="copyUpiId()">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </div>
+            </div>
+            
+            <button class="btn btn-black" onclick="cancelFullscreenPayment()" style="width: 100%; margin-top: 20px;">
+                <i class="fas fa-arrow-left"></i> Back to Shopping
             </button>
         </div>
-        <button class="btn btn-black" style="margin-top: 30px; padding: 12px 40px;" onclick="cancelFullscreenPayment()">
-            Cancel Payment
-        </button>
+    </div>
+
+    <!-- Confirmation Dialog -->
+    <div id="confirmDialog" class="confirm-dialog">
+        <div class="confirm-content">
+            <div class="confirm-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="confirm-title">Cancel Payment?</div>
+            <div class="confirm-message">Are you sure you want to cancel this payment? Your cart items will be saved.</div>
+            <div class="confirm-actions">
+                <button class="btn btn-black" onclick="closeConfirmDialog()">
+                    No, Continue
+                </button>
+                <button class="btn btn-primary" onclick="confirmCancelPayment()">
+                    Yes, Cancel
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- Chat Widget -->
@@ -1712,18 +1698,22 @@
         <div class="chat-window" id="chatWindow">
             <div class="chat-header">
                 <div>
-                    <div style="font-weight: 600;">Customer Support</div>
-                    <div style="font-size: 0.85rem; opacity: 0.8;">We typically reply instantly</div>
+                    <div style="font-weight: bold;">Customer Support</div>
+                    <div style="font-size: 12px; opacity: 0.8;">We typically reply instantly</div>
                 </div>
-                <button style="background: none; border: none; color: white; cursor: pointer;" onclick="toggleChat()">
+                <span style="cursor: pointer;" onclick="toggleChat()">
                     <i class="fas fa-times"></i>
-                </button>
+                </span>
             </div>
+            
             <div class="chat-messages" id="chatMessages">
                 <div class="chat-message">
-                    <div class="message-bubble">Welcome to CCShop! How can I help you today?</div>
+                    <div class="message-bubble">
+                        Hello! Welcome to CCShop. How can I help you today?
+                    </div>
                 </div>
             </div>
+            
             <div class="chat-input">
                 <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="handleChatInput(event)">
                 <button onclick="sendMessage()">
@@ -1731,6 +1721,7 @@
                 </button>
             </div>
         </div>
+        
         <button class="chat-button" onclick="toggleChat()">
             <i class="fas fa-comment-dots"></i>
         </button>
@@ -1745,262 +1736,317 @@
             currentUser: null,
             cart: [],
             orders: [],
-            currentUsdToInrRate: 83.50,
             cards: [
                 {
                     id: 1,
-                    name: 'VISA PLATINUM',
-                    number: '4532 •••• •••• 1234',
+                    name: 'Chase Sapphire Preferred',
+                    number: '4266 •••• •••• 1234',
                     limit: 800,
-                    valid: '12/2031',
-                    price: 89.99,
+                    valid: '12/2029',
+                    price: 149.99,
                     category: 'visa',
                     inStock: true,
                     brand: 'VISA'
                 },
                 {
                     id: 2,
-                    name: 'MASTERCARD GOLD',
-                    number: '5421 •••• •••• 5678',
+                    name: 'Capital One Venture',
+                    number: '5555 •••• •••• 5678',
                     limit: 750,
-                    valid: '08/2031',
-                    price: 79.99,
+                    valid: '08/2030',
+                    price: 129.99,
                     category: 'mastercard',
                     inStock: true,
                     brand: 'MASTERCARD'
                 },
                 {
                     id: 3,
-                    name: 'AMEX PLATINUM',
-                    number: '3743 •••• •••• 9012',
+                    name: 'American Express Gold',
+                    number: '3782 •••• •••• 9012',
                     limit: 900,
-                    valid: '10/2031',
-                    price: 99.99,
+                    valid: '03/2031',
+                    price: 199.99,
                     category: 'amex',
                     inStock: true,
                     brand: 'AMERICAN EXPRESS'
                 },
                 {
                     id: 4,
-                    name: 'DISCOVER IT',
+                    name: 'Discover it Cash Back',
                     number: '6011 •••• •••• 3456',
                     limit: 600,
-                    valid: '05/2031',
-                    price: 69.99,
+                    valid: '11/2029',
+                    price: 99.99,
                     category: 'discover',
                     inStock: true,
                     brand: 'DISCOVER'
                 },
                 {
                     id: 5,
-                    name: 'VISA SIGNATURE',
-                    number: '4916 •••• •••• 7890',
+                    name: 'Citi Double Cash',
+                    number: '5424 •••• •••• 7890',
                     limit: 950,
-                    valid: '03/2031',
+                    valid: '06/2030',
+                    price: 119.99,
+                    category: 'mastercard',
+                    inStock: true,
+                    brand: 'MASTERCARD'
+                },
+                {
+                    id: 6,
+                    name: 'Wells Fargo Propel',
+                    number: '4716 •••• •••• 2345',
+                    limit: 700,
+                    valid: '09/2031',
                     price: 109.99,
                     category: 'visa',
                     inStock: true,
                     brand: 'VISA'
                 },
                 {
-                    id: 6,
-                    name: 'MASTERCARD WORLD',
-                    number: '5555 •••• •••• 2468',
-                    limit: 700,
-                    valid: '11/2031',
-                    price: 85.99,
+                    id: 7,
+                    name: 'Bank of America Premium',
+                    number: '5583 •••• •••• 6789',
+                    limit: 850,
+                    valid: '04/2030',
+                    price: 139.99,
                     category: 'mastercard',
                     inStock: true,
                     brand: 'MASTERCARD'
                 },
                 {
-                    id: 7,
-                    name: 'CHASE SAPPHIRE',
-                    number: '4266 •••• •••• 1357',
-                    limit: 850,
-                    valid: '09/2031',
-                    price: 119.99,
+                    id: 8,
+                    name: 'US Bank Altitude',
+                    number: '4485 •••• •••• 0123',
+                    limit: 650,
+                    valid: '01/2031',
+                    price: 89.99,
                     category: 'visa',
                     inStock: true,
-                    brand: 'CHASE'
-                },
-                {
-                    id: 8,
-                    name: 'CITI DOUBLE CASH',
-                    number: '5424 •••• •••• 8642',
-                    limit: 650,
-                    valid: '07/2031',
-                    price: 75.99,
-                    category: 'mastercard',
-                    inStock: true,
-                    brand: 'CITI'
+                    brand: 'VISA'
                 },
                 {
                     id: 9,
-                    name: 'CAPITAL ONE VENTURE',
-                    number: '4147 •••• •••• 9753',
-                    limit: 920,
-                    valid: '04/2031',
-                    price: 95.99,
-                    category: 'visa',
+                    name: 'Barclaycard Arrival',
+                    number: '5199 •••• •••• 4567',
+                    limit: 720,
+                    valid: '07/2030',
+                    price: 99.99,
+                    category: 'mastercard',
                     inStock: true,
-                    brand: 'CAPITAL ONE'
+                    brand: 'MASTERCARD'
                 },
                 {
                     id: 10,
-                    name: 'WELLS FARGO PROPEL',
-                    number: '4716 •••• •••• 2580',
-                    limit: 780,
-                    valid: '06/2031',
-                    price: 87.99,
-                    category: 'visa',
+                    name: 'Discover Escape',
+                    number: '6011 •••• •••• 8901',
+                    limit: 820,
+                    valid: '02/2031',
+                    price: 119.99,
+                    category: 'discover',
                     inStock: true,
-                    brand: 'WELLS FARGO'
+                    brand: 'DISCOVER'
                 },
                 {
                     id: 11,
-                    name: 'BANK OF AMERICA PREMIUM',
-                    number: '4342 •••• •••• 3691',
-                    limit: 880,
-                    valid: '02/2031',
-                    price: 92.99,
+                    name: 'Chase Freedom Unlimited',
+                    number: '4147 •••• •••• 3456',
+                    limit: 980,
+                    valid: '10/2030',
+                    price: 149.99,
                     category: 'visa',
                     inStock: true,
-                    brand: 'BANK OF AMERICA'
+                    brand: 'VISA'
                 },
                 {
                     id: 12,
-                    name: 'US BANK ALTITUDE',
-                    number: '4462 •••• •••• 1470',
-                    limit: 720,
-                    valid: '01/2031',
-                    price: 82.99,
-                    category: 'visa',
+                    name: 'Capital One Savor',
+                    number: '5249 •••• •••• 7890',
+                    limit: 760,
+                    valid: '05/2031',
+                    price: 109.99,
+                    category: 'mastercard',
                     inStock: true,
-                    brand: 'US BANK'
+                    brand: 'MASTERCARD'
                 },
                 {
                     id: 13,
-                    name: 'BARCLAYCARD ARRIVAL',
-                    number: '5354 •••• •••• 9632',
-                    limit: 680,
-                    valid: '12/2031',
-                    price: 77.99,
-                    category: 'mastercard',
+                    name: 'American Express Blue Cash',
+                    number: '3715 •••• •••• 2345',
+                    limit: 940,
+                    valid: '12/2030',
+                    price: 169.99,
+                    category: 'amex',
                     inStock: true,
-                    brand: 'BARCLAYCARD'
+                    brand: 'AMERICAN EXPRESS'
                 },
                 {
                     id: 14,
-                    name: 'DISCOVER ESCAPE',
-                    number: '6011 •••• •••• 8521',
-                    limit: 820,
-                    valid: '10/2031',
-                    price: 88.99,
+                    name: 'Discover it Miles',
+                    number: '6011 •••• •••• 6789',
+                    limit: 730,
+                    valid: '03/2031',
+                    price: 99.99,
                     category: 'discover',
                     inStock: true,
                     brand: 'DISCOVER'
                 },
                 {
                     id: 15,
-                    name: 'VISA INFINITE',
-                    number: '4991 •••• •••• 7410',
-                    limit: 980,
-                    valid: '11/2031',
+                    name: 'Citi Premier',
+                    number: '5537 •••• •••• 0123',
+                    limit: 880,
+                    valid: '08/2030',
                     price: 129.99,
+                    category: 'mastercard',
+                    inStock: true,
+                    brand: 'MASTERCARD'
+                },
+                {
+                    id: 16,
+                    name: 'Wells Fargo Cash Wise',
+                    number: '4532 •••• •••• 4567',
+                    limit: 680,
+                    valid: '01/2031',
+                    price: 79.99,
                     category: 'visa',
                     inStock: true,
                     brand: 'VISA'
                 },
                 {
-                    id: 16,
-                    name: 'MASTERCARD TITANIUM',
-                    number: '5583 •••• •••• 6543',
-                    limit: 760,
-                    valid: '09/2031',
-                    price: 86.99,
+                    id: 17,
+                    name: 'Bank of America Travel',
+                    number: '5404 •••• •••• 8901',
+                    limit: 920,
+                    valid: '11/2030',
+                    price: 139.99,
                     category: 'mastercard',
                     inStock: true,
                     brand: 'MASTERCARD'
-                },
-                {
-                    id: 17,
-                    name: 'AMEX GOLD',
-                    number: '3782 •••• •••• 9876',
-                    limit: 940,
-                    valid: '08/2031',
-                    price: 115.99,
-                    category: 'amex',
-                    inStock: true,
-                    brand: 'AMERICAN EXPRESS'
                 },
                 {
                     id: 18,
-                    name: 'MASTERCARD WORLD',
-                    number: '5354 •••• •••• 7165',
-                    limit: 730,
-                    valid: '02/2031',
-                    price: 84.99,
-                    category: 'mastercard',
+                    name: 'US Bank Cash Plus',
+                    number: '4427 •••• •••• 2345',
+                    limit: 780,
+                    valid: '06/2031',
+                    price: 89.99,
+                    category: 'visa',
                     inStock: true,
-                    brand: 'MASTERCARD'
+                    brand: 'VISA'
                 },
                 {
                     id: 19,
-                    name: 'AMEX PLATINUM',
+                    name: 'American Express Platinum',
                     number: '3743 •••• •••• 4837',
                     limit: 960,
                     valid: '05/2031',
-                    price: 125.99,
+                    price: 249.99,
                     category: 'amex',
                     inStock: true,
                     brand: 'AMERICAN EXPRESS'
                 },
                 {
                     id: 20,
-                    name: 'DISCOVER MILES',
+                    name: 'Discover it Student',
                     number: '6011 •••• •••• 6294',
                     limit: 690,
                     valid: '08/2031',
-                    price: 78.99,
+                    price: 49.99,
                     category: 'discover',
                     inStock: true,
                     brand: 'DISCOVER'
                 },
                 {
                     id: 21,
-                    name: 'VISA CLASSIC',
+                    name: 'Capital One Platinum',
                     number: '4532 •••• •••• 9999',
                     limit: 500,
                     valid: '07/2031',
-                    price: 59.99,
+                    price: 39.99,
                     category: 'visa',
                     inStock: true,
                     brand: 'VISA'
                 },
                 {
                     id: 22,
-                    name: 'MASTERCARD DEBIT',
+                    name: 'Discover it Secured',
                     number: '5421 •••• •••• 0000',
                     limit: 450,
                     valid: '04/2031',
-                    price: 54.99,
+                    price: 29.99,
+                    category: 'discover',
+                    inStock: true,
+                    brand: 'DISCOVER'
+                },
+                {
+                    id: 23,
+                    name: 'Citi Secured',
+                    number: '6011 •••• •••• 1111',
+                    limit: 550,
+                    valid: '06/2031',
+                    price: 34.99,
                     category: 'mastercard',
                     inStock: true,
                     brand: 'MASTERCARD'
                 },
                 {
-                    id: 23,
-                    name: 'DISCOVER IT SECURED',
-                    number: '6011 •••• •••• 1111',
-                    limit: 550,
-                    valid: '06/2031',
-                    price: 64.99,
-                    category: 'discover',
+                    id: 24,
+                    name: 'OpenSky Secured Visa',
+                    number: '4828 •••• •••• 2222',
+                    limit: 300,
+                    valid: '09/2031',
+                    price: 24.99,
+                    category: 'visa',
                     inStock: true,
-                    brand: 'DISCOVER'
+                    brand: 'VISA'
+                },
+                {
+                    id: 25,
+                    name: 'Milestone Mastercard',
+                    number: '5304 •••• •••• 3333',
+                    limit: 350,
+                    valid: '02/2032',
+                    price: 27.99,
+                    category: 'mastercard',
+                    inStock: true,
+                    brand: 'MASTERCARD'
+                },
+                {
+                    id: 26,
+                    name: 'Indigo Platinum Mastercard',
+                    number: '5525 •••• •••• 4444',
+                    limit: 400,
+                    valid: '11/2031',
+                    price: 32.99,
+                    category: 'mastercard',
+                    inStock: true,
+                    brand: 'MASTERCARD'
+                },
+                {
+                    id: 27,
+                    name: 'Reflex Mastercard',
+                    number: '5462 •••• •••• 5555',
+                    limit: 250,
+                    valid: '05/2032',
+                    price: 22.99,
+                    category: 'mastercard',
+                    inStock: true,
+                    brand: 'MASTERCARD'
+                },
+                {
+                    id: 28,
+                    name: 'Fit Mastercard',
+                    number: '5388 •••• •••• 6666',
+                    limit: 400,
+                    valid: '08/2031',
+                    price: 31.99,
+                    category: 'mastercard',
+                    inStock: true,
+                    brand: 'MASTERCARD'
                 }
-            ]
+            ],
+            currentUsdToInrRate: 83.50
         };
 
         // Initialize App
@@ -2246,8 +2292,15 @@
             renderCards(sorted);
         }
 
-        // Add to Cart with Animation
+        // Add to Cart with Sign In Requirement
         function addToCart(cardId) {
+            // Check if user is signed in
+            if (!app.currentUser) {
+                showToast('Please sign in first to add items to cart', 'warning');
+                openAuthModal();
+                return;
+            }
+            
             const card = app.cards.find(c => c.id === cardId);
             if (!card || !card.inStock) {
                 showToast('Card not available', 'error');
@@ -2359,6 +2412,23 @@
                 completeOrder();
                 closePaymentModal();
             }, 1500);
+        }
+
+        // Cancel Payment with Confirmation
+        function cancelPayment() {
+            document.getElementById('confirmDialog').classList.add('active');
+        }
+
+        // Close Confirmation Dialog
+        function closeConfirmDialog() {
+            document.getElementById('confirmDialog').classList.remove('active');
+        }
+
+        // Confirm Cancel Payment
+        function confirmCancelPayment() {
+            closeConfirmDialog();
+            closePaymentModal();
+            showToast('Payment cancelled', 'info');
         }
 
         // Update Cart UI
@@ -2539,6 +2609,8 @@
                 
                 // Show payment modal
                 document.getElementById('paymentModal').classList.add('active');
+            } else {
+                completeOrder();
             }
         }
 
@@ -2946,12 +3018,16 @@
         window.addEventListener('click', function(event) {
             const authModal = document.getElementById('authModal');
             const paymentModal = document.getElementById('paymentModal');
+            const confirmDialog = document.getElementById('confirmDialog');
             
             if (event.target === authModal) {
                 closeAuthModal();
             }
             if (event.target === paymentModal) {
-                closePaymentModal();
+                cancelPayment();
+            }
+            if (event.target === confirmDialog) {
+                closeConfirmDialog();
             }
         });
     </script>
