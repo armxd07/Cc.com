@@ -3,63 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CardVault - Premium Cards Marketplace</title>
+    <title>CardVault - Premium Card Marketplace</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --primary: #4f46e5;
-            --primary-dark: #4338ca;
-            --secondary: #f59e0b;
-            --success: #10b981;
-            --error: #ef4444;
-            --warning: #f59e0b;
-            --info: #3b82f6;
-            --dark: #1f2937;
-            --light: #f9fafb;
-            --border: #e5e7eb;
-            --text: #374151;
-            --text-light: #6b7280;
-            --shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-            --shadow-lg: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            color: var(--text);
+        :root {
+            --primary: #0066ff;
+            --primary-dark: #0052cc;
+            --primary-light: #1a75ff;
+            --secondary: #003d99;
+            --accent: #3399ff;
+            --background: #000000;
+            --surface: #0a0a0a;
+            --surface-light: #1a1a1a;
+            --text: #ffffff;
+            --text-secondary: #b3b3b3;
+            --border: #2a2a2a;
+            --success: #00ff88;
+            --warning: #ffaa00;
+            --error: #ff3366;
+            --info: #3399ff;
+            --gradient: linear-gradient(135deg, #0066ff 0%, #003d99 100%);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5);
         }
 
-        /* Header */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
         header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: var(--shadow);
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 10, 0.95);
         }
 
         nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: bold;
-            color: var(--primary);
-            text-decoration: none;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -68,19 +75,30 @@
         .nav-links {
             display: flex;
             gap: 2rem;
-            align-items: center;
+            list-style: none;
         }
 
         .nav-link {
-            color: var(--text);
+            color: var(--text-secondary);
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
-            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
         }
 
         .nav-link:hover, .nav-link.active {
             color: var(--primary);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary);
         }
 
         .auth-buttons {
@@ -90,23 +108,26 @@
         }
 
         .icon-btn {
-            background: none;
-            border: none;
-            font-size: 1.2rem;
+            background: var(--surface-light);
+            border: 1px solid var(--border);
             color: var(--text);
+            padding: 0.7rem;
+            border-radius: 50%;
             cursor: pointer;
+            transition: all 0.3s ease;
             position: relative;
-            transition: color 0.3s;
         }
 
         .icon-btn:hover {
-            color: var(--primary);
+            background: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
         }
 
         #cartCount {
             position: absolute;
-            top: -8px;
-            right: -8px;
+            top: -5px;
+            right: -5px;
             background: var(--error);
             color: white;
             font-size: 0.75rem;
@@ -116,106 +137,192 @@
             text-align: center;
         }
 
-        /* Main Container */
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 2rem;
-        }
-
-        /* Pages */
-        .page {
-            display: none;
-            animation: fadeIn 0.3s;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Home Page */
+        /* Hero Section */
         .hero {
-            background: white;
-            border-radius: 16px;
-            padding: 3rem;
+            background: var(--gradient);
+            padding: 4rem 2rem;
             text-align: center;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23000000" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,138.7C960,139,1056,117,1152,106.7C1248,96,1344,96,1392,96L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+            background-size: cover;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .hero h1 {
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 0.8s ease;
         }
 
         .hero p {
             font-size: 1.2rem;
-            color: var(--text-light);
             margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 0.8s ease 0.2s both;
         }
 
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        /* Button Styles */
+        .btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 102, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--surface-light);
+            color: var(--text);
+            border: 2px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Stats Section */
         .stats {
+            padding: 3rem 2rem;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .stat {
             text-align: center;
         }
 
+        .stat {
+            padding: 1rem;
+        }
+
         .stat-number {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: bold;
             color: var(--primary);
+            margin-bottom: 0.5rem;
         }
 
         .stat-label {
-            color: var(--text-light);
-            margin-top: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         /* Browse Section */
         .browse-section {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            margin-top: 2rem;
-            box-shadow: var(--shadow-lg);
+            padding: 4rem 2rem;
+            background: var(--background);
         }
 
-        .browse-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
         }
 
         .browse-grid {
+            max-width: 1200px;
+            margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
         }
 
         .browse-card {
+            background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 12px;
+            border-radius: 15px;
             padding: 1.5rem;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .browse-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient);
         }
 
         .browse-card:hover {
             transform: translateY(-5px);
             box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
         }
 
         .browse-card-header {
@@ -226,36 +333,40 @@
         }
 
         .browse-card-info h3 {
-            color: var(--primary);
-            margin-bottom: 0.25rem;
+            font-size: 1.3rem;
+            margin-bottom: 0.3rem;
+            color: var(--text);
         }
 
         .browse-card-info p {
-            color: var(--text-light);
+            color: var(--text-secondary);
             font-size: 0.9rem;
         }
 
         .browse-card-price {
             font-size: 1.5rem;
             font-weight: bold;
-            color: var(--secondary);
+            color: var(--primary);
         }
 
         .browse-card-details {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 1rem;
-            margin-bottom: 1.5rem;
+            margin: 1.5rem 0;
         }
 
         .browse-detail {
             text-align: center;
+            padding: 0.5rem;
+            background: var(--surface-light);
+            border-radius: 8px;
         }
 
         .browse-detail-label {
             font-size: 0.8rem;
-            color: var(--text-light);
-            margin-bottom: 0.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.3rem;
         }
 
         .browse-detail-value {
@@ -265,83 +376,100 @@
 
         .browse-card-actions {
             display: flex;
-            gap: 0.5rem;
-        }
-
-        /* Cards Page */
-        .filters {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow);
-        }
-
-        .filter-row {
-            display: flex;
             gap: 1rem;
+        }
+
+        .browse-card-actions .btn {
+            flex: 1;
+            justify-content: center;
+        }
+
+        /* Cards Section */
+        .cards-section {
+            padding: 4rem 2rem;
+            background: var(--surface);
+        }
+
+        .filters-bar {
+            max-width: 1200px;
+            margin: 0 auto 2rem;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .search-box {
+            display: flex;
+            align-items: center;
+            background: var(--surface-light);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
             flex: 1;
-            min-width: 200px;
-            position: relative;
+            max-width: 400px;
         }
 
         .search-box input {
+            background: none;
+            border: none;
+            color: var(--text);
+            outline: none;
             width: 100%;
-            padding: 0.75rem 1rem 0.75rem 2.5rem;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 1rem;
+            padding: 0.5rem;
         }
 
-        .search-box i {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-light);
+        .search-box input::placeholder {
+            color: var(--text-secondary);
         }
 
         .sort-dropdown {
-            padding: 0.75rem 1rem;
+            background: var(--surface-light);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 1rem;
+            color: var(--text);
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
             cursor: pointer;
+            outline: none;
         }
 
         .cards-grid {
+            max-width: 1200px;
+            margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
         }
 
         .card {
-            background: white;
-            border-radius: 12px;
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
         .card:hover {
             transform: translateY(-5px);
             box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
         }
 
         .card-image {
             height: 200px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: var(--gradient);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
-            color: white;
             position: relative;
+            overflow: hidden;
+        }
+
+        .card-image i {
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.2);
         }
 
         .card-badges {
@@ -354,14 +482,15 @@
         }
 
         .card-badge {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            color: white;
+            gap: 0.3rem;
+            backdrop-filter: blur(10px);
         }
 
         .card-badge.verified {
@@ -369,7 +498,7 @@
         }
 
         .card-badge.instant {
-            background: var(--secondary);
+            background: var(--info);
         }
 
         .card-badge.error {
@@ -388,48 +517,46 @@
         }
 
         .card-name {
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 0.25rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
         }
 
         .card-holder {
-            color: var(--text-light);
+            color: var(--text-secondary);
             font-size: 0.9rem;
             margin-bottom: 0.5rem;
         }
 
         .card-network {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: var(--light);
+            background: var(--surface-light);
+            color: var(--primary);
+            padding: 0.2rem 0.8rem;
             border-radius: 20px;
             font-size: 0.8rem;
-            color: var(--text);
             font-weight: 600;
         }
 
         .card-price {
             font-size: 1.5rem;
             font-weight: bold;
-            color: var(--secondary);
+            color: var(--primary);
         }
 
         .card-rating {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            margin-bottom: 1rem;
+            margin: 1rem 0;
         }
 
         .stars {
             display: flex;
-            gap: 0.25rem;
+            gap: 0.2rem;
         }
 
         .star {
-            color: var(--secondary);
+            color: var(--warning);
             font-size: 0.9rem;
         }
 
@@ -438,130 +565,100 @@
         }
 
         .rating-text {
-            color: var(--text-light);
+            color: var(--text-secondary);
             font-size: 0.9rem;
         }
 
         .card-details {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+            gap: 0.5rem;
+            margin: 1rem 0;
         }
 
         .card-detail {
             text-align: center;
+            padding: 0.5rem;
+            background: var(--surface);
+            border-radius: 8px;
         }
 
         .card-detail-label {
-            font-size: 0.8rem;
-            color: var(--text-light);
-            margin-bottom: 0.25rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.2rem;
         }
 
         .card-detail-value {
             font-weight: 600;
-            color: var(--text);
+            font-size: 0.9rem;
         }
 
         .card-actions {
             display: flex;
             gap: 0.5rem;
+            margin-top: 1rem;
         }
 
-        /* Buttons */
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
+        .card-actions .btn {
+            flex: 1;
+            padding: 0.6rem;
+            font-size: 0.9rem;
+            justify-content: center;
         }
 
-        .btn-primary {
-            background: var(--primary);
-            color: white;
+        /* Cart Section */
+        .cart-section {
+            padding: 4rem 2rem;
+            background: var(--background);
+            min-height: 60vh;
         }
 
-        .btn-primary:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            background: var(--secondary);
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background: #d97706;
-        }
-
-        .btn-outline {
-            background: white;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-        }
-
-        .btn-outline:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        .btn-danger {
-            background: var(--error);
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background: #dc2626;
-        }
-
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* Cart Page */
         .cart-container {
+            max-width: 1200px;
+            margin: 0 auto;
             display: grid;
             grid-template-columns: 1fr 350px;
             gap: 2rem;
         }
 
         .cart-items {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
+            background: var(--surface);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid var(--border);
         }
 
         .cart-item {
             display: flex;
             gap: 1.5rem;
             padding: 1.5rem;
-            border-bottom: 1px solid var(--border);
+            background: var(--background);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
         }
 
-        .cart-item:last-child {
-            border-bottom: none;
+        .cart-item:hover {
+            border-color: var(--primary);
+            transform: translateX(5px);
         }
 
         .cart-item-image {
             width: 100px;
             height: 100px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 8px;
+            background: var(--gradient);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
-            color: white;
+            flex-shrink: 0;
+        }
+
+        .cart-item-image i {
+            font-size: 2.5rem;
+            color: rgba(255, 255, 255, 0.3);
         }
 
         .cart-item-details {
@@ -569,21 +666,20 @@
         }
 
         .cart-item-name {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
         }
 
         .cart-item-info {
-            color: var(--text-light);
-            font-size: 0.9rem;
+            color: var(--text-secondary);
             margin-bottom: 0.5rem;
         }
 
         .cart-item-price {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: bold;
-            color: var(--secondary);
+            color: var(--primary);
             margin-bottom: 1rem;
         }
 
@@ -594,64 +690,116 @@
         }
 
         .quantity-btn {
-            width: 32px;
-            height: 32px;
+            background: var(--surface-light);
             border: 1px solid var(--border);
-            background: white;
-            border-radius: 6px;
+            color: var(--text);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
             cursor: pointer;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s;
         }
 
         .quantity-btn:hover {
             background: var(--primary);
-            color: white;
             border-color: var(--primary);
         }
 
         .quantity-value {
             font-weight: 600;
-            min-width: 20px;
+            font-size: 1.1rem;
+            min-width: 30px;
             text-align: center;
         }
 
         .cart-summary {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
+            background: var(--surface);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid var(--border);
             height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .summary-title {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
         }
 
         .summary-row {
             display: flex;
             justify-content: space-between;
             margin-bottom: 1rem;
+            color: var(--text-secondary);
         }
 
         .summary-row.total {
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: var(--primary);
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text);
             padding-top: 1rem;
-            border-top: 2px solid var(--border);
+            border-top: 1px solid var(--border);
         }
 
-        /* Checkout Page */
+        .summary-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        /* Checkout Section */
+        .checkout-section {
+            padding: 4rem 2rem;
+            background: var(--background);
+        }
+
         .checkout-container {
+            max-width: 1200px;
+            margin: 0 auto;
             display: grid;
             grid-template-columns: 1fr 350px;
             gap: 2rem;
         }
 
         .checkout-form {
-            background: white;
-            border-radius: 12px;
+            background: var(--surface);
+            border-radius: 15px;
             padding: 2rem;
-            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+        }
+
+        .form-section h3 {
+            margin-bottom: 1.5rem;
+            color: var(--text);
         }
 
         .form-group {
@@ -661,64 +809,81 @@
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--text);
+            color: var(--text-secondary);
+            font-weight: 500;
         }
 
         .form-group input,
         .form-group select {
             width: 100%;
-            padding: 0.75rem;
+            padding: 0.8rem;
+            background: var(--background);
             border: 1px solid var(--border);
             border-radius: 8px;
+            color: var(--text);
             font-size: 1rem;
+            transition: all 0.3s ease;
         }
 
         .form-group input:focus,
         .form-group select:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
         }
 
         .payment-methods {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 1rem;
             margin-bottom: 1.5rem;
         }
 
         .payment-method {
-            padding: 1rem;
+            background: var(--background);
             border: 2px solid var(--border);
-            border-radius: 8px;
+            border-radius: 10px;
+            padding: 1rem;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
         }
 
         .payment-method:hover {
             border-color: var(--primary);
+            transform: translateY(-2px);
         }
 
         .payment-method.selected {
             border-color: var(--primary);
-            background: rgba(79, 70, 229, 0.1);
+            background: rgba(0, 102, 255, 0.1);
         }
 
         .payment-method i {
-            font-size: 1.5rem;
+            font-size: 2rem;
             margin-bottom: 0.5rem;
             color: var(--primary);
         }
 
+        .payment-method span {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
         .qr-section {
             display: none;
+            background: var(--background);
+            border-radius: 10px;
+            padding: 1.5rem;
             text-align: center;
-            padding: 2rem;
-            background: var(--light);
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
+            margin-top: 1rem;
         }
 
         .qr-section.active {
@@ -728,34 +893,71 @@
         .qr-code {
             width: 200px;
             height: 200px;
-            margin: 1rem auto;
             background: white;
-            border: 1px solid var(--border);
+            margin: 1rem auto;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 0.9rem;
+            color: #333;
         }
 
         .upi-id {
+            background: var(--surface);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
             font-family: monospace;
             font-size: 1.1rem;
             color: var(--primary);
-            margin: 1rem 0;
-            padding: 0.5rem;
-            background: white;
-            border-radius: 4px;
+            border: 1px solid var(--border);
         }
 
-        /* Orders Page */
+        .copy-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .copy-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .copy-btn.copied {
+            background: var(--success);
+        }
+
+        /* Orders Section */
+        .orders-section {
+            padding: 4rem 2rem;
+            background: var(--background);
+        }
+
         .orders-grid {
+            max-width: 1200px;
+            margin: 0 auto;
             display: grid;
-            gap: 1.5rem;
+            gap: 2rem;
         }
 
         .order-card {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .order-card:hover {
+            border-color: var(--primary);
             box-shadow: var(--shadow);
         }
 
@@ -763,12 +965,15 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
         }
 
         .order-id {
+            font-size: 1.2rem;
             font-weight: 600;
-            color: var(--primary);
+            color: var(--text);
         }
 
         .order-status {
@@ -782,13 +987,8 @@
         }
 
         .order-status.delivered {
-            background: rgba(16, 185, 129, 0.1);
+            background: rgba(0, 255, 136, 0.1);
             color: var(--success);
-        }
-
-        .order-status.processing {
-            background: rgba(245, 158, 11, 0.1);
-            color: var(--warning);
         }
 
         .order-details {
@@ -799,12 +999,15 @@
 
         .order-detail {
             text-align: center;
+            padding: 1rem;
+            background: var(--background);
+            border-radius: 8px;
         }
 
         .order-detail-label {
-            font-size: 0.8rem;
-            color: var(--text-light);
-            margin-bottom: 0.25rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
         }
 
         .order-detail-value {
@@ -812,7 +1015,7 @@
             color: var(--text);
         }
 
-        /* Auth Modal */
+        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -820,10 +1023,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
             align-items: center;
             justify-content: center;
+            backdrop-filter: blur(5px);
         }
 
         .modal.active {
@@ -831,19 +1035,26 @@
         }
 
         .modal-content {
-            background: white;
-            border-radius: 16px;
+            background: var(--surface);
+            border-radius: 20px;
             padding: 2rem;
-            max-width: 400px;
+            max-width: 500px;
             width: 90%;
             max-height: 90vh;
             overflow-y: auto;
-            animation: slideUp 0.3s;
+            border: 1px solid var(--border);
+            animation: modalSlideIn 0.3s ease;
         }
 
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         .modal-header {
@@ -855,212 +1066,32 @@
 
         .modal-title {
             font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary);
+            color: var(--text);
         }
 
-        .close-btn {
+        .modal-close {
             background: none;
             border: none;
-            font-size: 1.5rem;
-            color: var(--text-light);
-            cursor: pointer;
-        }
-
-        .auth-tabs {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .auth-tab {
-            flex: 1;
-            padding: 0.75rem;
-            border: none;
-            background: var(--light);
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .auth-tab.active {
-            background: var(--primary);
-            color: white;
-        }
-
-        .auth-form {
-            display: none;
-        }
-
-        .auth-form.active {
-            display: block;
-        }
-
-        /* Chat Widget */
-        .chat-widget {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            z-index: 99;
-        }
-
-        .chat-button {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: var(--primary);
-            color: white;
-            border: none;
+            color: var(--text-secondary);
             font-size: 1.5rem;
             cursor: pointer;
-            box-shadow: var(--shadow-lg);
-            transition: all 0.3s;
+            transition: color 0.3s ease;
         }
 
-        .chat-button:hover {
-            transform: scale(1.1);
+        .modal-close:hover {
+            color: var(--error);
         }
 
-        .chat-window {
-            position: absolute;
-            bottom: 80px;
-            right: 0;
-            width: 350px;
-            height: 500px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: var(--shadow-lg);
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
+        .modal-body {
+            color: var(--text);
         }
 
-        .chat-window.active {
-            display: flex;
-        }
-
-        .chat-header {
-            background: var(--primary);
-            color: white;
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .chat-messages {
-            flex: 1;
-            padding: 1rem;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .chat-message {
-            display: flex;
-            gap: 0.5rem;
-            max-width: 80%;
-        }
-
-        .chat-message.user {
-            align-self: flex-end;
-            flex-direction: row-reverse;
-        }
-
-        .message-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: var(--light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            font-weight: bold;
-            color: var(--primary);
-        }
-
-        .message-bubble {
-            padding: 0.75rem;
-            background: var(--light);
-            border-radius: 12px;
-            font-size: 0.9rem;
-        }
-
-        .chat-message.user .message-bubble {
-            background: var(--primary);
-            color: white;
-        }
-
-        .chat-input {
-            padding: 1rem;
-            border-top: 1px solid var(--border);
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .chat-input input {
-            flex: 1;
-            padding: 0.5rem;
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            outline: none;
-        }
-
-        .chat-input button {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            border: none;
-            background: var(--primary);
-            color: white;
-            cursor: pointer;
-        }
-
-        /* Payment Modal */
-        .payment-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .payment-modal.active {
-            display: flex;
-        }
-
-        .payment-content {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            max-width: 500px;
-            width: 90%;
+        .payment-info {
+            background: var(--background);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
             text-align: center;
-            animation: slideUp 0.3s;
-        }
-
-        .payment-icon {
-            width: 80px;
-            height: 80px;
-            background: var(--success);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-        }
-
-        .payment-icon i {
-            font-size: 2rem;
-            color: white;
         }
 
         .payment-amount {
@@ -1071,39 +1102,247 @@
         }
 
         .payment-amount-usd {
-            color: var(--text-light);
-            margin-bottom: 2rem;
-        }
-
-        .payment-qr {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto 1.5rem;
-            background: var(--light);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .payment-upi {
-            font-family: monospace;
-            font-size: 1.1rem;
-            color: var(--primary);
+            color: var(--text-secondary);
+            font-size: 1rem;
             margin-bottom: 1rem;
-            padding: 0.5rem;
-            background: var(--light);
-            border-radius: 4px;
         }
 
-        .payment-actions {
+        .payment-instructions {
+            background: rgba(0, 102, 255, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .payment-instructions h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .payment-instructions ol {
+            margin-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .payment-instructions li {
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-actions {
             display: flex;
             gap: 1rem;
-            justify-content: center;
             margin-top: 2rem;
         }
 
-        /* Toast */
+        .modal-actions .btn {
+            flex: 1;
+            justify-content: center;
+        }
+
+        /* Chat Widget */
+        .chat-widget {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1500;
+        }
+
+        .chat-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .chat-button:hover {
+            transform: scale(1.1);
+            background: var(--primary-dark);
+        }
+
+        .chat-window {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 350px;
+            height: 450px;
+            background: var(--surface);
+            border-radius: 15px;
+            box-shadow: var(--shadow-lg);
+            display: none;
+            flex-direction: column;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .chat-window.active {
+            display: flex;
+            animation: chatSlideIn 0.3s ease;
+        }
+
+        @keyframes chatSlideIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .chat-header {
+            background: var(--gradient);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header h3 {
+            font-size: 1.1rem;
+        }
+
+        .chat-close {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            background: var(--background);
+        }
+
+        .chat-message {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .chat-message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .message-bubble {
+            background: var(--surface-light);
+            padding: 0.8rem 1rem;
+            border-radius: 15px;
+            max-width: 70%;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .chat-message.user .message-bubble {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .chat-input {
+            padding: 1rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 0.5rem;
+            background: var(--surface);
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 0.8rem;
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            color: var(--text);
+            outline: none;
+        }
+
+        .chat-input button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input button:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Auth Modal */
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .auth-tab.active {
+            color: var(--primary);
+        }
+
+        .auth-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        /* Toast Notifications */
         .toast-container {
             position: fixed;
             top: 2rem;
@@ -1112,17 +1351,18 @@
         }
 
         .toast {
-            background: white;
-            border-radius: 8px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
             padding: 1rem 1.5rem;
-            box-shadow: var(--shadow-lg);
             margin-bottom: 1rem;
             display: flex;
             align-items: center;
             gap: 1rem;
             min-width: 300px;
+            box-shadow: var(--shadow-lg);
             transform: translateX(400px);
-            transition: transform 0.3s;
+            transition: all 0.3s ease;
         }
 
         .toast.show {
@@ -1155,43 +1395,40 @@
 
         .toast-title {
             font-weight: 600;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.2rem;
+            color: var(--text);
         }
 
         .toast-message {
-            color: var(--text-light);
             font-size: 0.9rem;
+            color: var(--text-secondary);
         }
 
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 3rem;
-            background: white;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .empty-state i {
-            font-size: 3rem;
-            color: var(--text-light);
-            margin-bottom: 1rem;
-        }
-
-        .empty-state h3 {
-            color: var(--text);
-            margin-bottom: 0.5rem;
-        }
-
-        .empty-state p {
-            color: var(--text-light);
-            margin-bottom: 1.5rem;
-        }
-
-        /* Responsive */
+        /* Responsive Design */
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
             }
 
             .cart-container,
@@ -1199,91 +1436,66 @@
                 grid-template-columns: 1fr;
             }
 
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .browse-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .stats {
-                grid-template-columns: 1fr;
+            .cart-summary {
+                position: static;
             }
 
             .payment-methods {
                 grid-template-columns: 1fr;
             }
 
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .browse-grid,
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
             .chat-window {
                 width: 300px;
-                height: 400px;
+                right: -50px;
             }
         }
 
-        /* Copy Button */
-        .copy-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.3s;
-        }
-
-        .copy-btn:hover {
-            background: var(--primary-dark);
-        }
-
-        .copy-btn.copied {
-            background: var(--success);
-        }
-
-        /* Confirmation Dialog */
-        .confirm-dialog {
+        /* Page Styles */
+        .page {
             display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 2500;
-            align-items: center;
-            justify-content: center;
         }
 
-        .confirm-dialog.active {
-            display: flex;
+        .page.active {
+            display: block;
         }
 
-        .confirm-content {
-            background: white;
-            border-radius: 12px;
+        /* Confirm Dialog */
+        .confirm-dialog {
+            background: var(--surface);
+            border-radius: 15px;
             padding: 2rem;
             max-width: 400px;
             width: 90%;
             text-align: center;
+            border: 1px solid var(--border);
         }
 
-        .confirm-title {
-            font-size: 1.25rem;
-            font-weight: bold;
+        .confirm-dialog h3 {
             margin-bottom: 1rem;
             color: var(--text);
         }
 
-        .confirm-message {
-            color: var(--text-light);
-            margin-bottom: 1.5rem;
+        .confirm-dialog p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
         }
 
         .confirm-actions {
             display: flex;
             gap: 1rem;
-            justify-content: center;
+        }
+
+        .confirm-actions .btn {
+            flex: 1;
         }
     </style>
 </head>
@@ -1291,15 +1503,15 @@
     <!-- Header -->
     <header>
         <nav>
-            <a href="#" class="logo">
+            <div class="logo">
                 <i class="fas fa-credit-card"></i>
                 CardVault
-            </a>
-            <div class="nav-links">
-                <a class="nav-link active" onclick="showPage('home')">Home</a>
-                <a class="nav-link" onclick="showPage('cards')">Browse Cards</a>
-                <a class="nav-link" onclick="showPage('orders')">Orders</a>
             </div>
+            <ul class="nav-links">
+                <li><a href="#" class="nav-link active" onclick="showPage('home')">Home</a></li>
+                <li><a href="#" class="nav-link" onclick="showPage('cards')">Browse Cards</a></li>
+                <li><a href="#" class="nav-link" onclick="showPage('orders')">Orders</a></li>
+            </ul>
             <div class="auth-buttons">
                 <button class="icon-btn" onclick="showPage('cart')">
                     <i class="fas fa-shopping-cart"></i>
@@ -1312,82 +1524,96 @@
         </nav>
     </header>
 
-    <!-- Main Container -->
-    <div class="container">
-        <!-- Home Page -->
-        <div id="homePage" class="page active">
-            <div class="hero">
-                <h1>Welcome to CardVault</h1>
-                <p>Your premium marketplace for verified cards with instant delivery</p>
-                <button class="btn btn-primary" onclick="scrollToBrowse()">
-                    <i class="fas fa-arrow-down"></i> Browse Cards
-                </button>
-                
-                <div class="stats">
-                    <div class="stat">
-                        <div class="stat-number" data-target="12847">0</div>
-                        <div class="stat-label">Happy Customers</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number" data-target="99">0</div>
-                        <div class="stat-label">Success Rate %</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number" data-target="24">0</div>
-                        <div class="stat-label">Hour Support</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number" data-target="50">0</div>
-                        <div class="stat-label">Premium Cards</div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="browseSection" class="browse-section">
-                <div class="browse-header">
-                    <h2>Featured Cards</h2>
-                    <button class="btn btn-primary" onclick="showPage('cards')">
-                        View All <i class="fas fa-arrow-right"></i>
+    <!-- Home Page -->
+    <div id="homePage" class="page active">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Premium Cards, Instant Delivery</h1>
+                <p>Verified cards with limits up to $1950. 99% success rate, instant replacement guarantee.</p>
+                <div class="cta-buttons">
+                    <button class="btn btn-primary" onclick="scrollToBrowse()">
+                        <i class="fas fa-shopping-bag"></i> Browse Cards
+                    </button>
+                    <button class="btn btn-secondary" onclick="showPage('orders')">
+                        <i class="fas fa-box"></i> My Orders
                     </button>
                 </div>
-                <div id="browseGrid" class="browse-grid">
-                    <!-- Cards will be loaded here -->
-                </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Cards Page -->
-        <div id="cardsPage" class="page">
-            <div class="filters">
-                <div class="filter-row">
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text" id="searchInput" placeholder="Search cards...">
-                    </div>
-                    <select class="sort-dropdown" onchange="sortCards(this.value)">
-                        <option value="name">Sort by Name</option>
-                        <option value="price-low">Price: Low to High</option>
-                        <option value="price-high">Price: High to Low</option>
-                        <option value="limit-high">Limit: High to Low</option>
-                    </select>
+        <!-- Stats Section -->
+        <section class="stats">
+            <div class="stats-container">
+                <div class="stat">
+                    <div class="stat-number" data-target="12847">0</div>
+                    <div class="stat-label">Happy Customers</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" data-target="99">0</div>
+                    <div class="stat-label">Success Rate %</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" data-target="24">0</div>
+                    <div class="stat-label">Hour Support</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" data-target="1950">0</div>
+                    <div class="stat-label">Max Limit $</div>
                 </div>
             </div>
-            <div id="cardsGrid" class="cards-grid">
+        </section>
+
+        <!-- Browse Section -->
+        <section class="browse-section" id="browseSection">
+            <div class="section-header">
+                <h2 class="section-title">Featured Cards</h2>
+                <p class="section-subtitle">Hand-picked premium cards with instant delivery</p>
+            </div>
+            <div class="browse-grid" id="browseGrid">
                 <!-- Cards will be loaded here -->
             </div>
-        </div>
+        </section>
+    </div>
 
-        <!-- Cart Page -->
-        <div id="cartPage" class="page">
+    <!-- Cards Page -->
+    <div id="cardsPage" class="page">
+        <section class="cards-section">
+            <div class="section-header">
+                <h2 class="section-title">All Cards</h2>
+                <p class="section-subtitle">Complete collection of premium cards</p>
+            </div>
+            <div class="filters-bar">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search cards by name, holder, or network...">
+                </div>
+                <select class="sort-dropdown" onchange="sortCards(this.value)">
+                    <option value="name">Sort by Name</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="limit-high">Limit: High to Low</option>
+                </select>
+            </div>
+            <div class="cards-grid" id="cardsGrid">
+                <!-- Cards will be loaded here -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Cart Page -->
+    <div id="cartPage" class="page">
+        <section class="cart-section">
+            <div class="section-header">
+                <h2 class="section-title">Shopping Cart</h2>
+                <p class="section-subtitle">Review your selected cards</p>
+            </div>
             <div class="cart-container">
-                <div class="cart-items">
-                    <h2>Shopping Cart</h2>
-                    <div id="cartItems">
-                        <!-- Cart items will be loaded here -->
-                    </div>
+                <div class="cart-items" id="cartItems">
+                    <!-- Cart items will be loaded here -->
                 </div>
                 <div class="cart-summary">
-                    <h3>Order Summary</h3>
+                    <h3 class="summary-title">Order Summary</h3>
                     <div class="summary-row">
                         <span>Items (<span id="itemCount">0</span>)</span>
                         <span id="subtotal">$0.00</span>
@@ -1404,62 +1630,64 @@
                         <span>Total</span>
                         <span id="total">$0.00</span>
                     </div>
-                    <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="proceedToCheckout()">
-                        Proceed to Checkout
-                    </button>
-                    <button class="btn btn-outline" style="width: 100%; margin-top: 0.5rem;" onclick="clearCart()">
-                        Clear Cart
-                    </button>
+                    <div class="summary-actions">
+                        <button class="btn btn-primary" onclick="proceedToCheckout()">
+                            <i class="fas fa-lock"></i> Proceed to Checkout
+                        </button>
+                        <button class="btn btn-outline" onclick="clearCart()">
+                            <i class="fas fa-trash"></i> Clear Cart
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
+    </div>
 
-        <!-- Checkout Page -->
-        <div id="checkoutPage" class="page">
+    <!-- Checkout Page -->
+    <div id="checkoutPage" class="page">
+        <section class="checkout-section">
+            <div class="section-header">
+                <h2 class="section-title">Checkout</h2>
+                <p class="section-subtitle">Complete your order securely</p>
+            </div>
             <div class="checkout-container">
-                <div class="checkout-form">
-                    <h2>Checkout</h2>
-                    <form onsubmit="processCheckout(event)">
-                        <div class="form-group">
-                            <label>Full Name</label>
-                            <input type="text" required placeholder="John Doe">
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" required placeholder="john@example.com">
-                        </div>
-                        <div class="form-group">
-                            <label>Payment Method</label>
-                            <div class="payment-methods">
-                                <div class="payment-method" onclick="selectPayment(this, 'upi')">
-                                    <i class="fas fa-mobile-alt"></i>
-                                    <div>UPI</div>
-                                </div>
-                                <div class="payment-method" onclick="selectPayment(this, 'crypto')">
-                                    <i class="fas fa-coins"></i>
-                                    <div>Crypto</div>
-                                </div>
+                <form class="checkout-form" onsubmit="processCheckout(event)">
+                    <div class="form-section">
+                        <h3>Payment Method</h3>
+                        <div class="payment-methods">
+                            <div class="payment-method" onclick="selectPayment(this, 'upi')">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span>UPI</span>
+                            </div>
+                            <div class="payment-method" onclick="selectPayment(this, 'crypto')">
+                                <i class="fab fa-bitcoin"></i>
+                                <span>Crypto</span>
+                            </div>
+                            <div class="payment-method" onclick="selectPayment(this, 'paypal')">
+                                <i class="fab fa-paypal"></i>
+                                <span>PayPal</span>
                             </div>
                         </div>
                         <div id="qrSection" class="qr-section">
+                            <h4>Scan QR Code</h4>
                             <div class="qr-code">
-                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=viralchauhan457-1@okhdfcbank&pn=CardVault&am=0&cu=INR" alt="QR Code">
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=viralchauhan457-1@okhdfcbank&pn=CardVault&am=0&cu=INR" alt="UPI QR Code">
                             </div>
                             <div class="upi-id">viralchauhan457-1@okhdfcbank</div>
                             <button type="button" class="copy-btn" id="copyBtn" onclick="copyUpiId()">
                                 <i class="fas fa-copy"></i> Copy
                             </button>
                         </div>
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">
-                            <i class="fas fa-lock"></i> Complete Payment
-                        </button>
-                    </form>
-                </div>
-                <div class="cart-summary">
-                    <h3>Order Summary</h3>
-                    <div id="checkoutItems">
-                        <!-- Items will be loaded here -->
                     </div>
+                    <div class="form-section">
+                        <h3>Order Items</h3>
+                        <div id="checkoutItems">
+                            <!-- Items will be loaded here -->
+                        </div>
+                    </div>
+                </form>
+                <div class="cart-summary">
+                    <h3 class="summary-title">Payment Summary</h3>
                     <div class="summary-row">
                         <span>Subtotal</span>
                         <span id="checkoutSubtotal">$0.00</span>
@@ -1476,15 +1704,74 @@
                         <span>Total</span>
                         <span id="checkoutTotal">$0.00</span>
                     </div>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="processCheckout(event)">
+                        <i class="fas fa-lock"></i> Pay Now
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Orders Page -->
+    <div id="ordersPage" class="page">
+        <section class="orders-section">
+            <div class="section-header">
+                <h2 class="section-title">My Orders</h2>
+                <p class="section-subtitle">Track your order history</p>
+            </div>
+            <div class="orders-grid" id="ordersGrid">
+                <!-- Orders will be loaded here -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Complete Payment</h2>
+                <button class="modal-close" onclick="closePaymentModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="payment-info">
+                    <div class="payment-amount">₹<span id="modalAmount">0.00</span></div>
+                    <div class="payment-amount-usd">($<span id="modalAmountUSD">0.00</span> USD)</div>
+                </div>
+                <div class="payment-instructions">
+                    <h4><i class="fas fa-info-circle"></i> Payment Instructions</h4>
+                    <ol>
+                        <li>Scan the QR code or copy the UPI ID</li>
+                        <li>Make the payment using any UPI app</li>
+                        <li>Payment will be verified automatically</li>
+                        <li>Cards will be delivered instantly to your email</li>
+                    </ol>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-secondary" onclick="cancelPayment()">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                    <button class="btn btn-primary" onclick="confirmPayment()">
+                        <i class="fas fa-check"></i> Confirm Payment
+                    </button>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Orders Page -->
-        <div id="ordersPage" class="page">
-            <h2>My Orders</h2>
-            <div id="ordersGrid" class="orders-grid">
-                <!-- Orders will be loaded here -->
+    <!-- Confirmation Dialog -->
+    <div id="confirmDialog" class="modal">
+        <div class="confirm-dialog">
+            <h3>Cancel Payment?</h3>
+            <p>Are you sure you want to cancel this payment? Your cart will be preserved.</p>
+            <div class="confirm-actions">
+                <button class="btn btn-secondary" onclick="closeConfirmDialog()">
+                    Keep Payment
+                </button>
+                <button class="btn btn-outline" onclick="confirmCancelPayment()">
+                    Yes, Cancel
+                </button>
             </div>
         </div>
     </div>
@@ -1493,123 +1780,79 @@
     <div id="authModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title">Welcome Back</h2>
-                <button class="close-btn" onclick="closeAuthModal()">
+                <h2 class="modal-title">Welcome to CardVault</h2>
+                <button class="modal-close" onclick="closeAuthModal()">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <div class="auth-tabs">
-                <button class="auth-tab active" onclick="switchAuthTab('signin')">Sign In</button>
-                <button class="auth-tab" onclick="switchAuthTab('signup')">Sign Up</button>
-            </div>
-            <form class="auth-form active" onsubmit="handleSignIn(event)">
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" required placeholder="john@example.com">
+            <div class="modal-body">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" onclick="switchAuthTab('signin')">Sign In</button>
+                    <button class="auth-tab" onclick="switchAuthTab('signup')">Sign Up</button>
                 </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" required placeholder="••••••••">
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">
-                    Sign In
-                </button>
-            </form>
-            <form class="auth-form" onsubmit="handleSignUp(event)">
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" required placeholder="John Doe">
-                </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" required placeholder="john@example.com">
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" required placeholder="••••••••">
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">
-                    Create Account
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Payment Modal -->
-    <div id="paymentModal" class="payment-modal">
-        <div class="payment-content">
-            <div class="payment-icon">
-                <i class="fas fa-check"></i>
-            </div>
-            <h2>Payment Required</h2>
-            <div class="payment-amount">₹<span id="modalAmount">0.00</span></div>
-            <div class="payment-amount-usd">($<span id="modalAmountUSD">0.00</span> USD)</div>
-            <div class="payment-qr">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=viralchauhan457-1@okhdfcbank&pn=CardVault&am=0&cu=INR" alt="Payment QR">
-            </div>
-            <div class="payment-upi">viralchauhan457-1@okhdfcbank</div>
-            <p style="color: var(--text-light); margin-bottom: 1rem;">
-                Scan QR code or pay using UPI ID above
-            </p>
-            <div class="payment-actions">
-                <button class="btn btn-outline" onclick="cancelPayment()">
-                    Cancel
-                </button>
-                <button class="btn btn-primary" onclick="confirmPayment()">
-                    <i class="fas fa-check"></i> I've Paid
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Confirmation Dialog -->
-    <div id="confirmDialog" class="confirm-dialog">
-        <div class="confirm-content">
-            <h3 class="confirm-title">Cancel Payment?</h3>
-            <p class="confirm-message">Are you sure you want to cancel this payment?</p>
-            <div class="confirm-actions">
-                <button class="btn btn-outline" onclick="closeConfirmDialog()">
-                    No, Continue
-                </button>
-                <button class="btn btn-danger" onclick="confirmCancelPayment()">
-                    Yes, Cancel
-                </button>
+                <form class="auth-form active" onsubmit="handleSignIn(event)">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-sign-in-alt"></i> Sign In
+                    </button>
+                </form>
+                <form class="auth-form" onsubmit="handleSignUp(event)">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" placeholder="Create a password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-user-plus"></i> Create Account
+                    </button>
+                </form>
             </div>
         </div>
     </div>
 
     <!-- Chat Widget -->
     <div class="chat-widget">
-        <div id="chatWindow" class="chat-window">
+        <div class="chat-window" id="chatWindow">
             <div class="chat-header">
-                <div>
-                    <div style="font-weight: 600;">Customer Support</div>
-                    <div style="font-size: 0.9rem; opacity: 0.9;">We typically reply in minutes</div>
-                </div>
-                <button class="close-btn" onclick="toggleChat()">
+                <h3><i class="fas fa-headset"></i> Customer Support</h3>
+                <button class="chat-close" onclick="toggleChat()">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <div id="chatMessages" class="chat-messages">
+            <div class="chat-messages" id="chatMessages">
                 <div class="chat-message">
                     <div class="message-avatar">CS</div>
-                    <div class="message-bubble">Hello! Welcome to CardVault. How can I help you today?</div>
+                    <div class="message-bubble">Hello! How can I help you today?</div>
                 </div>
             </div>
             <div class="chat-input">
-                <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="handleChatInput(event)">
+                <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="handleChatInput(event)">
                 <button onclick="sendMessage()">
                     <i class="fas fa-paper-plane"></i>
                 </button>
             </div>
         </div>
         <button class="chat-button" onclick="toggleChat()">
-            <i class="fas fa-comment-dots"></i>
+            <i class="fas fa-comments"></i>
         </button>
     </div>
 
     <!-- Toast Container -->
-    <div id="toastContainer" class="toast-container"></div>
+    <div class="toast-container" id="toastContainer"></div>
 
     <script>
         // App State
@@ -1620,37 +1863,37 @@
             currentSort: 'name'
         };
 
-        // Real Cards Data - ONLY LIMITS CHANGED TO UNDER $2000
+        // Real Card Data with limits under $2000
         const realCards = [
-            { id: 1, name: 'Platinum Visa', holder: 'John Smith', network: 'visa', limit: 1500, price: 29.99, valid: '3 Months', inStock: true, rating: 4.5, reviews: 234 },
-            { id: 2, name: 'Gold Mastercard', holder: 'Emily Johnson', network: 'mastercard', limit: 1200, price: 24.99, valid: '2 Months', inStock: true, rating: 4.3, reviews: 189 },
-            { id: 3, name: 'Silver Amex', holder: 'Michael Brown', network: 'amex', limit: 800, price: 19.99, valid: '1 Month', inStock: false, rating: 4.6, reviews: 312 },
-            { id: 4, name: 'Titanium Visa', holder: 'Sarah Davis', network: 'visa', limit: 1800, price: 39.99, valid: '4 Months', inStock: true, rating: 4.7, reviews: 445 },
-            { id: 5, name: 'Diamond Mastercard', holder: 'David Wilson', network: 'mastercard', limit: 2000, price: 49.99, valid: '6 Months', inStock: true, rating: 4.8, reviews: 567 },
-            { id: 6, name: 'Ruby Amex', holder: 'Lisa Anderson', network: 'amex', limit: 1000, price: 22.99, valid: '2 Months', inStock: true, rating: 4.4, reviews: 278 },
-            { id: 7, name: 'Sapphire Visa', holder: 'James Taylor', network: 'visa', limit: 1600, price: 34.99, valid: '3 Months', inStock: false, rating: 4.6, reviews: 389 },
-            { id: 8, name: 'Emerald Mastercard', holder: 'Jennifer Thomas', network: 'mastercard', limit: 1400, price: 31.99, valid: '3 Months', inStock: true, rating: 4.5, reviews: 423 },
-            { id: 9, name: 'Pearl Amex', holder: 'Robert Jackson', network: 'amex', limit: 900, price: 18.99, valid: '1 Month', inStock: true, rating: 4.3, reviews: 234 },
-            { id: 10, name: 'Obsidian Visa', holder: 'Maria White', network: 'visa', limit: 1900, price: 44.99, valid: '5 Months', inStock: true, rating: 4.9, reviews: 612 },
-            { id: 11, name: 'Crystal Mastercard', holder: 'William Harris', network: 'mastercard', limit: 1100, price: 26.99, valid: '2 Months', inStock: true, rating: 4.4, reviews: 345 },
-            { id: 12, name: 'Onyx Amex', holder: 'Patricia Martin', network: 'amex', limit: 1300, price: 28.99, valid: '3 Months', inStock: false, rating: 4.6, reviews: 456 },
-            { id: 13, name: 'Ivory Visa', holder: 'Christopher Thompson', network: 'visa', limit: 1700, price: 37.99, valid: '4 Months', inStock: true, rating: 4.7, reviews: 523 },
-            { id: 14, name: 'Bronze Mastercard', holder: 'Linda Garcia', network: 'mastercard', limit: 700, price: 16.99, valid: '1 Month', inStock: true, rating: 4.2, reviews: 198 },
-            { id: 15, name: 'Copper Amex', holder: 'Daniel Martinez', network: 'amex', limit: 950, price: 20.99, valid: '2 Months', inStock: true, rating: 4.4, reviews: 289 },
-            { id: 16, name: 'Nickel Visa', holder: 'Nancy Robinson', network: 'visa', limit: 1250, price: 27.99, valid: '2 Months', inStock: false, rating: 4.5, reviews: 367 },
-            { id: 17, name: 'Zinc Mastercard', holder: 'Paul Clark', network: 'mastercard', limit: 1450, price: 32.99, valid: '3 Months', inStock: true, rating: 4.6, reviews: 412 },
-            { id: 18, name: 'Aluminum Amex', holder: 'Karen Lewis', network: 'amex', limit: 850, price: 17.99, valid: '1 Month', inStock: true, rating: 4.3, reviews: 245 },
-            { id: 19, name: 'Steel Visa', holder: 'Steven Lee', network: 'visa', limit: 1750, price: 41.99, valid: '4 Months', inStock: true, rating: 4.8, reviews: 589 },
-            { id: 20, name: 'Iron Mastercard', holder: 'Betty Walker', network: 'mastercard', limit: 1050, price: 25.99, valid: '2 Months', inStock: true, rating: 4.4, reviews: 334 },
-            { id: 21, name: 'Cobalt Amex', holder: 'Donald Hall', network: 'amex', limit: 1150, price: 23.99, valid: '2 Months', inStock: false, rating: 4.5, reviews: 378 },
-            { id: 22, name: 'Chrome Visa', holder: 'Helen Allen', network: 'visa', limit: 1550, price: 35.99, valid: '3 Months', inStock: true, rating: 4.6, reviews: 467 },
-            { id: 23, name: 'Platinum Plus', holder: 'Richard Young', network: 'visa', limit: 1650, price: 38.99, valid: '4 Months', inStock: true, rating: 4.7, reviews: 534 },
-            { id: 24, name: 'Gold Elite', holder: 'Sandra King', network: 'mastercard', limit: 1350, price: 30.99, valid: '3 Months', inStock: true, rating: 4.5, reviews: 423 },
-            { id: 25, name: 'Silver Premium', holder: 'Joseph Wright', network: 'amex', limit: 750, price: 15.99, valid: '1 Month', inStock: false, rating: 4.2, reviews: 189 },
-            { id: 26, name: 'Titanium Pro', holder: 'Ashley Lopez', network: 'visa', limit: 1850, price: 46.99, valid: '5 Months', inStock: true, rating: 4.9, reviews: 645 },
-            { id: 27, name: 'Diamond Select', holder: 'Charles Hill', network: 'mastercard', limit: 1950, price: 48.99, valid: '6 Months', inStock: true, rating: 4.8, reviews: 601 },
-            { id: 28, name: 'Ruby Deluxe', holder: 'Kimberly Scott', network: 'amex', limit: 880, price: 19.99, valid: '2 Months', inStock: true, rating: 4.4, reviews: 312 },
-            { id: 29, name: 'Sapphire Ultra', holder: 'Mark Green', network: 'visa', limit: 1280, price: 29.99, valid: '3 Months', inStock: false, rating: 4.5, reviews: 389 },
+            { id: 1, name: 'Platinum Elite', holder: 'John Smith', network: 'visa', limit: 1500, price: 49.99, valid: '1 Year', inStock: true, rating: 4.8, reviews: 1247 },
+            { id: 2, name: 'Gold Premium', holder: 'Sarah Johnson', network: 'mastercard', limit: 1200, price: 39.99, valid: '6 Months', inStock: true, rating: 4.6, reviews: 892 },
+            { id: 3, name: 'Black Diamond', holder: 'Michael Chen', network: 'amex', limit: 1950, price: 79.99, valid: '1 Year', inStock: false, rating: 4.9, reviews: 634 },
+            { id: 4, name: 'Silver Classic', holder: 'Emily Davis', network: 'visa', limit: 800, price: 24.99, valid: '3 Months', inStock: true, rating: 4.3, reviews: 445 },
+            { id: 5, name: 'Titanium Pro', holder: 'Robert Wilson', network: 'mastercard', limit: 1800, price: 69.99, valid: '1 Year', inStock: true, rating: 4.7, reviews: 1123 },
+            { id: 6, name: 'Ruby Exclusive', holder: 'Lisa Anderson', network: 'amex', limit: 1600, price: 59.99, valid: '6 Months', inStock: true, rating: 4.5, reviews: 756 },
+            { id: 7, name: 'Sapphire Plus', holder: 'David Martinez', network: 'visa', limit: 1400, price: 44.99, valid: '6 Months', inStock: false, rating: 4.6, reviews: 523 },
+            { id: 8, name: 'Emerald Royal', holder: 'Jennifer Taylor', network: 'mastercard', limit: 1750, price: 64.99, valid: '1 Year', inStock: true, rating: 4.8, reviews: 934 },
+            { id: 9, name: 'Crystal Ultimate', holder: 'James Brown', network: 'amex', limit: 1900, price: 74.99, valid: '1 Year', inStock: true, rating: 4.9, reviews: 1456 },
+            { id: 10, name: 'Pearl Premium', holder: 'Maria Garcia', network: 'visa', limit: 1100, price: 34.99, valid: '3 Months', inStock: true, rating: 4.4, reviews: 612 },
+            { id: 11, name: 'Opal Luxury', holder: 'William Jones', network: 'mastercard', limit: 1300, price: 42.99, valid: '6 Months', inStock: false, rating: 4.5, reviews: 389 },
+            { id: 12, name: 'Diamond Elite', holder: 'Patricia Miller', network: 'amex', limit: 1850, price: 69.99, valid: '1 Year', inStock: true, rating: 4.8, reviews: 1278 },
+            { id: 13, name: 'Jade Special', holder: 'Christopher Lee', network: 'visa', limit: 950, price: 29.99, valid: '3 Months', inStock: true, rating: 4.3, reviews: 456 },
+            { id: 14, name: 'Amber Gold', holder: 'Nancy White', network: 'mastercard', limit: 1250, price: 38.99, valid: '6 Months', inStock: true, rating: 4.6, reviews: 723 },
+            { id: 15, name: 'Coral Premium', holder: 'Daniel Harris', network: 'amex', limit: 1650, price: 54.99, valid: '6 Months', inStock: false, rating: 4.7, reviews: 567 },
+            { id: 16, name: 'Onyx Black', holder: 'Karen Clark', network: 'visa', limit: 1450, price: 46.99, valid: '6 Months', inStock: true, rating: 4.5, reviews: 834 },
+            { id: 17, name: 'Ivory White', holder: 'Thomas Lewis', network: 'mastercard', limit: 1050, price: 32.99, valid: '3 Months', inStock: true, rating: 4.4, reviews: 412 },
+            { id: 18, name: 'Bronze Classic', holder: 'Betty Walker', network: 'amex', limit: 750, price: 22.99, valid: '3 Months', inStock: true, rating: 4.2, reviews: 278 },
+            { id: 19, name: 'Copper Pro', holder: 'Paul Hall', network: 'visa', limit: 1150, price: 36.99, valid: '6 Months', inStock: false, rating: 4.5, reviews: 523 },
+            { id: 20, name: 'Nickel Plus', holder: 'Helen Allen', network: 'mastercard', limit: 1350, price: 41.99, valid: '6 Months', inStock: true, rating: 4.6, reviews: 689 },
+            { id: 21, name: 'Zinc Basic', holder: 'Mark Young', network: 'amex', limit: 850, price: 26.99, valid: '3 Months', inStock: true, rating: 4.3, reviews: 334 },
+            { id: 22, name: 'Aluminum Elite', holder: 'Sandra King', network: 'visa', limit: 1550, price: 48.99, valid: '1 Year', inStock: true, rating: 4.7, reviews: 945 },
+            { id: 23, name: 'Steel Premium', holder: 'Donald Wright', network: 'mastercard', limit: 1700, price: 56.99, valid: '1 Year', inStock: false, rating: 4.8, reviews: 712 },
+            { id: 24, name: 'Iron Classic', holder: 'Carol Lopez', network: 'amex', limit: 1000, price: 31.99, valid: '3 Months', inStock: true, rating: 4.4, reviews: 489 },
+            { id: 25, name: 'Cobalt Blue', holder: 'Joseph Hill', network: 'visa', limit: 900, price: 28.99, valid: '3 Months', inStock: true, rating: 4.3, reviews: 356 },
+            { id: 26, name: 'Chrome Silver', holder: 'Ruth Scott', network: 'mastercard', limit: 1200, price: 37.99, valid: '6 Months', inStock: true, rating: 4.5, reviews: 623 },
+            { id: 27, name: 'Platinum Max', holder: 'Ronald Green', network: 'amex', limit: 1925, price: 72.99, valid: '1 Year', inStock: false, rating: 4.9, reviews: 1567 },
+            { id: 28, name: 'Gold Standard', holder: 'Barbara Adams', network: 'visa', limit: 975, price: 30.99, valid: '3 Months', inStock: true, rating: 4.4, reviews: 412 },
+            { id: 29, name: 'Silver Select', holder: 'Mark Green', network: 'visa', limit: 1280, price: 29.99, valid: '3 Months', inStock: false, rating: 4.5, reviews: 389 },
             { id: 30, name: 'Emerald Supreme', holder: 'Amy Adams', network: 'mastercard', limit: 1480, price: 33.99, valid: '3 Months', inStock: true, rating: 4.6, reviews: 467 },
             { id: 31, name: 'Pearl Exclusive', holder: 'Daniel Baker', network: 'amex', limit: 980, price: 21.99, valid: '2 Months', inStock: true, rating: 4.3, reviews: 256 },
             { id: 32, name: 'Obsidian Premium', holder: 'Emily Nelson', network: 'visa', limit: 1380, price: 31.99, valid: '3 Months', inStock: true, rating: 4.5, reviews: 423 },
@@ -2390,7 +2633,7 @@
                         'We have served over 12,847 happy customers with a 99% success rate!',
                         'All transactions are encrypted and SSL secured.',
                         '24/7 customer support available to assist you!',
-                        'Premium cards starting from just $9.99 with limits up to $2000!',
+                        'Premium cards starting from just $9.99 with limits up to $1950!',
                         'Every card comes with instant delivery guarantee.',
                         'We accept payments from all over the world.',
                         'Your privacy and security are our top priorities.',
