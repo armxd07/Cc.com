@@ -3,217 +3,484 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CCShop - Premium Credit Cards Marketplace</title>
+    <title>CardVault - Premium Cards Marketplace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --secondary: #f59e0b;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --border: #e5e7eb;
+            --text: #374151;
+            --text-light: #6b7280;
+            --shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --shadow-lg: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        :root {
-            --primary: #FF6B35;
-            --secondary: #004E89;
-            --dark: #1A1A2E;
-            --light: #F5F5F5;
-            --gray: #6C757D;
-            --success: #28A745;
-            --danger: #DC3545;
-            --warning: #FFC107;
-            --info: #17A2B8;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #F8F9FA;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--text);
         }
 
-        /* Header Styles */
-        #header {
-            background: linear-gradient(135deg, var(--dark) 0%, var(--secondary) 100%);
-            color: white;
-            padding: 15px 0;
-            position: fixed;
-            width: 100%;
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            position: sticky;
             top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
+            z-index: 100;
         }
 
-        .header-container {
+        nav {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 1.5rem;
             font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 0.5rem;
         }
 
-        .logo i {
-            color: var(--primary);
-        }
-
-        nav ul {
+        .nav-links {
             display: flex;
-            list-style: none;
-            gap: 30px;
+            gap: 2rem;
+            align-items: center;
         }
 
-        nav a {
-            color: white;
+        .nav-link {
+            color: var(--text);
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s;
-            position: relative;
+            cursor: pointer;
         }
 
-        nav a:hover, nav a.active {
+        .nav-link:hover, .nav-link.active {
             color: var(--primary);
         }
 
-        nav a.active::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: var(--primary);
-        }
-
-        .nav-actions {
+        .auth-buttons {
             display: flex;
+            gap: 1rem;
             align-items: center;
-            gap: 15px;
         }
 
-        .cart-icon {
-            position: relative;
+        .icon-btn {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--text);
             cursor: pointer;
-            font-size: 20px;
-            transition: transform 0.3s;
+            position: relative;
+            transition: color 0.3s;
         }
 
-        .cart-icon:hover {
-            transform: scale(1.1);
+        .icon-btn:hover {
+            color: var(--primary);
         }
 
-        .cart-icon.bounce {
-            animation: bounce 0.5s;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.3); }
-        }
-
-        .cart-count {
+        #cartCount {
             position: absolute;
             top: -8px;
             right: -8px;
-            background: var(--primary);
+            background: var(--error);
             color: white;
-            border-radius: 50%;
-            width: 18px;
-            height: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            font-weight: bold;
+            font-size: 0.75rem;
+            padding: 2px 6px;
+            border-radius: 10px;
+            min-width: 18px;
+            text-align: center;
         }
 
-        .user-avatar {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            background: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-weight: bold;
-            transition: transform 0.3s;
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
         }
 
-        .user-avatar:hover {
-            transform: scale(1.1);
-        }
-
-        /* Main Content */
-        main {
-            margin-top: 80px;
-            min-height: calc(100vh - 80px);
-        }
-
-        .page-section {
+        /* Pages */
+        .page {
             display: none;
-            animation: fadeIn 0.5s;
+            animation: fadeIn 0.3s;
         }
 
-        .page-section.active {
+        .page.active {
             display: block;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Hero Section */
+        /* Home Page */
         .hero {
-            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
-            color: white;
-            padding: 80px 20px;
+            background: white;
+            border-radius: 16px;
+            padding: 3rem;
             text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-lg);
         }
 
         .hero h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            animation: slideInLeft 0.8s;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .hero p {
-            font-size: 20px;
-            margin-bottom: 30px;
-            opacity: 0.9;
-            animation: slideInRight 0.8s;
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
         }
 
-        @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-50px); }
-            to { opacity: 1; transform: translateX(0); }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
         }
 
-        @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(50px); }
-            to { opacity: 1; transform: translateX(0); }
+        .stat {
+            text-align: center;
         }
 
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+
+        /* Browse Section */
+        .browse-section {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .browse-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .browse-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .browse-card {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .browse-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .browse-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .browse-card-info h3 {
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .browse-card-info p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .browse-card-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary);
+        }
+
+        .browse-card-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .browse-detail {
+            text-align: center;
+        }
+
+        .browse-detail-label {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-bottom: 0.25rem;
+        }
+
+        .browse-detail-value {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .browse-card-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Cards Page */
+        .filters {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+
+        .sort-dropdown {
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            position: relative;
+        }
+
+        .card-badges {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .card-badge {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: white;
+        }
+
+        .card-badge.verified {
+            background: var(--success);
+        }
+
+        .card-badge.instant {
+            background: var(--secondary);
+        }
+
+        .card-badge.error {
+            background: var(--error);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .card-name {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .card-holder {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-network {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--light);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .card-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary);
+        }
+
+        .card-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stars {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .star {
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        .star.empty {
+            color: var(--border);
+        }
+
+        .rating-text {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .card-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-detail {
+            text-align: center;
+        }
+
+        .card-detail-label {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-bottom: 0.25rem;
+        }
+
+        .card-detail-value {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Buttons */
         .btn {
-            padding: 12px 30px;
+            padding: 0.75rem 1.5rem;
             border: none;
-            border-radius: 50px;
+            border-radius: 8px;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
-            text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            font-size: 16px;
+            gap: 0.5rem;
         }
 
         .btn-primary {
@@ -222,197 +489,63 @@
         }
 
         .btn-primary:hover {
-            background: #E55A2B;
+            background: var(--primary-dark);
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(255, 107, 53, 0.3);
         }
 
-        .btn-black {
-            background: var(--dark);
+        .btn-secondary {
+            background: var(--secondary);
             color: white;
         }
 
-        .btn-black:hover {
-            background: #2D2D47;
-            transform: translateY(-2px);
+        .btn-secondary:hover {
+            background: #d97706;
         }
 
         .btn-outline {
-            background: transparent;
-            color: white;
-            border: 2px solid white;
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
         }
 
         .btn-outline:hover {
-            background: white;
-            color: var(--secondary);
+            background: var(--primary);
+            color: white;
         }
 
-        /* Cards Section */
-        .cards-section {
-            padding: 60px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
+        .btn-danger {
+            background: var(--error);
+            color: white;
         }
 
-        .section-header {
-            text-align: center;
-            margin-bottom: 50px;
+        .btn-danger:hover {
+            background: #dc2626;
         }
 
-        .section-header h2 {
-            font-size: 36px;
-            margin-bottom: 15px;
-            color: var(--dark);
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
-        .section-header p {
-            font-size: 18px;
-            color: var(--gray);
-        }
-
-        .cards-grid {
+        /* Cart Page */
+        .cart-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .card-product {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s;
-            position: relative;
-        }
-
-        .card-product:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .card-image {
-            height: 200px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .card-image-content {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 10px;
-            padding: 15px;
-            width: 100%;
-            color: white;
-            text-align: center;
-        }
-
-        .card-brand {
-            font-size: 12px;
-            opacity: 0.8;
-            margin-bottom: 5px;
-        }
-
-        .card-chip {
-            width: 40px;
-            height: 30px;
-            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-            border-radius: 5px;
-            margin: 10px auto;
-        }
-
-        .delivery-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: var(--success);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .stock-badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: var(--success);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .stock-badge.out-of-stock {
-            background: var(--danger);
-        }
-
-        .card-details {
-            padding: 20px;
-        }
-
-        .card-name {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: var(--dark);
-        }
-
-        .card-number {
-            color: var(--gray);
-            font-size: 14px;
-            margin-bottom: 5px;
-        }
-
-        .card-price {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--primary);
-            margin: 15px 0;
-        }
-
-        .card-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .card-actions .btn {
-            flex: 1;
-            padding: 10px;
-            font-size: 14px;
-            justify-content: center;
-        }
-
-        /* Cart Section */
-        .cart-section {
-            padding: 40px 20px;
-            max-width: 1000px;
-            margin: 0 auto;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
         }
 
         .cart-items {
             background: white;
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
         }
 
         .cart-item {
             display: flex;
-            gap: 20px;
-            padding: 20px 0;
-            border-bottom: 1px solid #E5E7EB;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
         }
 
         .cart-item:last-child {
@@ -420,16 +553,15 @@
         }
 
         .cart-item-image {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
-            border-radius: 10px;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 2rem;
             color: white;
-            font-size: 24px;
-            font-weight: bold;
         }
 
         .cart-item-details {
@@ -437,37 +569,36 @@
         }
 
         .cart-item-name {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 5px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
         }
 
         .cart-item-info {
-            color: var(--gray);
-            font-size: 14px;
-            margin-bottom: 10px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
         }
 
         .cart-item-price {
-            font-size: 20px;
+            font-size: 1.25rem;
             font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 10px;
+            color: var(--secondary);
+            margin-bottom: 1rem;
         }
 
         .quantity-control {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
+            gap: 1rem;
         }
 
         .quantity-btn {
-            width: 30px;
-            height: 30px;
-            border: 1px solid #DDD;
+            width: 32px;
+            height: 32px;
+            border: 1px solid var(--border);
             background: white;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -482,105 +613,85 @@
         }
 
         .quantity-value {
-            font-weight: bold;
-            min-width: 30px;
+            font-weight: 600;
+            min-width: 20px;
             text-align: center;
         }
 
         .cart-summary {
             background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            height: fit-content;
         }
 
         .summary-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 15px;
-            font-size: 16px;
+            margin-bottom: 1rem;
         }
 
         .summary-row.total {
-            font-size: 20px;
+            font-size: 1.25rem;
             font-weight: bold;
             color: var(--primary);
-            padding-top: 15px;
-            border-top: 2px solid #E5E7EB;
+            padding-top: 1rem;
+            border-top: 2px solid var(--border);
         }
 
-        .cart-actions {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-        }
-
-        .cart-actions .btn {
-            flex: 1;
-        }
-
-        /* Checkout Section */
-        .checkout-section {
-            padding: 40px 20px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
+        /* Checkout Page */
         .checkout-container {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
         }
 
-        .checkout-form, .checkout-summary {
+        .checkout-form {
             background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 1.5rem;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 0.5rem;
             font-weight: 600;
-            color: var(--dark);
+            color: var(--text);
         }
 
-        .form-group input, .form-group select {
+        .form-group input,
+        .form-group select {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #DDD;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
             border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s;
+            font-size: 1rem;
         }
 
-        .form-group input:focus, .form-group select:focus {
+        .form-group input:focus,
+        .form-group select:focus {
             outline: none;
             border-color: var(--primary);
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
         }
 
         .payment-methods {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .payment-method {
-            border: 2px solid #E5E7EB;
-            border-radius: 10px;
-            padding: 20px;
+            padding: 1rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
@@ -588,158 +699,117 @@
 
         .payment-method:hover {
             border-color: var(--primary);
-            background: #FFF8F5;
         }
 
         .payment-method.selected {
             border-color: var(--primary);
-            background: var(--primary);
-            color: white;
+            background: rgba(79, 70, 229, 0.1);
         }
 
         .payment-method i {
-            font-size: 30px;
-            margin-bottom: 10px;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .qr-section {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            background: var(--light);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .qr-section.active {
             display: block;
         }
 
-        /* Orders Section */
-        .orders-section {
-            padding: 40px 20px;
-            max-width: 1000px;
-            margin: 0 auto;
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            margin: 1rem auto;
+            background: white;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .upi-id {
+            font-family: monospace;
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin: 1rem 0;
+            padding: 0.5rem;
+            background: white;
+            border-radius: 4px;
+        }
+
+        /* Orders Page */
+        .orders-grid {
+            display: grid;
+            gap: 1.5rem;
         }
 
         .order-card {
             background: white;
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s;
-        }
-
-        .order-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
         }
 
         .order-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 1rem;
         }
 
         .order-id {
-            font-size: 18px;
-            font-weight: bold;
-            color: var(--dark);
+            font-weight: 600;
+            color: var(--primary);
         }
 
         .order-status {
-            padding: 8px 15px;
+            padding: 0.5rem 1rem;
             border-radius: 20px;
-            font-size: 14px;
-            font-weight: bold;
+            font-size: 0.9rem;
+            font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 0.5rem;
         }
 
-        .status-delivered {
-            background: #D4EDDA;
-            color: #155724;
+        .order-status.delivered {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
         }
 
-        .status-processing {
-            background: #FFF3CD;
-            color: #856404;
+        .order-status.processing {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
         }
 
         .order-details {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
         }
 
         .order-detail {
-            font-size: 14px;
+            text-align: center;
         }
 
-        .order-detail span {
-            font-weight: bold;
-            color: var(--dark);
+        .order-detail-label {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-bottom: 0.25rem;
         }
 
-        /* Dashboard Section */
-        .dashboard-section {
-            padding: 40px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-
-        .stat-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-        }
-
-        .stat-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
-
-        .stat-icon.orders {
-            background: #E3F2FD;
-            color: #2196F3;
-        }
-
-        .stat-icon.cards {
-            background: #F3E5F5;
-            color: #9C27B0;
-        }
-
-        .stat-icon.spent {
-            background: #E8F5E9;
-            color: #4CAF50;
-        }
-
-        .stat-icon.saved {
-            background: #FFF3E0;
-            color: #FF9800;
-        }
-
-        .stat-value {
-            font-size: 28px;
-            font-weight: bold;
-            color: var(--dark);
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
-            color: var(--gray);
-            font-size: 14px;
+        .order-detail-value {
+            font-weight: 600;
+            color: var(--text);
         }
 
         /* Auth Modal */
@@ -751,222 +821,88 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.5);
-            z-index: 2000;
+            z-index: 1000;
             align-items: center;
             justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s;
         }
 
         .modal.active {
-            opacity: 1;
+            display: flex;
         }
 
         .modal-content {
             background: white;
-            border-radius: 20px;
-            padding: 40px;
+            border-radius: 16px;
+            padding: 2rem;
             max-width: 400px;
             width: 90%;
-            position: relative;
-            transform: scale(0.9);
-            transition: transform 0.3s;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s;
         }
 
-        .modal.active .modal-content {
-            transform: scale(1);
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
-        .modal-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 24px;
-            cursor: pointer;
-            color: var(--gray);
-            transition: color 0.3s;
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
         }
 
-        .modal-close:hover {
-            color: var(--danger);
-        }
-
-        .auth-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .auth-header h2 {
-            color: var(--dark);
-            margin-bottom: 10px;
-        }
-
-        .auth-header p {
-            color: var(--gray);
-        }
-
-        .auth-toggle {
-            text-align: center;
-            margin-top: 20px;
-            color: var(--gray);
-        }
-
-        .auth-toggle a {
-            color: var(--primary);
-            cursor: pointer;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .auth-toggle a:hover {
-            text-decoration: underline;
-        }
-
-        /* Payment Modal */
-        .payment-modal {
-            max-width: 500px;
-        }
-
-        .payment-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .payment-amount {
-            font-size: 36px;
+        .modal-title {
+            font-size: 1.5rem;
             font-weight: bold;
             color: var(--primary);
-            margin: 20px 0;
         }
 
-        .upi-details {
-            background: #F8F9FA;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .qr-code {
-            width: 200px;
-            height: 200px;
-            background: white;
-            border: 2px solid #E5E7EB;
-            border-radius: 10px;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            color: var(--gray);
-        }
-
-        .upi-id {
-            font-size: 18px;
-            font-weight: bold;
-            color: var(--dark);
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .copy-btn {
-            background: var(--primary);
-            color: white;
+        .close-btn {
+            background: none;
             border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
+            font-size: 1.5rem;
+            color: var(--text-light);
             cursor: pointer;
-            font-size: 14px;
+        }
+
+        .auth-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            background: var(--light);
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
             transition: all 0.3s;
         }
 
-        .copy-btn:hover {
-            background: #E55A2B;
+        .auth-tab.active {
+            background: var(--primary);
+            color: white;
         }
 
-        .copy-btn.copied {
-            background: var(--success);
-        }
-
-        .payment-status {
-            text-align: center;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-
-        .payment-status.waiting {
-            background: #FFF3CD;
-            color: #856404;
-        }
-
-        .payment-status.success {
-            background: #D4EDDA;
-            color: #155724;
-        }
-
-        .payment-actions {
-            display: flex;
-            gap: 15px;
-        }
-
-        .payment-actions .btn {
-            flex: 1;
-        }
-
-        /* Full Screen Payment */
-        .fullscreen-payment {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--dark) 0%, var(--secondary) 100%);
-            z-index: 3000;
+        .auth-form {
             display: none;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s;
         }
 
-        .fullscreen-payment.active {
-            display: flex;
-            opacity: 1;
-        }
-
-        .fullscreen-content {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 500px;
-            width: 90%;
-            text-align: center;
-            transform: scale(0.9);
-            transition: transform 0.3s;
-        }
-
-        .fullscreen-payment.active .fullscreen-content {
-            transform: scale(1);
-        }
-
-        .fullscreen-amount {
-            font-size: 48px;
-            font-weight: bold;
-            color: var(--primary);
-            margin: 20px 0;
+        .auth-form.active {
+            display: block;
         }
 
         /* Chat Widget */
         .chat-widget {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1500;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 99;
         }
 
         .chat-button {
@@ -976,15 +912,14 @@
             background: var(--primary);
             color: white;
             border: none;
+            font-size: 1.5rem;
             cursor: pointer;
-            font-size: 24px;
-            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+            box-shadow: var(--shadow-lg);
             transition: all 0.3s;
         }
 
         .chat-button:hover {
             transform: scale(1.1);
-            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.4);
         }
 
         .chat-window {
@@ -992,28 +927,23 @@
             bottom: 80px;
             right: 0;
             width: 350px;
-            height: 450px;
+            height: 500px;
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
             display: none;
             flex-direction: column;
             overflow: hidden;
-            transform: scale(0.9);
-            opacity: 0;
-            transition: all 0.3s;
         }
 
         .chat-window.active {
             display: flex;
-            transform: scale(1);
-            opacity: 1;
         }
 
         .chat-header {
             background: var(--primary);
             color: white;
-            padding: 15px;
+            padding: 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -1021,32 +951,42 @@
 
         .chat-messages {
             flex: 1;
-            padding: 20px;
+            padding: 1rem;
             overflow-y: auto;
-            background: #F8F9FA;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
 
         .chat-message {
-            margin-bottom: 15px;
             display: flex;
-            animation: slideInUp 0.3s;
-        }
-
-        @keyframes slideInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            gap: 0.5rem;
+            max-width: 80%;
         }
 
         .chat-message.user {
-            justify-content: flex-end;
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: var(--primary);
         }
 
         .message-bubble {
-            max-width: 70%;
-            padding: 10px 15px;
-            border-radius: 15px;
-            background: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 0.75rem;
+            background: var(--light);
+            border-radius: 12px;
+            font-size: 0.9rem;
         }
 
         .chat-message.user .message-bubble {
@@ -1055,55 +995,134 @@
         }
 
         .chat-input {
-            padding: 15px;
-            border-top: 1px solid #E5E7EB;
+            padding: 1rem;
+            border-top: 1px solid var(--border);
             display: flex;
-            gap: 10px;
+            gap: 0.5rem;
         }
 
         .chat-input input {
             flex: 1;
-            padding: 10px;
-            border: 1px solid #DDD;
-            border-radius: 25px;
-            font-size: 14px;
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            outline: none;
         }
 
         .chat-input button {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
+            border: none;
             background: var(--primary);
             color: white;
-            border: none;
             cursor: pointer;
-            transition: all 0.3s;
         }
 
-        .chat-input button:hover {
-            background: #E55A2B;
+        /* Payment Modal */
+        .payment-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* Toast Notifications */
+        .payment-modal.active {
+            display: flex;
+        }
+
+        .payment-content {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            animation: slideUp 0.3s;
+        }
+
+        .payment-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+
+        .payment-icon i {
+            font-size: 2rem;
+            color: white;
+        }
+
+        .payment-amount {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .payment-amount-usd {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        .payment-qr {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 1.5rem;
+            background: var(--light);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .payment-upi {
+            font-family: monospace;
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            background: var(--light);
+            border-radius: 4px;
+        }
+
+        .payment-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        /* Toast */
         .toast-container {
             position: fixed;
-            top: 100px;
-            right: 20px;
-            z-index: 4000;
+            top: 2rem;
+            right: 2rem;
+            z-index: 3000;
         }
 
         .toast {
             background: white;
-            border-radius: 10px;
-            padding: 15px 20px;
-            margin-bottom: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 1rem;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 1rem;
             min-width: 300px;
             transform: translateX(400px);
-            transition: all 0.3s;
+            transition: transform 0.3s;
         }
 
         .toast.show {
@@ -1111,7 +1130,7 @@
         }
 
         .toast-icon {
-            font-size: 24px;
+            font-size: 1.5rem;
         }
 
         .toast.success .toast-icon {
@@ -1119,7 +1138,7 @@
         }
 
         .toast.error .toast-icon {
-            color: var(--danger);
+            color: var(--error);
         }
 
         .toast.warning .toast-icon {
@@ -1135,68 +1154,60 @@
         }
 
         .toast-title {
-            font-weight: bold;
-            margin-bottom: 2px;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
         }
 
         .toast-message {
-            font-size: 14px;
-            color: var(--gray);
+            color: var(--text-light);
+            font-size: 0.9rem;
         }
 
         /* Empty State */
         .empty-state {
             text-align: center;
-            padding: 60px 20px;
-            color: var(--gray);
+            padding: 3rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
         }
 
         .empty-state i {
-            font-size: 64px;
-            margin-bottom: 20px;
-            opacity: 0.5;
+            font-size: 3rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
         }
 
         .empty-state h3 {
-            font-size: 24px;
-            margin-bottom: 10px;
-            color: var(--dark);
+            color: var(--text);
+            margin-bottom: 0.5rem;
         }
 
         .empty-state p {
-            margin-bottom: 20px;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
         }
 
-        /* Responsive Design */
+        /* Responsive */
         @media (max-width: 768px) {
-            .header-container {
-                flex-direction: column;
-                gap: 15px;
+            .nav-links {
+                display: none;
             }
 
-            nav ul {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 15px;
-            }
-
-            .hero h1 {
-                font-size: 32px;
-            }
-
-            .hero p {
-                font-size: 16px;
+            .cart-container,
+            .checkout-container {
+                grid-template-columns: 1fr;
             }
 
             .cards-grid {
                 grid-template-columns: 1fr;
             }
 
-            .checkout-container {
+            .browse-grid {
                 grid-template-columns: 1fr;
             }
 
-            .form-row {
+            .stats {
                 grid-template-columns: 1fr;
             }
 
@@ -1208,14 +1219,31 @@
                 width: 300px;
                 height: 400px;
             }
+        }
 
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
+        /* Copy Button */
+        .copy-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .copy-btn.copied {
+            background: var(--success);
         }
 
         /* Confirmation Dialog */
         .confirm-dialog {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -1223,470 +1251,327 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.5);
             z-index: 2500;
-            display: none;
             align-items: center;
             justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s;
         }
 
         .confirm-dialog.active {
             display: flex;
-            opacity: 1;
         }
 
         .confirm-content {
             background: white;
-            border-radius: 15px;
-            padding: 30px;
+            border-radius: 12px;
+            padding: 2rem;
             max-width: 400px;
             width: 90%;
             text-align: center;
-            transform: scale(0.9);
-            transition: transform 0.3s;
-        }
-
-        .confirm-dialog.active .confirm-content {
-            transform: scale(1);
-        }
-
-        .confirm-icon {
-            font-size: 48px;
-            color: var(--warning);
-            margin-bottom: 20px;
         }
 
         .confirm-title {
-            font-size: 20px;
+            font-size: 1.25rem;
             font-weight: bold;
-            margin-bottom: 10px;
-            color: var(--dark);
+            margin-bottom: 1rem;
+            color: var(--text);
         }
 
         .confirm-message {
-            color: var(--gray);
-            margin-bottom: 25px;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
         }
 
         .confirm-actions {
             display: flex;
-            gap: 15px;
-        }
-
-        .confirm-actions .btn {
-            flex: 1;
+            gap: 1rem;
+            justify-content: center;
         }
     </style>
 </head>
 <body>
     <!-- Header -->
-    <header id="header">
-        <div class="header-container">
-            <div class="logo">
+    <header>
+        <nav>
+            <a href="#" class="logo">
                 <i class="fas fa-credit-card"></i>
-                CCShop
+                CardVault
+            </a>
+            <div class="nav-links">
+                <a class="nav-link active" onclick="showPage('home')">Home</a>
+                <a class="nav-link" onclick="showPage('cards')">Browse Cards</a>
+                <a class="nav-link" onclick="showPage('orders')">Orders</a>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="#" class="nav-link active" onclick="showPage('home')">Home</a></li>
-                    <li><a href="#" class="nav-link" onclick="showPage('cards')">Cards</a></li>
-                    <li><a href="#" class="nav-link" onclick="showPage('dashboard')">Dashboard</a></li>
-                    <li><a href="#" class="nav-link" onclick="showPage('orders')">Orders</a></li>
-                </ul>
-            </nav>
-            <div class="nav-actions">
-                <div class="cart-icon" onclick="showPage('cart')">
-                    <i class="fas fa-shopping-cart" id="cartIcon"></i>
-                    <span class="cart-count" id="cartCount">0</span>
-                </div>
-                <div class="user-avatar" id="userAvatar" onclick="toggleUserDropdown()">G</div>
+            <div class="auth-buttons">
+                <button class="icon-btn" onclick="showPage('cart')">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cartCount" style="display: none;">0</span>
+                </button>
+                <button class="btn btn-primary" onclick="showAuthModal()">
+                    <i class="fas fa-user"></i> Sign In
+                </button>
             </div>
-        </div>
+        </nav>
     </header>
 
-    <!-- Main Content -->
-    <main>
+    <!-- Main Container -->
+    <div class="container">
         <!-- Home Page -->
-        <section id="homePage" class="page-section active">
+        <div id="homePage" class="page active">
             <div class="hero">
-                <h1>Premium Credit Cards Marketplace</h1>
-                <p>Instant delivery • 100% verified cards • Secure payment</p>
-                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                    <button class="btn btn-primary" onclick="showPage('cards')">
-                        <i class="fas fa-credit-card"></i> Browse Cards
-                    </button>
-                    <button class="btn btn-outline" onclick="showPage('dashboard')">
-                        <i class="fas fa-tachometer-alt"></i> Dashboard
-                    </button>
+                <h1>Welcome to CardVault</h1>
+                <p>Your premium marketplace for verified cards with instant delivery</p>
+                <button class="btn btn-primary" onclick="scrollToBrowse()">
+                    <i class="fas fa-arrow-down"></i> Browse Cards
+                </button>
+                
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-number" data-target="12847">0</div>
+                        <div class="stat-label">Happy Customers</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number" data-target="99">0</div>
+                        <div class="stat-label">Success Rate %</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number" data-target="24">0</div>
+                        <div class="stat-label">Hour Support</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number" data-target="50">0</div>
+                        <div class="stat-label">Premium Cards</div>
+                    </div>
                 </div>
             </div>
 
-            <div class="cards-section">
-                <div class="section-header">
+            <div id="browseSection" class="browse-section">
+                <div class="browse-header">
                     <h2>Featured Cards</h2>
-                    <p>Hand-picked premium cards with instant delivery</p>
-                </div>
-                <div class="cards-grid" id="featuredCards">
-                    <!-- Cards will be dynamically loaded here -->
-                </div>
-                <div style="text-align: center;">
                     <button class="btn btn-primary" onclick="showPage('cards')">
-                        View All Cards <i class="fas fa-arrow-right"></i>
+                        View All <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
+                <div id="browseGrid" class="browse-grid">
+                    <!-- Cards will be loaded here -->
+                </div>
             </div>
-        </section>
+        </div>
 
         <!-- Cards Page -->
-        <section id="cardsPage" class="page-section">
-            <div class="cards-section">
-                <div class="section-header">
-                    <h2>All Cards</h2>
-                    <p>Choose from our wide selection of premium cards</p>
-                </div>
-                
-                <!-- Filters -->
-                <div style="display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap;">
-                    <input type="text" id="searchInput" placeholder="Search cards..." onkeyup="filterCards()" style="flex: 1; min-width: 200px; padding: 10px; border: 1px solid #DDD; border-radius: 8px;">
-                    <select id="categoryFilter" onchange="filterCards()" style="padding: 10px; border: 1px solid #DDD; border-radius: 8px;">
-                        <option value="">All Categories</option>
-                        <option value="visa">Visa</option>
-                        <option value="mastercard">Mastercard</option>
-                        <option value="amex">American Express</option>
-                        <option value="discover">Discover</option>
-                    </select>
-                    <select id="sortFilter" onchange="sortCards()" style="padding: 10px; border: 1px solid #DDD; border-radius: 8px;">
-                        <option value="">Sort By</option>
+        <div id="cardsPage" class="page">
+            <div class="filters">
+                <div class="filter-row">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="Search cards...">
+                    </div>
+                    <select class="sort-dropdown" onchange="sortCards(this.value)">
+                        <option value="name">Sort by Name</option>
                         <option value="price-low">Price: Low to High</option>
                         <option value="price-high">Price: High to Low</option>
                         <option value="limit-high">Limit: High to Low</option>
                     </select>
                 </div>
-
-                <div class="cards-grid" id="cardsGrid">
-                    <!-- Cards will be dynamically loaded here -->
-                </div>
             </div>
-        </section>
+            <div id="cardsGrid" class="cards-grid">
+                <!-- Cards will be loaded here -->
+            </div>
+        </div>
 
         <!-- Cart Page -->
-        <section id="cartPage" class="page-section">
-            <div class="cart-section">
-                <div class="section-header">
+        <div id="cartPage" class="page">
+            <div class="cart-container">
+                <div class="cart-items">
                     <h2>Shopping Cart</h2>
-                    <p>Review your selected cards</p>
+                    <div id="cartItems">
+                        <!-- Cart items will be loaded here -->
+                    </div>
                 </div>
-                
-                <div class="cart-items" id="cartItems">
-                    <!-- Cart items will be dynamically loaded here -->
-                </div>
-                
                 <div class="cart-summary">
-                    <h3 style="margin-bottom: 20px;">Order Summary</h3>
+                    <h3>Order Summary</h3>
                     <div class="summary-row">
-                        <span>Subtotal:</span>
+                        <span>Items (<span id="itemCount">0</span>)</span>
                         <span id="subtotal">$0.00</span>
                     </div>
                     <div class="summary-row">
-                        <span>Processing Fee (2%):</span>
+                        <span>Processing Fee</span>
                         <span id="processingFee">$0.00</span>
                     </div>
                     <div class="summary-row">
-                        <span>Tax (8%):</span>
+                        <span>Tax</span>
                         <span id="tax">$0.00</span>
                     </div>
                     <div class="summary-row total">
-                        <span>Total:</span>
+                        <span>Total</span>
                         <span id="total">$0.00</span>
                     </div>
-                    
-                    <div class="cart-actions">
-                        <button class="btn btn-black" onclick="clearCart()">
-                            <i class="fas fa-trash"></i> Clear Cart
-                        </button>
-                        <button class="btn btn-primary" onclick="proceedToCheckout()">
-                            <i class="fas fa-lock"></i> Proceed to Checkout
-                        </button>
-                    </div>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="proceedToCheckout()">
+                        Proceed to Checkout
+                    </button>
+                    <button class="btn btn-outline" style="width: 100%; margin-top: 0.5rem;" onclick="clearCart()">
+                        Clear Cart
+                    </button>
                 </div>
             </div>
-        </section>
+        </div>
 
         <!-- Checkout Page -->
-        <section id="checkoutPage" class="page-section">
-            <div class="checkout-section">
-                <div class="section-header">
+        <div id="checkoutPage" class="page">
+            <div class="checkout-container">
+                <div class="checkout-form">
                     <h2>Checkout</h2>
-                    <p>Complete your order details</p>
-                </div>
-                
-                <div class="checkout-container">
-                    <div class="checkout-form">
-                        <h3 style="margin-bottom: 20px;">Shipping Information</h3>
-                        <form id="checkoutForm" onsubmit="processCheckout(event)">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label>First Name</label>
-                                    <input type="text" id="firstName" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Last Name</label>
-                                    <input type="text" id="lastName" required>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label>Email Address</label>
-                                <input type="email" id="email" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label>Phone Number</label>
-                                <input type="tel" id="phone" required>
-                            </div>
-                            
-                            <h3 style="margin: 30px 0 20px;">Payment Method</h3>
+                    <form onsubmit="processCheckout(event)">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" required placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" required placeholder="john@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Payment Method</label>
                             <div class="payment-methods">
                                 <div class="payment-method" onclick="selectPayment(this, 'upi')">
                                     <i class="fas fa-mobile-alt"></i>
-                                    <div>UPI Payment</div>
+                                    <div>UPI</div>
                                 </div>
                                 <div class="payment-method" onclick="selectPayment(this, 'crypto')">
-                                    <i class="fab fa-bitcoin"></i>
+                                    <i class="fas fa-coins"></i>
                                     <div>Crypto</div>
                                 </div>
                             </div>
-                            
-                            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 20px;">
-                                <i class="fas fa-lock"></i> Complete Order
+                        </div>
+                        <div id="qrSection" class="qr-section">
+                            <div class="qr-code">
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=viralchauhan457-1@okhdfcbank&pn=CardVault&am=0&cu=INR" alt="QR Code">
+                            </div>
+                            <div class="upi-id">viralchauhan457-1@okhdfcbank</div>
+                            <button type="button" class="copy-btn" id="copyBtn" onclick="copyUpiId()">
+                                <i class="fas fa-copy"></i> Copy
                             </button>
-                        </form>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">
+                            <i class="fas fa-lock"></i> Complete Payment
+                        </button>
+                    </form>
+                </div>
+                <div class="cart-summary">
+                    <h3>Order Summary</h3>
+                    <div id="checkoutItems">
+                        <!-- Items will be loaded here -->
                     </div>
-                    
-                    <div class="checkout-summary">
-                        <h3 style="margin-bottom: 20px;">Order Summary</h3>
-                        <div id="checkoutItems">
-                            <!-- Items will be loaded here -->
-                        </div>
-                        
-                        <div style="margin-top: 20px; padding-top: 20px; border-top: 2px solid #E5E7EB;">
-                            <div class="summary-row">
-                                <span>Subtotal:</span>
-                                <span id="checkoutSubtotal">$0.00</span>
-                            </div>
-                            <div class="summary-row">
-                                <span>Processing Fee (2%):</span>
-                                <span id="checkoutProcessingFee">$0.00</span>
-                            </div>
-                            <div class="summary-row">
-                                <span>Tax (8%):</span>
-                                <span id="checkoutTax">$0.00</span>
-                            </div>
-                            <div class="summary-row total">
-                                <span>Total:</span>
-                                <span id="checkoutTotal">$0.00</span>
-                            </div>
-                        </div>
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span id="checkoutSubtotal">$0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Processing Fee</span>
+                        <span id="checkoutProcessingFee">$0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Tax</span>
+                        <span id="checkoutTax">$0.00</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <span id="checkoutTotal">$0.00</span>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
 
         <!-- Orders Page -->
-        <section id="ordersPage" class="page-section">
-            <div class="orders-section">
-                <div class="section-header">
-                    <h2>Your Orders</h2>
-                    <p>Track your order history</p>
-                </div>
-                
-                <div id="allOrders">
-                    <!-- Orders will be dynamically loaded here -->
-                </div>
+        <div id="ordersPage" class="page">
+            <h2>My Orders</h2>
+            <div id="ordersGrid" class="orders-grid">
+                <!-- Orders will be loaded here -->
             </div>
-        </section>
-
-        <!-- Dashboard Page -->
-        <section id="dashboardPage" class="page-section">
-            <div class="dashboard-section">
-                <div class="section-header">
-                    <h2>Dashboard</h2>
-                    <p>Welcome back! Here's your account overview</p>
-                </div>
-                
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon orders">
-                            <i class="fas fa-shopping-bag"></i>
-                        </div>
-                        <div class="stat-value" id="totalOrders">0</div>
-                        <div class="stat-label">Total Orders</div>
-                    </div>
-                    
-                    <div class="stat-card">
-                        <div class="stat-icon cards">
-                            <i class="fas fa-credit-card"></i>
-                        </div>
-                        <div class="stat-value" id="activeCards">0</div>
-                        <div class="stat-label">Active Cards</div>
-                    </div>
-                    
-                    <div class="stat-card">
-                        <div class="stat-icon spent">
-                            <i class="fas fa-dollar-sign"></i>
-                        </div>
-                        <div class="stat-value" id="totalSpent">$0</div>
-                        <div class="stat-label">Total Spent</div>
-                    </div>
-                    
-                    <div class="stat-card">
-                        <div class="stat-icon saved">
-                            <i class="fas fa-piggy-bank"></i>
-                        </div>
-                        <div class="stat-value" id="savedAmount">$0</div>
-                        <div class="stat-label">Amount Saved</div>
-                    </div>
-                </div>
-                
-                <div style="background: white; border-radius: 15px; padding: 30px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);">
-                    <h3 style="margin-bottom: 20px;">Recent Orders</h3>
-                    <div id="recentOrders">
-                        <!-- Recent orders will be loaded here -->
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+        </div>
+    </div>
 
     <!-- Auth Modal -->
     <div id="authModal" class="modal">
         <div class="modal-content">
-            <span class="modal-close" onclick="closeAuthModal()">
-                <i class="fas fa-times"></i>
-            </span>
-            
-            <div class="auth-header">
-                <h2 id="authTitle">Sign In</h2>
-                <p id="authSubtitle">Access your account to continue</p>
+            <div class="modal-header">
+                <h2 class="modal-title">Welcome Back</h2>
+                <button class="close-btn" onclick="closeAuthModal()">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
-            
-            <form id="authForm" onsubmit="handleAuth(event)">
-                <div class="form-group" id="signupFields" style="display: none;">
-                    <label>Full Name</label>
-                    <input type="text" id="authFullName" placeholder="Enter your full name">
-                </div>
-                
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchAuthTab('signin')">Sign In</button>
+                <button class="auth-tab" onclick="switchAuthTab('signup')">Sign Up</button>
+            </div>
+            <form class="auth-form active" onsubmit="handleSignIn(event)">
                 <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email" id="authEmail" placeholder="Enter your email" required>
+                    <label>Email</label>
+                    <input type="email" required placeholder="john@example.com">
                 </div>
-                
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" id="authPassword" placeholder="Enter your password" required>
+                    <input type="password" required placeholder="••••••••">
                 </div>
-                
-                <div class="form-group" id="phoneField" style="display: none;">
-                    <label>Phone Number</label>
-                    <input type="tel" id="authPhone" placeholder="Enter your phone number">
-                </div>
-                
-                <button type="submit" class="btn btn-primary" style="width: 100%;" id="authSubmitBtn">
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
                     Sign In
                 </button>
             </form>
-            
-            <div class="auth-toggle">
-                <span id="authToggleText">Don't have an account?</span>
-                <a id="authToggleLink" onclick="toggleAuthMode()">Sign Up</a>
-            </div>
+            <form class="auth-form" onsubmit="handleSignUp(event)">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" required placeholder="john@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    Create Account
+                </button>
+            </form>
         </div>
     </div>
 
     <!-- Payment Modal -->
-    <div id="paymentModal" class="modal">
-        <div class="modal-content payment-modal">
-            <span class="modal-close" onclick="closePaymentModal()">
-                <i class="fas fa-times"></i>
-            </span>
-            
-            <div class="payment-header">
-                <h2>Complete Payment</h2>
-                <p>Pay using UPI for instant delivery</p>
+    <div id="paymentModal" class="payment-modal">
+        <div class="payment-content">
+            <div class="payment-icon">
+                <i class="fas fa-check"></i>
             </div>
-            
-            <div class="payment-amount">
-                ₹<span id="modalAmount">0.00</span>
+            <h2>Payment Required</h2>
+            <div class="payment-amount">₹<span id="modalAmount">0.00</span></div>
+            <div class="payment-amount-usd">($<span id="modalAmountUSD">0.00</span> USD)</div>
+            <div class="payment-qr">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=viralchauhan457-1@okhdfcbank&pn=CardVault&am=0&cu=INR" alt="Payment QR">
             </div>
-            
-            <div class="upi-details">
-                <div class="qr-code">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=viralchauhan457-1@okhdfcbank&pn=CCShop&am=0" alt="QR Code" style="width: 100%; height: 100%; object-fit: contain;">
-                </div>
-                
-                <div class="upi-id">
-                    viralchauhan457-1@okhdfcbank
-                    <button class="copy-btn" id="copyBtn" onclick="copyUpiId()">
-                        <i class="fas fa-copy"></i> Copy
-                    </button>
-                </div>
-            </div>
-            
-            <div class="payment-status waiting" id="paymentStatus">
-                <i class="fas fa-clock"></i> Waiting for payment...
-            </div>
-            
+            <div class="payment-upi">viralchauhan457-1@okhdfcbank</div>
+            <p style="color: var(--text-light); margin-bottom: 1rem;">
+                Scan QR code or pay using UPI ID above
+            </p>
             <div class="payment-actions">
-                <button class="btn btn-black" onclick="cancelPayment()">
-                    <i class="fas fa-times"></i> Cancel
+                <button class="btn btn-outline" onclick="cancelPayment()">
+                    Cancel
                 </button>
-                <button class="btn btn-primary" id="confirmPaymentBtn" onclick="confirmPayment()">
-                    <i class="fas fa-check"></i> I Have Paid
+                <button class="btn btn-primary" onclick="confirmPayment()">
+                    <i class="fas fa-check"></i> I've Paid
                 </button>
             </div>
-        </div>
-    </div>
-
-    <!-- Full Screen Payment -->
-    <div id="fullscreenPayment" class="fullscreen-payment">
-        <div class="fullscreen-content">
-            <h2>Quick Payment</h2>
-            <div class="fullscreen-amount">
-                ₹<span id="fullscreenAmount">0.00</span>
-            </div>
-            
-            <div class="upi-details">
-                <div class="qr-code">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=viralchauhan457-1@okhdfcbank&pn=CCShop&am=0" alt="QR Code" style="width: 100%; height: 100%; object-fit: contain;">
-                </div>
-                
-                <div class="upi-id">
-                    viralchauhan457-1@okhdfcbank
-                    <button class="copy-btn" onclick="copyUpiId()">
-                        <i class="fas fa-copy"></i> Copy
-                    </button>
-                </div>
-            </div>
-            
-            <button class="btn btn-black" onclick="cancelFullscreenPayment()" style="width: 100%; margin-top: 20px;">
-                <i class="fas fa-arrow-left"></i> Back to Shopping
-            </button>
         </div>
     </div>
 
     <!-- Confirmation Dialog -->
     <div id="confirmDialog" class="confirm-dialog">
         <div class="confirm-content">
-            <div class="confirm-icon">
-                <i class="fas fa-exclamation-triangle"></i>
-            </div>
-            <div class="confirm-title">Cancel Payment?</div>
-            <div class="confirm-message">Are you sure you want to cancel this payment? Your cart items will be saved.</div>
+            <h3 class="confirm-title">Cancel Payment?</h3>
+            <p class="confirm-message">Are you sure you want to cancel this payment?</p>
             <div class="confirm-actions">
-                <button class="btn btn-black" onclick="closeConfirmDialog()">
+                <button class="btn btn-outline" onclick="closeConfirmDialog()">
                     No, Continue
                 </button>
-                <button class="btn btn-primary" onclick="confirmCancelPayment()">
+                <button class="btn btn-danger" onclick="confirmCancelPayment()">
                     Yes, Cancel
                 </button>
             </div>
@@ -1695,40 +1580,36 @@
 
     <!-- Chat Widget -->
     <div class="chat-widget">
-        <div class="chat-window" id="chatWindow">
+        <div id="chatWindow" class="chat-window">
             <div class="chat-header">
                 <div>
-                    <div style="font-weight: bold;">Customer Support</div>
-                    <div style="font-size: 12px; opacity: 0.8;">We typically reply instantly</div>
+                    <div style="font-weight: 600;">Customer Support</div>
+                    <div style="font-size: 0.9rem; opacity: 0.9;">We typically reply in minutes</div>
                 </div>
-                <span style="cursor: pointer;" onclick="toggleChat()">
+                <button class="close-btn" onclick="toggleChat()">
                     <i class="fas fa-times"></i>
-                </span>
+                </button>
             </div>
-            
-            <div class="chat-messages" id="chatMessages">
+            <div id="chatMessages" class="chat-messages">
                 <div class="chat-message">
-                    <div class="message-bubble">
-                        Hello! Welcome to CCShop. How can I help you today?
-                    </div>
+                    <div class="message-avatar">CS</div>
+                    <div class="message-bubble">Hello! Welcome to CardVault. How can I help you today?</div>
                 </div>
             </div>
-            
             <div class="chat-input">
-                <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="handleChatInput(event)">
+                <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="handleChatInput(event)">
                 <button onclick="sendMessage()">
                     <i class="fas fa-paper-plane"></i>
                 </button>
             </div>
         </div>
-        
         <button class="chat-button" onclick="toggleChat()">
             <i class="fas fa-comment-dots"></i>
         </button>
     </div>
 
     <!-- Toast Container -->
-    <div class="toast-container" id="toastContainer"></div>
+    <div id="toastContainer" class="toast-container"></div>
 
     <script>
         // App State
@@ -1736,579 +1617,302 @@
             currentUser: null,
             cart: [],
             orders: [],
-            cards: [
-                {
-                    id: 1,
-                    name: 'Chase Sapphire Preferred',
-                    number: '4266 •••• •••• 1234',
-                    limit: 800,
-                    valid: '12/2029',
-                    price: 149.99,
-                    category: 'visa',
-                    inStock: true,
-                    brand: 'VISA'
-                },
-                {
-                    id: 2,
-                    name: 'Capital One Venture',
-                    number: '5555 •••• •••• 5678',
-                    limit: 750,
-                    valid: '08/2030',
-                    price: 129.99,
-                    category: 'mastercard',
-                    inStock: true,
-                    brand: 'MASTERCARD'
-                },
-                {
-                    id: 3,
-                    name: 'American Express Gold',
-                    number: '3782 •••• •••• 9012',
-                    limit: 900,
-                    valid: '03/2031',
-                    price: 199.99,
-                    category: 'amex',
-                    inStock: true,
-                    brand: 'AMERICAN EXPRESS'
-                },
-                {
-                    id: 4,
-                    name: 'Discover it Cash Back',
-                    number: '6011 •••• •••• 3456',
-                    limit: 600,
-                    valid: '11/2029',
-                    price: 99.99,
-                    category: 'discover',
-                    inStock: true,
-                    brand: 'DISCOVER'
-                },
-                {
-                    id: 5,
-                    name: 'Citi Double Cash',
-                    number: '5424 •••• •••• 7890',
-                    limit: 950,
-                    valid: '06/2030',
-                    price: 119.99,
-                    category: 'mastercard',
-                    inStock: true,
-                    brand: 'MASTERCARD'
-                },
-                {
-                    id: 6,
-                    name: 'Wells Fargo Propel',
-                    number: '4716 •••• •••• 2345',
-                    limit: 700,
-                    valid: '09/2031',
-                    price: 109.99,
-                    category: 'visa',
-                    inStock: true,
-                    brand: 'VISA'
-                },
-                {
-                    id: 7,
-                    name: 'Bank of America Premium',
-                    number: '5583 •••• •••• 6789',
-                    limit: 850,
-                    valid: '04/2030',
-                    price: 139.99,
-                    category: 'mastercard',
-                    inStock: true,
-                    brand: 'MASTERCARD'
-                },
-                {
-                    id: 8,
-                    name: 'US Bank Altitude',
-                    number: '4485 •••• •••• 0123',
-                    limit: 650,
-                    valid: '01/2031',
-                    price: 89.99,
-                    category: 'visa',
-                    inStock: true,
-                    brand: 'VISA'
-                },
-                {
-                    id: 9,
-                    name: 'Barclaycard Arrival',
-                    number: '5199 •••• •••• 4567',
-                    limit: 720,
-                    valid: '07/2030',
-                    price: 99.99,
-                    category: 'mastercard',
-                    inStock: true,
-                    brand: 'MASTERCARD'
-                },
-                {
-                    id: 10,
-                    name: 'Discover Escape',
-                    number: '6011 •••• •••• 8901',
-                    limit: 820,
-                    valid: '02/2031',
-                    price: 119.99,
-                    category: 'discover',
-                    inStock: true,
-                    brand: 'DISCOVER'
-                },
-                {
-                    id: 11,
-                    name: 'Chase Freedom Unlimited',
-                    number: '4147 •••• •••• 3456',
-                    limit: 980,
-                    valid: '10/2030',
-                    price: 149.99,
-                    category: 'visa',
-                    inStock: true,
-                    brand: 'VISA'
-                },
-                {
-                    id: 12,
-                    name: 'Capital One Savor',
-                    number: '5249 •••• •••• 7890',
-                    limit: 760,
-                    valid: '05/2031',
-                    price: 109.99,
-                    category: 'mastercard',
-                    inStock: true,
-                    brand: 'MASTERCARD'
-                },
-                {
-                    id: 13,
-                    name: 'American Express Blue Cash',
-                    number: '3715 •••• •••• 2345',
-                    limit: 940,
-                    valid: '12/2030',
-                    price: 169.99,
-                    category: 'amex',
-                    inStock: true,
-                    brand: 'AMERICAN EXPRESS'
-                },
-                {
-                    id: 14,
-                    name: 'Discover it Miles',
-                    number: '6011 •••• •••• 6789',
-                    limit: 730,
-                    valid: '03/2031',
-                    price: 99.99,
-                    category: 'discover',
-                    inStock: true,
-                    brand: 'DISCOVER'
-                },
-                {
-                    id: 15,
-                    name: 'Citi Premier',
-                    number: '5537 •••• •••• 0123',
-                    limit: 880,
-                    valid: '08/2030',
-                    price: 129.99,
-                    category: 'mastercard',
-                    inStock: true,
-                    brand: 'MASTERCARD'
-                },
-                {
-                    id: 16,
-                    name: 'Wells Fargo Cash Wise',
-                    number: '4532 •••• •••• 4567',
-                    limit: 680,
-                    valid: '01/2031',
-                    price: 79.99,
-                    category: 'visa',
-                    inStock: true,
-                    brand: 'VISA'
-                },
-                {
-                    id: 17,
-                    name: 'Bank of America Travel',
-                    number: '5404 •••• •••• 8901',
-                    limit: 920,
-                    valid: '11/2030',
-                    price: 139.99,
-                    category: 'mastercard',
-                    inStock: true,
-                    brand: 'MASTERCARD'
-                },
-                {
-                    id: 18,
-                    name: 'US Bank Cash Plus',
-                    number: '4427 •••• •••• 2345',
-                    limit: 780,
-                    valid: '06/2031',
-                    price: 89.99,
-                    category: 'visa',
-                    inStock: true,
-                    brand: 'VISA'
-                },
-                {
-                    id: 19,
-                    name: 'American Express Platinum',
-                    number: '3743 •••• •••• 4837',
-                    limit: 960,
-                    valid: '05/2031',
-                    price: 249.99,
-                    category: 'amex',
-                    inStock: true,
-                    brand: 'AMERICAN EXPRESS'
-                },
-                {
-                    id: 20,
-                    name: 'Discover it Student',
-                    number: '6011 •••• •••• 6294',
-                    limit: 690,
-                    valid: '08/2031',
-                    price: 49.99,
-                    category: 'discover',
-                    inStock: true,
-                    brand: 'DISCOVER'
-                },
-                {
-                    id: 21,
-                    name: 'Capital One Platinum',
-                    number: '4532 •••• •••• 9999',
-                    limit: 500,
-                    valid: '07/2031',
-                    price: 39.99,
-                    category: 'visa',
-                    inStock: true,
-                    brand: 'VISA'
-                },
-                {
-                    id: 22,
-                    name: 'Discover it Secured',
-                    number: '5421 •••• •••• 0000',
-                    limit: 450,
-                    valid: '04/2031',
-                    price: 29.99,
-                    category: 'discover',
-                    inStock: true,
-                    brand: 'DISCOVER'
-                },
-                {
-                    id: 23,
-                    name: 'Citi Secured',
-                    number: '6011 •••• •••• 1111',
-                    limit: 550,
-                    valid: '06/2031',
-                    price: 34.99,
-                    category: 'mastercard',
-                    inStock: true,
-                    brand: 'MASTERCARD'
-                },
-                {
-                    id: 24,
-                    name: 'OpenSky Secured Visa',
-                    number: '4828 •••• •••• 2222',
-                    limit: 300,
-                    valid: '09/2031',
-                    price: 24.99,
-                    category: 'visa',
-                    inStock: true,
-                    brand: 'VISA'
-                },
-                {
-                    id: 25,
-                    name: 'Milestone Mastercard',
-                    number: '5304 •••• •••• 3333',
-                    limit: 350,
-                    valid: '02/2032',
-                    price: 27.99,
-                    category: 'mastercard',
-                    inStock: true,
-                    brand: 'MASTERCARD'
-                },
-                {
-                    id: 26,
-                    name: 'Indigo Platinum Mastercard',
-                    number: '5525 •••• •••• 4444',
-                    limit: 400,
-                    valid: '11/2031',
-                    price: 32.99,
-                    category: 'mastercard',
-                    inStock: true,
-                    brand: 'MASTERCARD'
-                },
-                {
-                    id: 27,
-                    name: 'Reflex Mastercard',
-                    number: '5462 •••• •••• 5555',
-                    limit: 250,
-                    valid: '05/2032',
-                    price: 22.99,
-                    category: 'mastercard',
-                    inStock: true,
-                    brand: 'MASTERCARD'
-                },
-                {
-                    id: 28,
-                    name: 'Fit Mastercard',
-                    number: '5388 •••• •••• 6666',
-                    limit: 400,
-                    valid: '08/2031',
-                    price: 31.99,
-                    category: 'mastercard',
-                    inStock: true,
-                    brand: 'MASTERCARD'
-                }
-            ],
-            currentUsdToInrRate: 83.50
+            currentSort: 'name'
         };
 
-        // Initialize App
+        // Real Cards Data - ONLY LIMITS CHANGED TO UNDER $2000
+        const realCards = [
+            { id: 1, name: 'Platinum Visa', holder: 'John Smith', network: 'visa', limit: 1500, price: 29.99, valid: '3 Months', inStock: true, rating: 4.5, reviews: 234 },
+            { id: 2, name: 'Gold Mastercard', holder: 'Emily Johnson', network: 'mastercard', limit: 1200, price: 24.99, valid: '2 Months', inStock: true, rating: 4.3, reviews: 189 },
+            { id: 3, name: 'Silver Amex', holder: 'Michael Brown', network: 'amex', limit: 800, price: 19.99, valid: '1 Month', inStock: false, rating: 4.6, reviews: 312 },
+            { id: 4, name: 'Titanium Visa', holder: 'Sarah Davis', network: 'visa', limit: 1800, price: 39.99, valid: '4 Months', inStock: true, rating: 4.7, reviews: 445 },
+            { id: 5, name: 'Diamond Mastercard', holder: 'David Wilson', network: 'mastercard', limit: 2000, price: 49.99, valid: '6 Months', inStock: true, rating: 4.8, reviews: 567 },
+            { id: 6, name: 'Ruby Amex', holder: 'Lisa Anderson', network: 'amex', limit: 1000, price: 22.99, valid: '2 Months', inStock: true, rating: 4.4, reviews: 278 },
+            { id: 7, name: 'Sapphire Visa', holder: 'James Taylor', network: 'visa', limit: 1600, price: 34.99, valid: '3 Months', inStock: false, rating: 4.6, reviews: 389 },
+            { id: 8, name: 'Emerald Mastercard', holder: 'Jennifer Thomas', network: 'mastercard', limit: 1400, price: 31.99, valid: '3 Months', inStock: true, rating: 4.5, reviews: 423 },
+            { id: 9, name: 'Pearl Amex', holder: 'Robert Jackson', network: 'amex', limit: 900, price: 18.99, valid: '1 Month', inStock: true, rating: 4.3, reviews: 234 },
+            { id: 10, name: 'Obsidian Visa', holder: 'Maria White', network: 'visa', limit: 1900, price: 44.99, valid: '5 Months', inStock: true, rating: 4.9, reviews: 612 },
+            { id: 11, name: 'Crystal Mastercard', holder: 'William Harris', network: 'mastercard', limit: 1100, price: 26.99, valid: '2 Months', inStock: true, rating: 4.4, reviews: 345 },
+            { id: 12, name: 'Onyx Amex', holder: 'Patricia Martin', network: 'amex', limit: 1300, price: 28.99, valid: '3 Months', inStock: false, rating: 4.6, reviews: 456 },
+            { id: 13, name: 'Ivory Visa', holder: 'Christopher Thompson', network: 'visa', limit: 1700, price: 37.99, valid: '4 Months', inStock: true, rating: 4.7, reviews: 523 },
+            { id: 14, name: 'Bronze Mastercard', holder: 'Linda Garcia', network: 'mastercard', limit: 700, price: 16.99, valid: '1 Month', inStock: true, rating: 4.2, reviews: 198 },
+            { id: 15, name: 'Copper Amex', holder: 'Daniel Martinez', network: 'amex', limit: 950, price: 20.99, valid: '2 Months', inStock: true, rating: 4.4, reviews: 289 },
+            { id: 16, name: 'Nickel Visa', holder: 'Nancy Robinson', network: 'visa', limit: 1250, price: 27.99, valid: '2 Months', inStock: false, rating: 4.5, reviews: 367 },
+            { id: 17, name: 'Zinc Mastercard', holder: 'Paul Clark', network: 'mastercard', limit: 1450, price: 32.99, valid: '3 Months', inStock: true, rating: 4.6, reviews: 412 },
+            { id: 18, name: 'Aluminum Amex', holder: 'Karen Lewis', network: 'amex', limit: 850, price: 17.99, valid: '1 Month', inStock: true, rating: 4.3, reviews: 245 },
+            { id: 19, name: 'Steel Visa', holder: 'Steven Lee', network: 'visa', limit: 1750, price: 41.99, valid: '4 Months', inStock: true, rating: 4.8, reviews: 589 },
+            { id: 20, name: 'Iron Mastercard', holder: 'Betty Walker', network: 'mastercard', limit: 1050, price: 25.99, valid: '2 Months', inStock: true, rating: 4.4, reviews: 334 },
+            { id: 21, name: 'Cobalt Amex', holder: 'Donald Hall', network: 'amex', limit: 1150, price: 23.99, valid: '2 Months', inStock: false, rating: 4.5, reviews: 378 },
+            { id: 22, name: 'Chrome Visa', holder: 'Helen Allen', network: 'visa', limit: 1550, price: 35.99, valid: '3 Months', inStock: true, rating: 4.6, reviews: 467 },
+            { id: 23, name: 'Platinum Plus', holder: 'Richard Young', network: 'visa', limit: 1650, price: 38.99, valid: '4 Months', inStock: true, rating: 4.7, reviews: 534 },
+            { id: 24, name: 'Gold Elite', holder: 'Sandra King', network: 'mastercard', limit: 1350, price: 30.99, valid: '3 Months', inStock: true, rating: 4.5, reviews: 423 },
+            { id: 25, name: 'Silver Premium', holder: 'Joseph Wright', network: 'amex', limit: 750, price: 15.99, valid: '1 Month', inStock: false, rating: 4.2, reviews: 189 },
+            { id: 26, name: 'Titanium Pro', holder: 'Ashley Lopez', network: 'visa', limit: 1850, price: 46.99, valid: '5 Months', inStock: true, rating: 4.9, reviews: 645 },
+            { id: 27, name: 'Diamond Select', holder: 'Charles Hill', network: 'mastercard', limit: 1950, price: 48.99, valid: '6 Months', inStock: true, rating: 4.8, reviews: 601 },
+            { id: 28, name: 'Ruby Deluxe', holder: 'Kimberly Scott', network: 'amex', limit: 880, price: 19.99, valid: '2 Months', inStock: true, rating: 4.4, reviews: 312 },
+            { id: 29, name: 'Sapphire Ultra', holder: 'Mark Green', network: 'visa', limit: 1280, price: 29.99, valid: '3 Months', inStock: false, rating: 4.5, reviews: 389 },
+            { id: 30, name: 'Emerald Supreme', holder: 'Amy Adams', network: 'mastercard', limit: 1480, price: 33.99, valid: '3 Months', inStock: true, rating: 4.6, reviews: 467 },
+            { id: 31, name: 'Pearl Exclusive', holder: 'Daniel Baker', network: 'amex', limit: 980, price: 21.99, valid: '2 Months', inStock: true, rating: 4.3, reviews: 256 },
+            { id: 32, name: 'Obsidian Premium', holder: 'Emily Nelson', network: 'visa', limit: 1380, price: 31.99, valid: '3 Months', inStock: true, rating: 4.5, reviews: 423 },
+            { id: 33, name: 'Crystal Luxury', holder: 'Frank Carter', network: 'mastercard', limit: 1580, price: 36.99, valid: '4 Months', inStock: false, rating: 4.7, reviews: 512 },
+            { id: 34, name: 'Onyx Ultimate', holder: 'Grace Mitchell', network: 'amex', limit: 780, price: 16.99, valid: '1 Month', inStock: true, rating: 4.2, reviews: 198 },
+            { id: 35, name: 'Ivory Classic', holder: 'Henry Perez', network: 'visa', limit: 1180, price: 26.99, valid: '2 Months', inStock: true, rating: 4.4, reviews: 334 },
+            { id: 36, name: 'Bronze Standard', holder: 'Isabella Roberts', network: 'mastercard', limit: 680, price: 14.99, valid: '1 Month', inStock: true, rating: 4.1, reviews: 156 },
+            { id: 37, name: 'Copper Basic', holder: 'Jacob Turner', network: 'amex', limit: 820, price: 18.99, valid: '2 Months', inStock: false, rating: 4.3, reviews: 278 },
+            { id: 38, name: 'Nickel Essential', holder: 'Katherine Phillips', network: 'visa', limit: 1020, price: 24.99, valid: '2 Months', inStock: true, rating: 4.4, reviews: 312 },
+            { id: 39, name: 'Zinc Value', holder: 'Liam Campbell', network: 'mastercard', limit: 1220, price: 28.99, valid: '3 Months', inStock: true, rating: 4.5, reviews: 389 },
+            { id: 40, name: 'Aluminum Plus', holder: 'Mia Parker', network: 'amex', limit: 920, price: 20.99, valid: '2 Months', inStock: true, rating: 4.3, reviews: 245 },
+            { id: 41, name: 'Steel Advanced', holder: 'Noah Evans', network: 'visa', limit: 1420, price: 32.99, valid: '3 Months', inStock: false, rating: 4.6, reviews: 423 },
+            { id: 42, name: 'Iron Professional', holder: 'Olivia Edwards', network: 'mastercard', limit: 1120, price: 25.99, valid: '2 Months', inStock: true, rating: 4.4, reviews: 334 },
+            { id: 43, name: 'Cobalt Business', holder: 'Peter Collins', network: 'amex', limit: 1320, price: 29.99, valid: '3 Months', inStock: true, rating: 4.5, reviews: 378 },
+            { id: 44, name: 'Chrome Corporate', holder: 'Quinn Stewart', network: 'visa', limit: 1520, price: 34.99, valid: '3 Months', inStock: true, rating: 4.6, reviews: 456 },
+            { id: 45, name: 'Platinum Executive', holder: 'Rachel Sanchez', network: 'mastercard', limit: 1720, price: 40.99, valid: '4 Months', inStock: false, rating: 4.7, reviews: 523 },
+            { id: 46, name: 'Gold Premier', holder: 'Ryan Morris', network: 'amex', limit: 870, price: 19.99, valid: '2 Months', inStock: true, rating: 4.3, reviews: 267 },
+            { id: 47, name: 'Silver Signature', holder: 'Sophia Rogers', network: 'visa', limit: 1080, price: 23.99, valid: '2 Months', inStock: true, rating: 4.4, reviews: 312 },
+            { id: 48, name: 'Titanium Reserve', holder: 'Thomas Reed', network: 'mastercard', limit: 1280, price: 27.99, valid: '3 Months', inStock: true, rating: 4.5, reviews: 389 },
+            { id: 49, name: 'Diamond Imperial', holder: 'Ursula Cook', network: 'amex', limit: 1620, price: 37.99, valid: '4 Months', inStock: true, rating: 4.7, reviews: 512 },
+            { id: 50, name: 'Ruby Majesty', holder: 'Vincent Bailey', network: 'visa', limit: 1820, price: 43.99, valid: '5 Months', inStock: false, rating: 4.8, reviews: 589 }
+        ];
+
+        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             loadAppState();
-            renderCards();
-            renderFeaturedCards();
             updateCartUI();
-            checkAuthStatus();
-            
-            // Show home page by default
+            updateAuthUI();
             showPage('home');
-        });
-
-        // Load App State from LocalStorage
-        function loadAppState() {
-            const savedState = localStorage.getItem('ccshop_state');
-            if (savedState) {
-                const state = JSON.parse(savedState);
-                app.currentUser = state.currentUser || null;
-                app.cart = state.cart || [];
-                app.orders = state.orders || [];
-            }
-        }
-
-        // Save App State to LocalStorage
-        function saveAppState() {
-            const state = {
-                currentUser: app.currentUser,
-                cart: app.cart,
-                orders: app.orders
-            };
-            localStorage.setItem('ccshop_state', JSON.stringify(state));
-        }
-
-        // Check Authentication Status
-        function checkAuthStatus() {
-            if (app.currentUser) {
-                updateUserUI(app.currentUser);
-            } else {
-                updateUserUI(null);
-            }
-        }
-
-        // Update User UI
-        function updateUserUI(user) {
-            const userAvatar = document.getElementById('userAvatar');
-            const authButtonText = document.getElementById('authButtonText');
-            const signInBtn = document.querySelector('.nav-actions .btn-black');
+            animateStats();
             
-            if (user) {
-                userAvatar.textContent = user.name.charAt(0).toUpperCase();
-                authButtonText.textContent = 'Sign Out';
-                if (signInBtn) {
-                    signInBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i> <span id="authButtonText">Sign Out</span>';
-                }
-            } else {
-                userAvatar.textContent = 'G';
-                authButtonText.textContent = 'Sign In';
-                if (signInBtn) {
-                    signInBtn.innerHTML = '<i class="fas fa-user"></i> <span id="authButtonText">Sign In</span>';
-                }
+            // Add sample orders for demo
+            if (app.orders.length === 0) {
+                app.orders = [
+                    {
+                        id: 'ORD2024032501',
+                        date: new Date('2024-03-25').toISOString(),
+                        items: [realCards[0], realCards[11]],
+                        status: 'delivered',
+                        total: 184.98,
+                        paymentMethod: 'upi',
+                        customer: { name: 'John Doe', email: 'john@example.com' }
+                    },
+                    {
+                        id: 'ORD2024032402',
+                        date: new Date('2024-03-24').toISOString(),
+                        items: [realCards[5]],
+                        status: 'delivered',
+                        total: 59.99,
+                        paymentMethod: 'crypto',
+                        customer: { name: 'Jane Smith', email: 'jane@example.com' }
+                    }
+                ];
             }
-        }
+        });
 
         // Page Navigation
         function showPage(pageName) {
             // Hide all pages
-            document.querySelectorAll('.page-section').forEach(page => {
+            document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
             });
             
             // Show selected page
-            const pageId = pageName + 'Page';
-            const page = document.getElementById(pageId);
-            if (page) {
-                page.classList.add('active');
+            const pageElement = document.getElementById(pageName + 'Page');
+            if (pageElement) {
+                pageElement.classList.add('active');
                 
                 // Update nav links
                 document.querySelectorAll('.nav-link').forEach(link => {
                     link.classList.remove('active');
-                    if (link.textContent.toLowerCase() === pageName || 
-                        (pageName === 'home' && link.textContent === 'Home')) {
-                        link.classList.add('active');
-                    }
                 });
+                const activeLink = document.querySelector(`.nav-link[onclick*="${pageName}"]`);
+                if (activeLink) activeLink.classList.add('active');
                 
-                // Update page-specific content
-                if (pageName === 'dashboard') {
-                    loadDashboard();
+                // Load page-specific content
+                if (pageName === 'cards') {
+                    loadCards();
                 } else if (pageName === 'cart') {
                     loadCart();
-                } else if (pageName === 'orders') {
-                    loadOrders();
                 } else if (pageName === 'checkout') {
                     loadCheckout();
-                } else if (pageName === 'cards') {
-                    renderCards();
+                } else if (pageName === 'orders') {
+                    loadOrders();
+                } else if (pageName === 'home') {
+                    loadBrowseCards();
+                    animateStats();
                 }
             }
         }
 
-        // Render Featured Cards
-        function renderFeaturedCards() {
-            const featuredCards = document.getElementById('featuredCards');
-            if (!featuredCards) return;
-            
+        // Scroll to Browse Section
+        function scrollToBrowse() {
+            document.getElementById('browseSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Load Browse Cards (Featured on Home)
+        function loadBrowseCards() {
+            const browseGrid = document.getElementById('browseGrid');
             // Show first 6 cards as featured
-            const featured = app.cards.slice(0, 6);
+            const featuredCards = realCards.slice(0, 6);
             
-            featuredCards.innerHTML = featured.map(card => `
-                <div class="card-product">
-                    <div class="card-image">
-                        <div class="card-image-content">
-                            <div class="card-brand">${card.brand}</div>
-                            <div class="card-chip"></div>
-                            <div style="font-size: 14px; margin-top: 10px;">${card.number}</div>
+            browseGrid.innerHTML = featuredCards.map(card => `
+                <div class="browse-card">
+                    <div class="browse-card-header">
+                        <div class="browse-card-info">
+                            <h3>${card.name}</h3>
+                            <p>${card.holder}</p>
                         </div>
-                        <div class="delivery-badge">
-                            <i class="fas fa-bolt"></i>
-                            Instant
+                        <div class="browse-card-price">$${card.price.toFixed(2)}</div>
+                    </div>
+                    <div class="browse-card-details">
+                        <div class="browse-detail">
+                            <div class="browse-detail-label">Limit</div>
+                            <div class="browse-detail-value">$${card.limit.toLocaleString()}</div>
                         </div>
-                        <div class="stock-badge ${!card.inStock ? 'out-of-stock' : ''}">
-                            ${card.inStock ? 'In Stock' : 'Out of Stock'}
+                        <div class="browse-detail">
+                            <div class="browse-detail-label">Valid</div>
+                            <div class="browse-detail-value">${card.valid}</div>
+                        </div>
+                        <div class="browse-detail">
+                            <div class="browse-detail-label">Stock</div>
+                            <div class="browse-detail-value" style="color: ${card.inStock ? 'var(--success)' : 'var(--error)'}">
+                                ${card.inStock ? '✓' : '✗'}
+                            </div>
                         </div>
                     </div>
-                    <div class="card-details">
-                        <div class="card-name">
-                            ${card.name}
-                        </div>
-                        <div class="card-number">
-                            ${card.number} | Limit: $${card.limit}
-                        </div>
-                        <div class="card-number">
-                            Valid: ${card.valid}
-                        </div>
-                        <div class="card-price">$${card.price.toFixed(2)}</div>
-                        <div class="card-actions">
-                            <button class="btn btn-black" onclick="addToCart(${card.id})" ${!card.inStock ? 'disabled' : ''}>
-                                <i class="fas fa-cart-plus"></i>
-                                Add to Cart
-                            </button>
-                            <button class="btn btn-primary" onclick="buyNow(${card.id})" ${!card.inStock ? 'disabled' : ''}>
-                                <i class="fas fa-bolt"></i>
-                                Buy Now
-                            </button>
-                        </div>
+                    <div class="browse-card-actions">
+                        <button class="btn btn-primary" onclick="addToCart(${card.id})">
+                            <i class="fas fa-cart-plus"></i> Add to Cart
+                        </button>
+                        <button class="btn btn-outline" onclick="buyNow(${card.id})">
+                            <i class="fas fa-bolt"></i> Buy Now
+                        </button>
                     </div>
                 </div>
             `).join('');
         }
 
-        // Render Cards
-        function renderCards(cardsToRender = app.cards) {
+        // Load Cards
+        function loadCards() {
             const cardsGrid = document.getElementById('cardsGrid');
-            if (!cardsGrid) return;
+            let filteredCards = [...realCards];
             
-            if (cardsToRender.length === 0) {
-                cardsGrid.innerHTML = `
-                    <div class="empty-state" style="grid-column: 1/-1;">
-                        <i class="fas fa-credit-card"></i>
-                        <h3>No cards found</h3>
-                        <p>Try adjusting your filters or search criteria</p>
-                    </div>
-                `;
-                return;
+            // Apply search filter
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            if (searchTerm) {
+                filteredCards = filteredCards.filter(card => 
+                    card.name.toLowerCase().includes(searchTerm) ||
+                    card.holder.toLowerCase().includes(searchTerm) ||
+                    card.network.toLowerCase().includes(searchTerm)
+                );
             }
             
-            cardsGrid.innerHTML = cardsToRender.map(card => `
-                <div class="card-product">
+            // Sort cards
+            switch(app.currentSort) {
+                case 'price-low':
+                    filteredCards.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    filteredCards.sort((a, b) => b.price - a.price);
+                    break;
+                case 'limit-high':
+                    filteredCards.sort((a, b) => b.limit - a.limit);
+                    break;
+                case 'name':
+                    filteredCards.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+            }
+            
+            cardsGrid.innerHTML = filteredCards.map(card => `
+                <div class="card">
                     <div class="card-image">
-                        <div class="card-image-content">
-                            <div class="card-brand">${card.brand}</div>
-                            <div class="card-chip"></div>
-                            <div style="font-size: 14px; margin-top: 10px;">${card.number}</div>
-                        </div>
-                        <div class="delivery-badge">
-                            <i class="fas fa-bolt"></i>
-                            Instant
-                        </div>
-                        <div class="stock-badge ${!card.inStock ? 'out-of-stock' : ''}">
-                            ${card.inStock ? 'In Stock' : 'Out of Stock'}
+                        <i class="fas fa-credit-card"></i>
+                        <div class="card-badges">
+                            <div class="card-badge verified">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="card-badge instant">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            ${card.inStock ? '' : '<div class="card-badge error"><i class="fas fa-times"></i></div>'}
                         </div>
                     </div>
-                    <div class="card-details">
-                        <div class="card-name">
-                            ${card.name}
+                    <div class="card-content">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-name">${card.name}</div>
+                                <div class="card-holder">Holder: ${card.holder}</div>
+                                <span class="card-network">${card.network.toUpperCase()}</span>
+                            </div>
+                            <div class="card-price">$${card.price.toFixed(2)}</div>
                         </div>
-                        <div class="card-number">
-                            ${card.number} | Limit: $${card.limit}
+                        <div class="card-rating">
+                            <div class="stars">
+                                ${generateStars(card.rating)}
+                            </div>
+                            <span class="rating-text">${card.rating} (${card.reviews.toLocaleString()} reviews)</span>
                         </div>
-                        <div class="card-number">
-                            Valid: ${card.valid}
+                        <div class="card-details">
+                            <div class="card-detail">
+                                <div class="card-detail-label">Limit</div>
+                                <div class="card-detail-value">$${card.limit.toLocaleString()}</div>
+                            </div>
+                            <div class="card-detail">
+                                <div class="card-detail-label">Valid</div>
+                                <div class="card-detail-value">${card.valid}</div>
+                            </div>
+                            <div class="card-detail">
+                                <div class="card-detail-label">Stock</div>
+                                <div class="card-detail-value" style="color: ${card.inStock ? 'var(--success)' : 'var(--error)'}">
+                                    ${card.inStock ? 'Available' : 'Sold Out'}
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-price">$${card.price.toFixed(2)}</div>
                         <div class="card-actions">
-                            <button class="btn btn-black" onclick="addToCart(${card.id})" ${!card.inStock ? 'disabled' : ''}>
-                                <i class="fas fa-cart-plus"></i>
-                                Add to Cart
+                            <button class="btn btn-primary" onclick="addToCart(${card.id})">
+                                <i class="fas fa-cart-plus"></i> Cart
                             </button>
-                            <button class="btn btn-primary" onclick="buyNow(${card.id})" ${!card.inStock ? 'disabled' : ''}>
-                                <i class="fas fa-bolt"></i>
-                                Buy Now
+                            <button class="btn btn-outline" onclick="buyNow(${card.id})">
+                                <i class="fas fa-bolt"></i> Buy Now
                             </button>
                         </div>
                     </div>
                 </div>
             `).join('');
-        }
-
-        // Filter Cards
-        function filterCards() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const category = document.getElementById('categoryFilter').value;
-            
-            let filtered = app.cards.filter(card => {
-                const matchesSearch = card.name.toLowerCase().includes(searchTerm) || 
-                                     card.number.includes(searchTerm);
-                const matchesCategory = !category || card.category === category;
-                return matchesSearch && matchesCategory;
-            });
-            
-            renderCards(filtered);
         }
 
         // Sort Cards
-        function sortCards() {
-            const sortBy = document.getElementById('sortFilter').value;
-            let sorted = [...app.cards];
-            
-            switch(sortBy) {
-                case 'price-low':
-                    sorted.sort((a, b) => a.price - b.price);
-                    break;
-                case 'price-high':
-                    sorted.sort((a, b) => b.price - a.price);
-                    break;
-                case 'limit-high':
-                    sorted.sort((a, b) => b.limit - a.limit);
-                    break;
-            }
-            
-            renderCards(sorted);
+        function sortCards(sortBy) {
+            app.currentSort = sortBy;
+            loadCards();
         }
 
-        // Add to Cart with Sign In Requirement
-        function addToCart(cardId) {
-            // Check if user is signed in
-            if (!app.currentUser) {
-                showToast('Please sign in first to add items to cart', 'warning');
-                openAuthModal();
-                return;
-            }
+        // Generate Star Rating
+        function generateStars(rating) {
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+            const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
             
-            const card = app.cards.find(c => c.id === cardId);
+            let stars = '';
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i class="fas fa-star star"></i>';
+            }
+            if (hasHalfStar) {
+                stars += '<i class="fas fa-star-half-alt star"></i>';
+            }
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '<i class="far fa-star star empty"></i>';
+            }
+            return stars;
+        }
+
+        // Add to Cart
+        function addToCart(cardId) {
+            const card = realCards.find(c => c.id === cardId);
             if (!card || !card.inStock) {
                 showToast('Card not available', 'error');
                 return;
             }
             
             const existingItem = app.cart.find(item => item.id === cardId);
-            
             if (existingItem) {
                 existingItem.quantity++;
             } else {
@@ -2321,19 +1925,19 @@
             saveAppState();
             updateCartUI();
             
-            // Add bounce animation to cart icon
-            const cartIcon = document.getElementById('cartIcon');
-            cartIcon.classList.add('bounce');
+            // Animate cart icon
+            const cartIcon = document.querySelector('.icon-btn');
+            cartIcon.style.transform = 'scale(1.2)';
             setTimeout(() => {
-                cartIcon.classList.remove('bounce');
-            }, 500);
+                cartIcon.style.transform = 'scale(1)';
+            }, 300);
             
             showToast(`${card.name} added to cart`, 'success');
         }
 
-        // Buy Now - Full Screen Payment
+        // Buy Now
         function buyNow(cardId) {
-            const card = app.cards.find(c => c.id === cardId);
+            const card = realCards.find(c => c.id === cardId);
             if (!card || !card.inStock) {
                 showToast('Card not available', 'error');
                 return;
@@ -2348,87 +1952,8 @@
             saveAppState();
             updateCartUI();
             
-            // Show full screen payment
-            const total = calculateOrderTotal();
-            const inrAmount = convertUsdToInr(total);
-            document.getElementById('fullscreenAmount').textContent = inrAmount.toFixed(2);
-            document.getElementById('fullscreenPayment').classList.add('active');
-        }
-
-        // Cancel Full Screen Payment
-        function cancelFullscreenPayment() {
-            document.getElementById('fullscreenPayment').classList.remove('active');
-        }
-
-        // Close Payment Modal
-        function closePaymentModal() {
-            const modal = document.getElementById('paymentModal');
-            modal.classList.remove('active');
-            
-            // Reset payment status
-            const paymentStatus = document.getElementById('paymentStatus');
-            paymentStatus.className = 'payment-status waiting';
-            paymentStatus.innerHTML = '<i class="fas fa-clock"></i> Waiting for payment...';
-            
-            // Reset confirm button
-            const confirmBtn = document.getElementById('confirmPaymentBtn');
-            confirmBtn.disabled = false;
-            confirmBtn.innerHTML = '<i class="fas fa-check"></i> I Have Paid';
-        }
-
-        // Copy UPI ID
-        function copyUpiId() {
-            const upiId = 'viralchauhan457-1@okhdfcbank';
-            navigator.clipboard.writeText(upiId).then(() => {
-                const copyBtn = document.getElementById('copyBtn');
-                copyBtn.classList.add('copied');
-                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                
-                showToast('UPI ID copied to clipboard!', 'success');
-                
-                setTimeout(() => {
-                    copyBtn.classList.remove('copied');
-                    copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
-                }, 2000);
-            });
-        }
-
-        // Confirm Payment - Complete order immediately
-        function confirmPayment() {
-            const confirmBtn = document.getElementById('confirmPaymentBtn');
-            const paymentStatus = document.getElementById('paymentStatus');
-            
-            // Disable button and show success status
-            confirmBtn.disabled = true;
-            confirmBtn.innerHTML = '<i class="fas fa-check"></i> Payment Complete';
-            
-            paymentStatus.className = 'payment-status success';
-            paymentStatus.innerHTML = '<i class="fas fa-check-circle"></i> Payment received successfully!';
-            
-            showToast('🎉 Payment received! Processing your order...', 'success');
-            
-            // Complete order immediately
-            setTimeout(() => {
-                completeOrder();
-                closePaymentModal();
-            }, 1500);
-        }
-
-        // Cancel Payment with Confirmation
-        function cancelPayment() {
-            document.getElementById('confirmDialog').classList.add('active');
-        }
-
-        // Close Confirmation Dialog
-        function closeConfirmDialog() {
-            document.getElementById('confirmDialog').classList.remove('active');
-        }
-
-        // Confirm Cancel Payment
-        function confirmCancelPayment() {
-            closeConfirmDialog();
-            closePaymentModal();
-            showToast('Payment cancelled', 'info');
+            // Go directly to checkout
+            showPage('checkout');
         }
 
         // Update Cart UI
@@ -2436,6 +1961,7 @@
             const cartCount = document.getElementById('cartCount');
             const totalItems = app.cart.reduce((sum, item) => sum + item.quantity, 0);
             cartCount.textContent = totalItems;
+            cartCount.style.display = totalItems > 0 ? 'block' : 'none';
         }
 
         // Load Cart
@@ -2460,26 +1986,24 @@
             cartItems.innerHTML = app.cart.map(item => `
                 <div class="cart-item">
                     <div class="cart-item-image">
-                        ${item.name.charAt(0)}
+                        <i class="fas fa-credit-card"></i>
                     </div>
                     <div class="cart-item-details">
-                        <div class="cart-item-name">${item.name} - ${item.number}</div>
-                        <div class="cart-item-info">Limit: $${item.limit} | Valid: ${item.valid}</div>
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-info">Holder: ${item.holder}</div>
                         <div class="cart-item-price">$${item.price.toFixed(2)}</div>
-                        <div class="cart-item-actions">
-                            <div class="quantity-control">
-                                <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                                <span class="quantity-value">${item.quantity}</span>
-                                <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">
-                                    <i class="fas fa-plus"></i>
-                                </button>
-                            </div>
-                            <button class="btn btn-black" onclick="removeFromCart(${item.id})">
-                                Remove
+                        <div class="quantity-control">
+                            <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <span class="quantity-value">${item.quantity}</span>
+                            <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">
+                                <i class="fas fa-plus"></i>
                             </button>
                         </div>
+                        <button class="btn btn-outline" onclick="removeFromCart(${item.id})" style="margin-top: 10px;">
+                            <i class="fas fa-trash"></i> Remove
+                        </button>
                     </div>
                 </div>
             `).join('');
@@ -2495,26 +2019,32 @@
             const total = subtotal + processingFee + tax;
             
             // Update cart page summary
-            const subtotalEl = document.getElementById('subtotal');
-            const processingFeeEl = document.getElementById('processingFee');
-            const taxEl = document.getElementById('tax');
-            const totalEl = document.getElementById('total');
+            const elements = {
+                itemCount: document.getElementById('itemCount'),
+                subtotal: document.getElementById('subtotal'),
+                processingFee: document.getElementById('processingFee'),
+                tax: document.getElementById('tax'),
+                total: document.getElementById('total')
+            };
             
-            if (subtotalEl) subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
-            if (processingFeeEl) processingFeeEl.textContent = `$${processingFee.toFixed(2)}`;
-            if (taxEl) taxEl.textContent = `$${tax.toFixed(2)}`;
-            if (totalEl) totalEl.textContent = `$${total.toFixed(2)}`;
+            if (elements.itemCount) elements.itemCount.textContent = app.cart.reduce((sum, item) => sum + item.quantity, 0);
+            if (elements.subtotal) elements.subtotal.textContent = `$${subtotal.toFixed(2)}`;
+            if (elements.processingFee) elements.processingFee.textContent = `$${processingFee.toFixed(2)}`;
+            if (elements.tax) elements.tax.textContent = `$${tax.toFixed(2)}`;
+            if (elements.total) elements.total.textContent = `$${total.toFixed(2)}`;
             
             // Update checkout page summary
-            const checkoutSubtotal = document.getElementById('checkoutSubtotal');
-            const checkoutProcessingFee = document.getElementById('checkoutProcessingFee');
-            const checkoutTax = document.getElementById('checkoutTax');
-            const checkoutTotal = document.getElementById('checkoutTotal');
+            const checkoutElements = {
+                subtotal: document.getElementById('checkoutSubtotal'),
+                processingFee: document.getElementById('checkoutProcessingFee'),
+                tax: document.getElementById('checkoutTax'),
+                total: document.getElementById('checkoutTotal')
+            };
             
-            if (checkoutSubtotal) checkoutSubtotal.textContent = `$${subtotal.toFixed(2)}`;
-            if (checkoutProcessingFee) checkoutProcessingFee.textContent = `$${processingFee.toFixed(2)}`;
-            if (checkoutTax) checkoutTax.textContent = `$${tax.toFixed(2)}`;
-            if (checkoutTotal) checkoutTotal.textContent = `$${total.toFixed(2)}`;
+            if (checkoutElements.subtotal) checkoutElements.subtotal.textContent = `$${subtotal.toFixed(2)}`;
+            if (checkoutElements.processingFee) checkoutElements.processingFee.textContent = `$${processingFee.toFixed(2)}`;
+            if (checkoutElements.tax) checkoutElements.tax.textContent = `$${tax.toFixed(2)}`;
+            if (checkoutElements.total) checkoutElements.total.textContent = `$${total.toFixed(2)}`;
         }
 
         // Update Quantity
@@ -2568,9 +2098,9 @@
             const checkoutItems = document.getElementById('checkoutItems');
             if (checkoutItems) {
                 checkoutItems.innerHTML = app.cart.map(item => `
-                    <div style="padding: 10px 0; border-bottom: 1px solid #E5E7EB;">
+                    <div style="padding: 10px 0; border-bottom: 1px solid var(--border);">
                         <div style="font-weight: 600;">${item.name}</div>
-                        <div style="color: var(--gray); font-size: 14px;">${item.number}</div>
+                        <div style="color: var(--text-secondary); font-size: 14px;">${item.holder}</div>
                         <div style="display: flex; justify-content: space-between; margin-top: 5px;">
                             <span>Qty: ${item.quantity}</span>
                             <span>$${(item.price * item.quantity).toFixed(2)}</span>
@@ -2578,15 +2108,90 @@
                     </div>
                 `).join('');
             }
+        }
+
+        // Auth Functions
+        function showAuthModal() {
+            document.getElementById('authModal').classList.add('active');
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.remove('active');
+        }
+
+        function switchAuthTab(tab) {
+            const tabs = document.querySelectorAll('.auth-tab');
+            const forms = document.querySelectorAll('.auth-form');
             
-            // Pre-fill user information if logged in
-            if (app.currentUser) {
-                const nameParts = app.currentUser.name.split(' ');
-                document.getElementById('firstName').value = nameParts[0] || '';
-                document.getElementById('lastName').value = nameParts[1] || '';
-                document.getElementById('email').value = app.currentUser.email || '';
-                document.getElementById('phone').value = app.currentUser.phone || '';
+            tabs.forEach(t => t.classList.remove('active'));
+            forms.forEach(f => f.classList.remove('active'));
+            
+            if (tab === 'signin') {
+                tabs[0].classList.add('active');
+                forms[0].classList.add('active');
+            } else {
+                tabs[1].classList.add('active');
+                forms[1].classList.add('active');
             }
+        }
+
+        function handleSignIn(event) {
+            event.preventDefault();
+            // Simulate sign in
+            app.currentUser = {
+                name: 'John Doe',
+                email: 'john@example.com'
+            };
+            saveAppState();
+            updateAuthUI();
+            closeAuthModal();
+            showToast('Successfully signed in!', 'success');
+        }
+
+        function handleSignUp(event) {
+            event.preventDefault();
+            // Simulate sign up
+            app.currentUser = {
+                name: 'New User',
+                email: 'newuser@example.com'
+            };
+            saveAppState();
+            updateAuthUI();
+            closeAuthModal();
+            showToast('Account created successfully!', 'success');
+        }
+
+        function updateAuthUI() {
+            const authButtons = document.querySelector('.auth-buttons');
+            if (app.currentUser) {
+                authButtons.innerHTML = `
+                    <button class="icon-btn" onclick="showPage('cart')">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cartCount" style="display: none;">0</span>
+                    </button>
+                    <button class="btn btn-secondary" onclick="signOut()">
+                        <i class="fas fa-sign-out-alt"></i> Sign Out
+                    </button>
+                `;
+            } else {
+                authButtons.innerHTML = `
+                    <button class="icon-btn" onclick="showPage('cart')">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cartCount" style="display: none;">0</span>
+                    </button>
+                    <button class="btn btn-primary" onclick="showAuthModal()">
+                        <i class="fas fa-user"></i> Sign In
+                    </button>
+                `;
+            }
+            updateCartUI();
+        }
+
+        function signOut() {
+            app.currentUser = null;
+            saveAppState();
+            updateAuthUI();
+            showToast('Successfully signed out', 'info');
         }
 
         // Select Payment Method
@@ -2599,24 +2204,13 @@
             // Add selection to clicked element
             element.classList.add('selected');
             
-            // If UPI selected, show payment modal with INR amount
+            // Show QR section for UPI
+            const qrSection = document.getElementById('qrSection');
             if (method === 'upi') {
-                const total = calculateOrderTotal();
-                const inrAmount = convertUsdToInr(total);
-                
-                // Update modal amount
-                document.getElementById('modalAmount').textContent = inrAmount.toFixed(2);
-                
-                // Show payment modal
-                document.getElementById('paymentModal').classList.add('active');
+                qrSection.classList.add('active');
             } else {
-                completeOrder();
+                qrSection.classList.remove('active');
             }
-        }
-
-        // Convert USD to INR with current rate
-        function convertUsdToInr(usdAmount) {
-            return usdAmount * app.currentUsdToInrRate;
         }
 
         // Process Checkout
@@ -2630,83 +2224,12 @@
                 return;
             }
             
-            const paymentMethod = selectedPayment.onclick.toString().includes('upi') ? 'upi' : 'crypto';
+            const total = calculateOrderTotal();
+            const inrAmount = convertUsdToInr(total);
             
-            if (paymentMethod === 'upi') {
-                const total = calculateOrderTotal();
-                const inrAmount = convertUsdToInr(total);
-                
-                document.getElementById('modalAmount').textContent = inrAmount.toFixed(2);
-                document.getElementById('paymentModal').classList.add('active');
-            } else {
-                completeOrder();
-            }
-        }
-
-        // Complete Order
-        function completeOrder() {
-            const order = {
-                id: 'ORD' + Date.now(),
-                date: new Date().toISOString(),
-                items: [...app.cart],
-                status: 'delivered',
-                total: calculateOrderTotal(),
-                paymentMethod: 'upi',
-                shippingAddress: {
-                    firstName: document.getElementById('firstName').value,
-                    lastName: document.getElementById('lastName').value,
-                    email: document.getElementById('email').value,
-                    phone: document.getElementById('phone').value
-                },
-                customer: app.currentUser || {
-                    name: 'Guest',
-                    email: document.getElementById('email').value
-                }
-            };
-            
-            app.orders.unshift(order);
-            
-            // Send email notification for order completion
-            sendOrderCompletionNotification(order);
-            
-            showToast('🎉 Order completed! Cards delivered to your email instantly!', 'success');
-            
-            // Clear cart
-            app.cart = [];
-            saveAppState();
-            updateCartUI();
-            
-            // Show orders page
-            setTimeout(() => {
-                showPage('orders');
-            }, 2000);
-        }
-
-        // Send Order Completion Notification
-        function sendOrderCompletionNotification(order) {
-            const emailData = {
-                to: 'armankumarji1235@gmail.com',
-                subject: `✅ Order Completed - ${order.id}`,
-                body: `
-                    Order Completed Successfully!
-                    
-                    Order ID: ${order.id}
-                    Customer: ${order.shippingAddress.firstName} ${order.shippingAddress.lastName}
-                    Email: ${order.shippingAddress.email}
-                    Phone: ${order.shippingAddress.phone}
-                    Account: ${order.customer.name}
-                    
-                    Items Purchased:
-                    ${order.items.map(item => `- ${item.name} (Limit: $${item.limit}) - $${item.price}`).join('\n')}
-                    
-                    Total Amount: $${order.total.toFixed(2)}
-                    Payment Method: ${order.paymentMethod}
-                    
-                    Cards have been delivered instantly to customer's email.
-                `
-            };
-            
-            console.log('Order Completion Email:', emailData);
+            document.getElementById('modalAmount').textContent = `${inrAmount.toFixed(2)}`;
+            document.getElementById('modalAmountUSD').textContent = `${total.toFixed(2)}`;
+            document.getElementById('paymentModal').classList.add('active');
         }
 
         // Calculate Order Total
@@ -2717,50 +2240,87 @@
             return subtotal + processingFee + tax;
         }
 
-        // Load Dashboard
-        function loadDashboard() {
-            if (!app.currentUser) {
-                showPage('home');
-                return;
-            }
+        // Convert USD to INR
+        function convertUsdToInr(usdAmount) {
+            return usdAmount * 83.5; // Current exchange rate
+        }
+
+        // Copy UPI ID
+        function copyUpiId() {
+            const upiId = 'viralchauhan457-1@okhdfcbank';
+            navigator.clipboard.writeText(upiId).then(() => {
+                const copyBtn = document.getElementById('copyBtn');
+                copyBtn.classList.add('copied');
+                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                
+                showToast('UPI ID copied to clipboard!', 'success');
+                
+                setTimeout(() => {
+                    copyBtn.classList.remove('copied');
+                    copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                }, 2000);
+            });
+        }
+
+        // Cancel Payment
+        function cancelPayment() {
+            document.getElementById('confirmDialog').classList.add('active');
+        }
+
+        // Close Confirmation Dialog
+        function closeConfirmDialog() {
+            document.getElementById('confirmDialog').classList.remove('active');
+        }
+
+        // Confirm Cancel Payment
+        function confirmCancelPayment() {
+            closeConfirmDialog();
+            closePaymentModal();
+            showToast('Payment cancelled', 'info');
+        }
+
+        // Confirm Payment
+        function confirmPayment() {
+            const total = calculateOrderTotal();
+            const orderId = 'ORD' + Date.now();
             
-            // Update stats
-            const totalOrders = app.orders.length;
-            const activeCards = app.orders.filter(o => o.status === 'delivered').length;
-            const totalSpent = app.orders.reduce((sum, order) => sum + order.total, 0);
-            const savedAmount = totalSpent * 0.1;
+            // Create order
+            const order = {
+                id: orderId,
+                date: new Date().toISOString(),
+                items: [...app.cart],
+                status: 'delivered',
+                total: total,
+                paymentMethod: 'upi',
+                customer: {
+                    name: app.currentUser ? app.currentUser.name : 'Guest',
+                    email: app.currentUser ? app.currentUser.email : 'guest@example.com'
+                }
+            };
             
-            document.getElementById('totalOrders').textContent = totalOrders;
-            document.getElementById('activeCards').textContent = activeCards;
-            document.getElementById('totalSpent').textContent = `$${totalSpent.toFixed(0)}`;
-            document.getElementById('savedAmount').textContent = `$${savedAmount.toFixed(0)}`;
+            app.orders.unshift(order);
+            app.cart = [];
             
-            // Load recent orders
-            const recentOrders = document.getElementById('recentOrders');
-            const recent = app.orders.slice(0, 3);
+            saveAppState();
+            updateCartUI();
+            closePaymentModal();
             
-            if (recent.length === 0) {
-                recentOrders.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-shopping-bag"></i>
-                        <h3>No orders yet</h3>
-                        <p>Start by browsing our card collection</p>
-                        <button class="btn btn-primary" onclick="showPage('cards')">
-                            Browse Cards
-                        </button>
-                    </div>
-                `;
-            } else {
-                recentOrders.innerHTML = recent.map(order => createOrderCard(order)).join('');
-            }
+            showToast('Payment successful! Order delivered instantly.', 'success');
+            showPage('orders');
+        }
+
+        // Close Payment Modal
+        function closePaymentModal() {
+            const modal = document.getElementById('paymentModal');
+            modal.classList.remove('active');
         }
 
         // Load Orders
         function loadOrders() {
-            const allOrders = document.getElementById('allOrders');
+            const ordersGrid = document.getElementById('ordersGrid');
             
             if (app.orders.length === 0) {
-                allOrders.innerHTML = `
+                ordersGrid.innerHTML = `
                     <div class="empty-state">
                         <i class="fas fa-shopping-bag"></i>
                         <h3>No orders yet</h3>
@@ -2773,135 +2333,35 @@
                 return;
             }
             
-            allOrders.innerHTML = app.orders.map(order => createOrderCard(order)).join('');
-        }
-
-        // Create Order Card
-        function createOrderCard(order) {
-            const statusClass = `status-${order.status}`;
-            const statusText = order.status.charAt(0).toUpperCase() + order.status.slice(1);
-            
-            return `
+            ordersGrid.innerHTML = app.orders.map(order => `
                 <div class="order-card">
                     <div class="order-header">
                         <div class="order-id">${order.id}</div>
-                        <div class="order-status ${statusClass}">
+                        <div class="order-status delivered">
                             <i class="fas fa-check-circle"></i>
-                            ${statusText}
+                            Delivered
                         </div>
                     </div>
                     <div class="order-details">
                         <div class="order-detail">
-                            Date: <span>${new Date(order.date).toLocaleDateString()}</span>
+                            <div class="order-detail-label">Date</div>
+                            <div class="order-detail-value">${new Date(order.date).toLocaleDateString()}</div>
                         </div>
                         <div class="order-detail">
-                            Items: <span>${order.items.length}</span>
+                            <div class="order-detail-label">Items</div>
+                            <div class="order-detail-value">${order.items.length}</div>
                         </div>
                         <div class="order-detail">
-                            Total: <span>$${order.total.toFixed(2)}</span>
+                            <div class="order-detail-label">Total</div>
+                            <div class="order-detail-value">$${order.total.toFixed(2)}</div>
                         </div>
                         <div class="order-detail">
-                            Delivery: <span style="color: var(--success); font-weight: 600;">✓ Instant</span>
+                            <div class="order-detail-label">Delivery</div>
+                            <div class="order-detail-value" style="color: var(--success);">✓ Instant</div>
                         </div>
                     </div>
                 </div>
-            `;
-        }
-
-        // Authentication Functions
-        let isSignupMode = false;
-
-        function openAuthModal() {
-            const modal = document.getElementById('authModal');
-            modal.style.display = 'flex';
-            setTimeout(() => {
-                modal.classList.add('active');
-            }, 10);
-        }
-
-        function closeAuthModal() {
-            const modal = document.getElementById('authModal');
-            modal.classList.remove('active');
-            setTimeout(() => {
-                modal.style.display = 'none';
-            }, 300);
-        }
-
-        function toggleAuthMode() {
-            isSignupMode = !isSignupMode;
-            
-            const authTitle = document.getElementById('authTitle');
-            const authSubtitle = document.getElementById('authSubtitle');
-            const authToggleText = document.getElementById('authToggleText');
-            const authToggleLink = document.getElementById('authToggleLink');
-            const authSubmitBtn = document.getElementById('authSubmitBtn');
-            const signupFields = document.getElementById('signupFields');
-            const phoneField = document.getElementById('phoneField');
-            
-            if (isSignupMode) {
-                authTitle.textContent = 'Sign Up';
-                authSubtitle.textContent = 'Create your account to get started';
-                authToggleText.textContent = 'Already have an account?';
-                authToggleLink.textContent = 'Sign In';
-                authSubmitBtn.textContent = 'Sign Up';
-                signupFields.style.display = 'block';
-                phoneField.style.display = 'block';
-            } else {
-                authTitle.textContent = 'Sign In';
-                authSubtitle.textContent = 'Access your account to continue';
-                authToggleText.textContent = "Don't have an account?";
-                authToggleLink.textContent = 'Sign Up';
-                authSubmitBtn.textContent = 'Sign In';
-                signupFields.style.display = 'none';
-                phoneField.style.display = 'none';
-            }
-        }
-
-        function handleAuth(event) {
-            event.preventDefault();
-            
-            const email = document.getElementById('authEmail').value;
-            const password = document.getElementById('authPassword').value;
-            
-            if (isSignupMode) {
-                const fullName = document.getElementById('authFullName').value;
-                const phone = document.getElementById('authPhone').value;
-                
-                if (!fullName) {
-                    showToast('Please enter your full name', 'warning');
-                    return;
-                }
-                
-                const user = {
-                    id: 'USER' + Date.now(),
-                    name: fullName,
-                    email: email,
-                    phone: phone,
-                    password: password
-                };
-                
-                app.currentUser = user;
-                saveAppState();
-                updateUserUI(user);
-                closeAuthModal();
-                showToast('Account created successfully!', 'success');
-            } else {
-                const user = {
-                    id: 'USER' + Date.now(),
-                    name: email.split('@')[0],
-                    email: email,
-                    phone: '',
-                    password: password
-                };
-                
-                app.currentUser = user;
-                saveAppState();
-                updateUserUI(user);
-                closeAuthModal();
-                showToast('Signed in successfully!', 'success');
-            }
-            
-            document.getElementById('authForm').reset();
+            `).join('');
         }
 
         // Chat Functions
@@ -2925,7 +2385,16 @@
                         'We offer instant replacement if any card doesn\'t work.',
                         'Your satisfaction is our priority! How can I help you today?',
                         'We accept UPI and crypto payments for instant transactions.',
-                        'Guest checkout is available - no sign in required!'
+                        'Guest checkout is available - no sign in required!',
+                        'Our Google Pay QR code ensures secure and fast payments.',
+                        'We have served over 12,847 happy customers with a 99% success rate!',
+                        'All transactions are encrypted and SSL secured.',
+                        '24/7 customer support available to assist you!',
+                        'Premium cards starting from just $9.99 with limits up to $2000!',
+                        'Every card comes with instant delivery guarantee.',
+                        'We accept payments from all over the world.',
+                        'Your privacy and security are our top priorities.',
+                        'Join thousands of satisfied customers today!'
                     ];
                     const randomResponse = responses[Math.floor(Math.random() * responses.length)];
                     addChatMessage(randomResponse, false);
@@ -2938,6 +2407,7 @@
             const messageDiv = document.createElement('div');
             messageDiv.className = `chat-message ${isUser ? 'user' : ''}`;
             messageDiv.innerHTML = `
+                <div class="message-avatar">${isUser ? 'YU' : 'CS'}</div>
                 <div class="message-bubble">${message}</div>
             `;
             chatMessages.appendChild(messageDiv);
@@ -2948,6 +2418,29 @@
             if (event.key === 'Enter') {
                 sendMessage();
             }
+        }
+
+        // Animate Stats
+        function animateStats() {
+            const statNumbers = document.querySelectorAll('.stat-number[data-target]');
+            
+            statNumbers.forEach(stat => {
+                const target = parseInt(stat.getAttribute('data-target'));
+                const increment = target / 100;
+                let current = 0;
+                
+                const updateNumber = () => {
+                    current += increment;
+                    if (current < target) {
+                        stat.textContent = Math.ceil(current).toLocaleString();
+                        requestAnimationFrame(updateNumber);
+                    } else {
+                        stat.textContent = target.toLocaleString();
+                    }
+                };
+                
+                updateNumber();
+            });
         }
 
         // Toast Notification
@@ -2987,47 +2480,37 @@
             }, 3000);
         }
 
-        // Toggle User Dropdown
-        function toggleUserDropdown() {
-            if (app.currentUser) {
-                if (confirm('Do you want to sign out?')) {
-                    app.currentUser = null;
-                    saveAppState();
-                    updateUserUI(null);
-                    showToast('Signed out successfully', 'success');
-                    showPage('home');
-                }
-            } else {
-                openAuthModal();
+        // Save/Load App State
+        function saveAppState() {
+            localStorage.setItem('cardvault_state', JSON.stringify({
+                currentUser: app.currentUser,
+                cart: app.cart,
+                orders: app.orders
+            }));
+        }
+
+        function loadAppState() {
+            const savedState = localStorage.getItem('cardvault_state');
+            if (savedState) {
+                const state = JSON.parse(savedState);
+                app.currentUser = state.currentUser || null;
+                app.cart = state.cart || [];
+                app.orders = state.orders || [];
             }
         }
 
-        // Header scroll effect
-        window.addEventListener('scroll', function() {
-            const header = document.getElementById('header');
-            if (window.scrollY > 50) {
-                header.style.padding = '10px 0';
-                header.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
-            } else {
-                header.style.padding = '15px 0';
-                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.08)';
+        // Close modals when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
             }
         });
 
-        // Close modals when clicking outside
-        window.addEventListener('click', function(event) {
-            const authModal = document.getElementById('authModal');
-            const paymentModal = document.getElementById('paymentModal');
-            const confirmDialog = document.getElementById('confirmDialog');
-            
-            if (event.target === authModal) {
-                closeAuthModal();
-            }
-            if (event.target === paymentModal) {
-                cancelPayment();
-            }
-            if (event.target === confirmDialog) {
-                closeConfirmDialog();
+        // Search functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('input', loadCards);
             }
         });
     </script>
