@@ -14,50 +14,68 @@
 
         :root {
             --primary: #000000;
-            --secondary: #1e3a8a;
-            --accent: #3b82f6;
+            --secondary: #0066ff;
+            --accent: #00d4ff;
+            --success: #00ff88;
+            --warning: #ffaa00;
+            --error: #ff3366;
+            --dark: #0a0a0a;
+            --light: #ffffff;
             --text: #ffffff;
-            --text-secondary: #94a3b8;
-            --background: #0f172a;
-            --surface: #1e293b;
-            --border: #334155;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --error: #ef4444;
+            --text-secondary: #b0b0b0;
+            --border: #333333;
+            --card-bg: #111111;
+            --modal-bg: #1a1a1a;
+            --gradient: linear-gradient(135deg, #0066ff 0%, #00d4ff 100%);
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: var(--background);
+            background: var(--dark);
             color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
         }
 
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--secondary);
+            border-radius: 4px;
+        }
+
         /* Header */
         header {
-            background: var(--primary);
-            padding: 1rem 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+            border-bottom: 1px solid var(--border);
         }
 
         nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
         .logo {
             font-size: 1.8rem;
             font-weight: 800;
-            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             display: flex;
@@ -65,14 +83,18 @@
             gap: 0.5rem;
         }
 
+        .logo i {
+            -webkit-text-fill-color: var(--secondary);
+        }
+
         .nav-links {
             display: flex;
             gap: 2rem;
-            list-style: none;
+            align-items: center;
         }
 
         .nav-link {
-            color: var(--text-secondary);
+            color: var(--text);
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
@@ -80,11 +102,11 @@
         }
 
         .nav-link:hover {
-            color: var(--text);
+            color: var(--accent);
         }
 
         .nav-link.active {
-            color: var(--accent);
+            color: var(--secondary);
         }
 
         .nav-link.active::after {
@@ -94,7 +116,7 @@
             left: 0;
             right: 0;
             height: 2px;
-            background: var(--accent);
+            background: var(--gradient);
         }
 
         .auth-buttons {
@@ -104,10 +126,10 @@
         }
 
         .icon-btn {
-            background: var(--surface);
-            border: 1px solid var(--border);
+            background: transparent;
+            border: 2px solid var(--border);
             color: var(--text);
-            padding: 0.5rem 1rem;
+            padding: 0.6rem 1.2rem;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -115,7 +137,8 @@
         }
 
         .icon-btn:hover {
-            background: var(--secondary);
+            border-color: var(--secondary);
+            color: var(--secondary);
             transform: translateY(-2px);
         }
 
@@ -123,13 +146,60 @@
             position: absolute;
             top: -8px;
             right: -8px;
-            background: var(--accent);
-            color: white;
+            background: var(--error);
+            color: var(--light);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 0.75rem;
-            padding: 2px 6px;
-            border-radius: 12px;
-            min-width: 20px;
-            text-align: center;
+            font-weight: bold;
+        }
+
+        .btn {
+            padding: 0.6rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: var(--light);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 102, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 2px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--secondary);
+            color: var(--secondary);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--secondary);
+            border: 2px solid var(--secondary);
+        }
+
+        .btn-outline:hover {
+            background: var(--secondary);
+            color: var(--light);
         }
 
         /* Main Content */
@@ -148,55 +218,38 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            padding: 6rem 2rem;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(0, 102, 255, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
             text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%231e3a8a" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
-            background-size: cover;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
         }
 
         .hero h1 {
             font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, var(--text), var(--accent));
+            margin-bottom: 1rem;
+            background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes glow {
-            from { filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.5)); }
-            to { filter: drop-shadow(0 0 30px rgba(59, 130, 246, 0.8)); }
         }
 
         .hero p {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             color: var(--text-secondary);
             margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .hero-buttons {
@@ -206,147 +259,162 @@
             flex-wrap: wrap;
         }
 
-        /* Buttons */
-        .btn {
-            padding: 0.75rem 2rem;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-primary {
-            background: var(--accent);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #2563eb;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
-        }
-
-        .btn-secondary {
-            background: var(--surface);
-            color: var(--text);
-            border: 1px solid var(--border);
-        }
-
-        .btn-secondary:hover {
-            background: var(--border);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--accent);
-            border: 1px solid var(--accent);
-        }
-
-        .btn-outline:hover {
-            background: var(--accent);
-            color: white;
-        }
-
-        /* Features Section */
+        /* Features */
         .features {
             padding: 4rem 2rem;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            margin-top: 3rem;
         }
 
         .feature-card {
-            background: var(--surface);
+            background: var(--card-bg);
             padding: 2rem;
-            border-radius: 12px;
-            text-align: center;
+            border-radius: 16px;
             border: 1px solid var(--border);
+            text-align: center;
             transition: all 0.3s ease;
         }
 
         .feature-card:hover {
             transform: translateY(-5px);
-            border-color: var(--accent);
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+            border-color: var(--secondary);
+            box-shadow: 0 20px 40px rgba(0, 102, 255, 0.1);
         }
 
         .feature-icon {
             font-size: 3rem;
-            color: var(--accent);
+            color: var(--secondary);
             margin-bottom: 1rem;
         }
 
-        .feature-title {
-            font-size: 1.25rem;
-            margin-bottom: 0.5rem;
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
         }
 
-        .feature-description {
+        .feature-card p {
             color: var(--text-secondary);
         }
 
         /* Browse Section */
         .browse-section {
             padding: 4rem 2rem;
-            background: var(--surface);
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
-        .section-header {
-            text-align: center;
-            margin-bottom: 3rem;
+        .browse-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
-        .section-title {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--text), var(--accent));
+        .browse-header h2 {
+            font-size: 2rem;
+            background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
+        .browse-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            color: var(--text);
+            padding: 0.6rem 2.5rem 0.6rem 1rem;
+            border-radius: 8px;
+            width: 250px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .sort-dropdown {
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            color: var(--text);
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sort-dropdown:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+
         .browse-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
         }
 
         .browse-card {
-            background: var(--background);
-            border-radius: 12px;
-            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
             border: 1px solid var(--border);
             transition: all 0.3s ease;
         }
 
         .browse-card:hover {
             transform: translateY(-5px);
-            border-color: var(--accent);
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+            border-color: var(--secondary);
+            box-shadow: 0 20px 40px rgba(0, 102, 255, 0.1);
         }
 
         .browse-card-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(0, 102, 255, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
             display: flex;
             justify-content: space-between;
             align-items: start;
-            margin-bottom: 1rem;
         }
 
         .browse-card-info h3 {
-            font-size: 1.25rem;
-            margin-bottom: 0.25rem;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
         }
 
         .browse-card-info p {
@@ -356,157 +424,142 @@
 
         .browse-card-price {
             font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent);
+            font-weight: bold;
+            color: var(--success);
         }
 
         .browse-card-details {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin: 1rem 0;
+            padding: 1.5rem;
         }
 
         .browse-detail {
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
         }
 
         .browse-detail-label {
-            font-size: 0.8rem;
             color: var(--text-secondary);
-            margin-bottom: 0.25rem;
+            font-size: 0.9rem;
         }
 
         .browse-detail-value {
             font-weight: 600;
+            color: var(--text);
         }
 
         .browse-card-actions {
+            padding: 1.5rem;
             display: flex;
-            gap: 0.5rem;
-            margin-top: 1rem;
+            gap: 1rem;
         }
 
         .browse-card-actions .btn {
             flex: 1;
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-        }
-
-        /* Cards Section */
-        .cards-section {
-            padding: 4rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .filters {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
             justify-content: center;
         }
 
-        .search-box {
-            position: relative;
-            flex: 1;
-            max-width: 400px;
+        /* Cards Page */
+        .cards-container {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
-        .search-box input {
-            width: 100%;
-            padding: 0.75rem 1rem 0.75rem 3rem;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text);
-            font-size: 1rem;
+        .cards-header {
+            margin-bottom: 2rem;
         }
 
-        .search-box i {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
+        .cards-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cards-header p {
             color: var(--text-secondary);
+            font-size: 1.1rem;
         }
 
-        .sort-dropdown {
-            padding: 0.75rem 1rem;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text);
-            font-size: 1rem;
-            cursor: pointer;
+        .cards-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 2rem;
         }
 
         .card {
-            background: var(--surface);
-            border-radius: 12px;
+            background: var(--card-bg);
+            border-radius: 16px;
             overflow: hidden;
             border: 1px solid var(--border);
             transition: all 0.3s ease;
-            position: relative;
         }
 
         .card:hover {
             transform: translateY(-5px);
-            border-color: var(--accent);
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+            border-color: var(--secondary);
+            box-shadow: 0 20px 40px rgba(0, 102, 255, 0.1);
         }
 
         .card-image {
             height: 200px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, rgba(0, 102, 255, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 4rem;
-            color: var(--text);
             position: relative;
-            overflow: hidden;
+        }
+
+        .card-image i {
+            font-size: 4rem;
+            color: var(--secondary);
         }
 
         .card-badges {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 1rem;
+            right: 1rem;
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 0.5rem;
         }
 
         .card-badge {
-            width: 22px;
-            height: 22px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
             border-radius: 50%;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 10px;
-            color: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
+            font-size: 1rem;
         }
 
         .card-badge.verified {
-            background: var(--success);
+            color: var(--success);
+            border-color: var(--success);
         }
 
         .card-badge.instant {
-            background: var(--accent);
+            color: var(--accent);
+            border-color: var(--accent);
         }
 
         .card-badge.error {
-            background: var(--error);
+            color: var(--error);
+            border-color: var(--error);
         }
 
         .card-content {
@@ -521,9 +574,9 @@
         }
 
         .card-name {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
         }
 
         .card-holder {
@@ -534,35 +587,35 @@
 
         .card-network {
             display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: var(--background);
-            border-radius: 20px;
+            background: var(--secondary);
+            color: var(--light);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
             font-size: 0.8rem;
-            color: var(--accent);
             font-weight: 600;
         }
 
         .card-price {
             font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent);
+            font-weight: bold;
+            color: var(--success);
         }
 
         .card-rating {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            margin: 1rem 0;
+            margin-bottom: 1rem;
         }
 
         .stars {
             display: flex;
-            gap: 2px;
+            gap: 0.2rem;
         }
 
         .star {
             color: var(--warning);
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
 
         .star.empty {
@@ -578,7 +631,7 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 1rem;
-            margin: 1rem 0;
+            margin-bottom: 1.5rem;
         }
 
         .card-detail {
@@ -586,44 +639,55 @@
         }
 
         .card-detail-label {
-            font-size: 0.8rem;
             color: var(--text-secondary);
-            margin-bottom: 0.25rem;
+            font-size: 0.8rem;
+            margin-bottom: 0.3rem;
         }
 
         .card-detail-value {
             font-weight: 600;
+            color: var(--text);
         }
 
         .card-actions {
             display: flex;
-            gap: 0.5rem;
-            margin-top: 1rem;
+            gap: 1rem;
         }
 
         .card-actions .btn {
             flex: 1;
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
+            justify-content: center;
         }
 
-        /* Cart Section */
-        .cart-section {
-            padding: 4rem 2rem;
+        /* Cart Page */
+        .cart-container {
+            padding: 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        .cart-container {
+        .cart-header {
+            margin-bottom: 2rem;
+        }
+
+        .cart-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cart-content {
             display: grid;
-            grid-template-columns: 1fr 300px;
+            grid-template-columns: 1fr 350px;
             gap: 2rem;
         }
 
         .cart-items {
-            background: var(--surface);
-            border-radius: 12px;
-            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 1.5rem;
             border: 1px solid var(--border);
         }
 
@@ -641,13 +705,17 @@
         .cart-item-image {
             width: 100px;
             height: 100px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 8px;
+            background: linear-gradient(135deg, rgba(0, 102, 255, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
-            color: var(--text);
+            flex-shrink: 0;
+        }
+
+        .cart-item-image i {
+            font-size: 2.5rem;
+            color: var(--secondary);
         }
 
         .cart-item-details {
@@ -655,20 +723,21 @@
         }
 
         .cart-item-name {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
         }
 
         .cart-item-info {
             color: var(--text-secondary);
+            font-size: 0.9rem;
             margin-bottom: 0.5rem;
         }
 
         .cart-item-price {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--accent);
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--success);
             margin-bottom: 1rem;
         }
 
@@ -679,42 +748,46 @@
         }
 
         .quantity-btn {
+            background: var(--dark);
+            border: 1px solid var(--border);
+            color: var(--text);
             width: 32px;
             height: 32px;
-            border: 1px solid var(--border);
-            background: var(--background);
-            color: var(--text);
             border-radius: 6px;
-            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            cursor: pointer;
             transition: all 0.3s ease;
         }
 
         .quantity-btn:hover {
-            background: var(--accent);
-            border-color: var(--accent);
+            border-color: var(--secondary);
+            color: var(--secondary);
         }
 
         .quantity-value {
             font-weight: 600;
-            min-width: 20px;
+            min-width: 30px;
             text-align: center;
         }
 
         .cart-summary {
-            background: var(--surface);
-            border-radius: 12px;
-            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 1.5rem;
             border: 1px solid var(--border);
             height: fit-content;
+            position: sticky;
+            top: 100px;
         }
 
         .summary-title {
-            font-size: 1.25rem;
-            font-weight: 700;
+            font-size: 1.3rem;
+            font-weight: 600;
             margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
         }
 
         .summary-row {
@@ -723,12 +796,29 @@
             margin-bottom: 1rem;
         }
 
-        .summary-row.total {
-            padding-top: 1rem;
+        .summary-label {
+            color: var(--text-secondary);
+        }
+
+        .summary-value {
+            font-weight: 600;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
             border-top: 1px solid var(--border);
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--accent);
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .summary-actions {
+            margin-top: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
 
         .empty-state {
@@ -745,80 +835,114 @@
 
         .empty-state h3 {
             font-size: 1.5rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
             color: var(--text);
         }
 
-        /* Checkout Section */
-        .checkout-section {
-            padding: 4rem 2rem;
-            max-width: 800px;
+        /* Checkout Page */
+        .checkout-container {
+            padding: 2rem;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
-        .checkout-container {
-            background: var(--surface);
-            border-radius: 12px;
+        .checkout-header {
+            margin-bottom: 2rem;
+        }
+
+        .checkout-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .checkout-content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+        }
+
+        .checkout-form {
+            background: var(--card-bg);
+            border-radius: 16px;
             padding: 2rem;
             border: 1px solid var(--border);
         }
 
-        .checkout-items {
+        .form-section {
             margin-bottom: 2rem;
         }
 
-        .checkout-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 1rem 0;
+        .form-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
             border-bottom: 1px solid var(--border);
         }
 
-        .checkout-item:last-child {
-            border-bottom: none;
+        .form-group {
+            margin-bottom: 1.5rem;
         }
 
-        .checkout-summary {
-            background: var(--background);
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            background: var(--dark);
+            border: 2px solid var(--border);
+            color: var(--text);
+            padding: 0.8rem 1rem;
             border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--secondary);
         }
 
         .payment-methods {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 1rem;
-            margin-bottom: 2rem;
         }
 
         .payment-method {
-            padding: 1.5rem;
-            background: var(--background);
+            background: var(--dark);
             border: 2px solid var(--border);
-            border-radius: 8px;
+            border-radius: 12px;
+            padding: 1.5rem;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
         .payment-method:hover {
-            border-color: var(--accent);
+            border-color: var(--secondary);
         }
 
         .payment-method.selected {
-            border-color: var(--accent);
-            background: rgba(59, 130, 246, 0.1);
+            border-color: var(--secondary);
+            background: rgba(0, 102, 255, 0.1);
         }
 
         .payment-method i {
             font-size: 2rem;
-            color: var(--accent);
             margin-bottom: 0.5rem;
+            color: var(--secondary);
         }
 
         .payment-method h4 {
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.3rem;
         }
 
         .payment-method p {
@@ -830,9 +954,9 @@
             display: none;
             text-align: center;
             padding: 2rem;
-            background: var(--background);
-            border-radius: 8px;
-            margin-bottom: 2rem;
+            background: var(--dark);
+            border-radius: 12px;
+            margin-top: 1.5rem;
         }
 
         .qr-section.active {
@@ -842,15 +966,19 @@
         .qr-code {
             width: 200px;
             height: 200px;
-            background: white;
             margin: 1rem auto;
-            padding: 1rem;
-            border-radius: 8px;
+            background: var(--light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .qr-code img {
             width: 100%;
             height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
         }
 
         .upi-id {
@@ -861,40 +989,65 @@
             margin-top: 1rem;
         }
 
-        .upi-id input {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
+        .upi-id-text {
             font-family: monospace;
+            font-size: 1.1rem;
+            color: var(--accent);
         }
 
-        /* Orders Section */
-        .orders-section {
-            padding: 4rem 2rem;
+        #copyBtn {
+            background: var(--secondary);
+            color: var(--light);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #copyBtn:hover {
+            background: var(--accent);
+        }
+
+        #copyBtn.copied {
+            background: var(--success);
+        }
+
+        /* Orders Page */
+        .orders-container {
+            padding: 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
 
+        .orders-header {
+            margin-bottom: 2rem;
+        }
+
+        .orders-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         .orders-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 2rem;
         }
 
         .order-card {
-            background: var(--surface);
-            border-radius: 12px;
+            background: var(--card-bg);
+            border-radius: 16px;
             padding: 2rem;
             border: 1px solid var(--border);
             transition: all 0.3s ease;
         }
 
         .order-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+            border-color: var(--secondary);
+            box-shadow: 0 10px 30px rgba(0, 102, 255, 0.1);
         }
 
         .order-header {
@@ -902,12 +1055,13 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
         }
 
         .order-id {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--accent);
+            font-size: 1.2rem;
+            font-weight: 600;
         }
 
         .order-status {
@@ -921,221 +1075,108 @@
         }
 
         .order-status.delivered {
-            background: rgba(16, 185, 129, 0.1);
+            background: rgba(0, 255, 136, 0.1);
             color: var(--success);
+            border: 1px solid var(--success);
         }
 
         .order-status.processing {
-            background: rgba(245, 158, 11, 0.1);
+            background: rgba(255, 170, 0, 0.1);
             color: var(--warning);
+            border: 1px solid var(--warning);
+        }
+
+        .order-status.pending {
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--accent);
+            border: 1px solid var(--accent);
         }
 
         .order-details {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 1rem;
         }
 
         .order-detail {
-            display: flex;
-            justify-content: space-between;
+            text-align: center;
         }
 
         .order-detail-label {
             color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
         }
 
         .order-detail-value {
             font-weight: 600;
+            color: var(--text);
         }
 
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 2000;
+        /* Footer */
+        footer {
+            background: var(--card-bg);
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            line-height: 2;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: var(--dark);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: var(--surface);
-            border-radius: 12px;
-            padding: 2rem;
-            max-width: 500px;
-            width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-            animation: slideUp 0.3s ease;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .modal-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-
-        .modal-close:hover {
             color: var(--text);
+            transition: all 0.3s ease;
         }
 
-        .modal-body {
-            margin-bottom: 1.5rem;
+        .social-links a:hover {
+            border-color: var(--secondary);
+            color: var(--secondary);
+            transform: translateY(-3px);
         }
 
-        .modal-footer {
-            display: flex;
-            gap: 1rem;
-            justify-content: flex-end;
-        }
-
-        /* Auth Modal */
-        .auth-tabs {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .auth-tab {
-            padding: 1rem;
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-weight: 600;
-            cursor: pointer;
-            position: relative;
-            transition: color 0.3s ease;
-        }
-
-        .auth-tab.active {
-            color: var(--accent);
-        }
-
-        .auth-tab.active::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: var(--accent);
-        }
-
-        .auth-form {
-            display: none;
-        }
-
-        .auth-form.active {
-            display: block;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            background: var(--background);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text);
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-
-        /* Payment Modal */
-        .payment-modal .modal-content {
+        .footer-bottom {
             text-align: center;
-        }
-
-        .payment-icon {
-            font-size: 4rem;
-            color: var(--accent);
-            margin-bottom: 1rem;
-        }
-
-        .payment-amount {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 0.5rem;
-        }
-
-        .payment-amount-usd {
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
             color: var(--text-secondary);
-            margin-bottom: 2rem;
-        }
-
-        .payment-info {
-            background: var(--background);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .payment-info h4 {
-            margin-bottom: 1rem;
-            color: var(--accent);
-        }
-
-        .payment-steps {
-            text-align: left;
-            list-style: none;
-        }
-
-        .payment-steps li {
-            padding: 0.5rem 0;
-            display: flex;
-            align-items: start;
-            gap: 0.5rem;
-        }
-
-        .payment-steps li i {
-            color: var(--success);
-            margin-top: 2px;
         }
 
         /* Chat Widget */
@@ -1143,25 +1184,26 @@
             position: fixed;
             bottom: 2rem;
             right: 2rem;
-            z-index: 1000;
+            z-index: 999;
         }
 
         .chat-button {
             width: 60px;
             height: 60px;
+            background: var(--gradient);
             border-radius: 50%;
-            background: var(--accent);
-            color: white;
-            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--light);
             font-size: 1.5rem;
             cursor: pointer;
-            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 102, 255, 0.3);
             transition: all 0.3s ease;
         }
 
         .chat-button:hover {
             transform: scale(1.1);
-            box-shadow: 0 6px 30px rgba(59, 130, 246, 0.6);
         }
 
         .chat-window {
@@ -1170,13 +1212,13 @@
             right: 0;
             width: 350px;
             height: 500px;
-            background: var(--surface);
-            border-radius: 12px;
+            background: var(--modal-bg);
+            border-radius: 16px;
             border: 1px solid var(--border);
             display: none;
             flex-direction: column;
             overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
         }
 
         .chat-window.active {
@@ -1184,25 +1226,22 @@
         }
 
         .chat-header {
-            background: var(--accent);
-            color: white;
+            background: var(--gradient);
             padding: 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .chat-header h4 {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+        .chat-header h3 {
+            color: var(--light);
         }
 
         .chat-close {
-            background: none;
+            background: transparent;
             border: none;
-            color: white;
-            font-size: 1.25rem;
+            color: var(--light);
+            font-size: 1.2rem;
             cursor: pointer;
         }
 
@@ -1229,27 +1268,27 @@
         .message-avatar {
             width: 32px;
             height: 32px;
+            background: var(--secondary);
             border-radius: 50%;
-            background: var(--background);
             display: flex;
             align-items: center;
             justify-content: center;
+            color: var(--light);
             font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--accent);
+            font-weight: bold;
             flex-shrink: 0;
         }
 
         .message-bubble {
-            background: var(--background);
-            padding: 0.75rem 1rem;
+            background: var(--dark);
+            padding: 0.8rem 1rem;
             border-radius: 12px;
-            font-size: 0.9rem;
+            border: 1px solid var(--border);
         }
 
         .chat-message.user .message-bubble {
-            background: var(--accent);
-            color: white;
+            background: var(--secondary);
+            color: var(--light);
         }
 
         .chat-input {
@@ -1261,45 +1300,248 @@
 
         .chat-input input {
             flex: 1;
-            padding: 0.5rem 1rem;
-            background: var(--background);
+            background: var(--dark);
             border: 1px solid var(--border);
-            border-radius: 20px;
             color: var(--text);
+            padding: 0.8rem;
+            border-radius: 8px;
         }
 
         .chat-input button {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: var(--accent);
-            color: white;
+            background: var(--secondary);
+            color: var(--light);
             border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
             cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input button:hover {
+            background: var(--accent);
+        }
+
+        /* Modals */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--modal-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h2 {
+            font-size: 1.8rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .modal-close {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--error);
+        }
+
+        .auth-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .auth-tab {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 1rem;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .auth-tab.active {
+            color: var(--secondary);
+        }
+
+        .auth-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient);
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .auth-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .auth-form button {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        /* Payment Modal */
+        .payment-modal {
+            max-width: 600px;
+        }
+
+        .payment-qr {
+            text-align: center;
+            padding: 2rem;
+            background: var(--dark);
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .payment-qr img {
+            width: 250px;
+            height: 250px;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .payment-amount {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--success);
+            margin-bottom: 0.5rem;
+        }
+
+        .payment-amount-usd {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-instructions {
+            text-align: left;
+            margin: 2rem 0;
+        }
+
+        .payment-instructions h4 {
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .payment-instructions ol {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+
+        .payment-instructions li {
+            counter-increment: step-counter;
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .payment-instructions li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 24px;
+            height: 24px;
+            background: var(--secondary);
+            color: var(--light);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
         }
 
-        /* Toast Notifications */
+        .payment-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .payment-actions .btn {
+            flex: 1;
+        }
+
+        /* Toast */
         .toast-container {
             position: fixed;
             top: 100px;
             right: 20px;
             z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
 
         .toast {
-            background: var(--surface);
+            background: var(--modal-bg);
             border: 1px solid var(--border);
-            border-radius: 8px;
+            border-radius: 12px;
             padding: 1rem 1.5rem;
-            margin-bottom: 1rem;
             display: flex;
             align-items: center;
             gap: 1rem;
             min-width: 300px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             transform: translateX(400px);
             transition: transform 0.3s ease;
         }
@@ -1334,7 +1576,7 @@
 
         .toast-title {
             font-weight: 600;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.2rem;
         }
 
         .toast-message {
@@ -1342,50 +1584,23 @@
             color: var(--text-secondary);
         }
 
-        /* Footer */
-        footer {
-            background: var(--primary);
-            padding: 3rem 2rem 1rem;
-            margin-top: 4rem;
+        /* Confirmation Dialog */
+        .confirm-dialog {
+            max-width: 400px;
         }
 
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 1rem;
-            color: var(--accent);
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-section a {
+        .confirm-dialog p {
+            margin: 1.5rem 0;
             color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.3s ease;
         }
 
-        .footer-section a:hover {
-            color: var(--text);
+        .confirm-actions {
+            display: flex;
+            gap: 1rem;
         }
 
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border);
-            color: var(--text-secondary);
+        .confirm-actions .btn {
+            flex: 1;
         }
 
         /* Responsive */
@@ -1398,12 +1613,26 @@
                 font-size: 2.5rem;
             }
 
-            .cart-container {
+            .cards-grid,
+            .browse-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-content,
+            .checkout-content {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-summary {
+                position: static;
+            }
+
+            .payment-methods {
                 grid-template-columns: 1fr;
             }
 
             .order-details {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .chat-window {
@@ -1414,17 +1643,18 @@
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header>
         <nav>
             <div class="logo">
                 <i class="fas fa-credit-card"></i>
                 CardVault
             </div>
-            <ul class="nav-links">
-                <li><a href="#" class="nav-link active" onclick="showPage('home')">Home</a></li>
-                <li><a href="#" class="nav-link" onclick="showPage('cards')">Browse Cards</a></li>
-                <li><a href="#" class="nav-link" onclick="showPage('orders')">My Orders</a></li>
-            </ul>
+            <div class="nav-links">
+                <a href="#" class="nav-link active" onclick="showPage('home')">Home</a>
+                <a href="#" class="nav-link" onclick="showPage('cards')">Browse Cards</a>
+                <a href="#" class="nav-link" onclick="showPage('orders')">My Orders</a>
+            </div>
             <div class="auth-buttons">
                 <button class="icon-btn" onclick="showPage('cart')">
                     <i class="fas fa-shopping-cart"></i>
@@ -1437,85 +1667,84 @@
         </nav>
     </header>
 
+    <!-- Main Content -->
     <main>
         <!-- Home Page -->
         <div id="homePage" class="page active">
+            <!-- Hero Section -->
             <section class="hero">
-                <div class="hero-content">
-                    <h1>Premium Virtual Cards</h1>
-                    <p>Instant delivery • Verified cards • 100% satisfaction guarantee</p>
-                    <div class="hero-buttons">
-                        <button class="btn btn-primary" onclick="scrollToBrowse()">
-                            <i class="fas fa-shopping-bag"></i> Browse Cards
-                        </button>
-                        <button class="btn btn-outline" onclick="showPage('orders')">
-                            <i class="fas fa-box"></i> My Orders
-                        </button>
-                    </div>
+                <h1>Premium Virtual Cards</h1>
+                <p>Instant delivery • 100% verified • Secure payments</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="scrollToBrowse()">
+                        <i class="fas fa-shopping-bag"></i> Browse Cards
+                    </button>
+                    <button class="btn btn-secondary" onclick="showPage('orders')">
+                        <i class="fas fa-box"></i> My Orders
+                    </button>
                 </div>
             </section>
 
+            <!-- Features -->
             <section class="features">
+                <h2>Why Choose CardVault?</h2>
                 <div class="features-grid">
                     <div class="feature-card">
                         <div class="feature-icon">
                             <i class="fas fa-bolt"></i>
                         </div>
-                        <h3 class="feature-title">Instant Delivery</h3>
-                        <p class="feature-description">Get your virtual cards instantly after payment</p>
+                        <h3>Instant Delivery</h3>
+                        <p>Get your virtual cards delivered instantly after payment</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">
                             <i class="fas fa-shield-alt"></i>
                         </div>
-                        <h3 class="feature-title">100% Verified</h3>
-                        <p class="feature-description">All cards are tested and verified for quality</p>
+                        <h3>100% Verified</h3>
+                        <p>All cards are tested and verified for guaranteed performance</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">
-                            <i class="fas fa-sync"></i>
+                            <i class="fas fa-lock"></i>
                         </div>
-                        <h3 class="feature-title">Instant Replacement</h3>
-                        <p class="feature-description">Quick replacement if any card doesn't work</p>
+                        <h3>Secure Payments</h3>
+                        <p>Multiple payment options with bank-level security</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">
                             <i class="fas fa-headset"></i>
                         </div>
-                        <h3 class="feature-title">24/7 Support</h3>
-                        <p class="feature-description">Round the clock customer support</p>
+                        <h3>24/7 Support</h3>
+                        <p>Round-the-clock customer support for all your needs</p>
                     </div>
                 </div>
             </section>
 
+            <!-- Browse Section -->
             <section id="browseSection" class="browse-section">
-                <div class="section-header">
-                    <h2 class="section-title">Featured Cards</h2>
-                    <p style="color: var(--text-secondary);">Our most popular virtual cards</p>
-                </div>
-                <div class="browse-grid" id="browseGrid">
-                    <!-- Cards will be loaded here -->
-                </div>
-                <div style="text-align: center; margin-top: 3rem;">
+                <div class="browse-header">
+                    <h2>Featured Cards</h2>
                     <button class="btn btn-primary" onclick="showPage('cards')">
-                        <i class="fas fa-th"></i> View All Cards
+                        View All Cards <i class="fas fa-arrow-right"></i>
                     </button>
+                </div>
+                <div id="browseGrid" class="browse-grid">
+                    <!-- Cards will be loaded here -->
                 </div>
             </section>
         </div>
 
         <!-- Cards Page -->
         <div id="cardsPage" class="page">
-            <section class="cards-section">
-                <div class="section-header">
-                    <h2 class="section-title">Browse All Cards</h2>
-                    <p style="color: var(--text-secondary);">Choose from our wide selection of premium virtual cards</p>
+            <div class="cards-container">
+                <div class="cards-header">
+                    <h1>Browse All Cards</h1>
+                    <p>Choose from our wide selection of premium virtual cards</p>
                 </div>
-                
-                <div class="filters">
+                <div class="cards-controls">
                     <div class="search-box">
-                        <i class="fas fa-search"></i>
                         <input type="text" id="searchInput" placeholder="Search cards...">
+                        <i class="fas fa-search"></i>
                     </div>
                     <select class="sort-dropdown" onchange="sortCards(this.value)">
                         <option value="name">Sort by Name</option>
@@ -1524,259 +1753,185 @@
                         <option value="limit-high">Limit: High to Low</option>
                     </select>
                 </div>
-
-                <div class="cards-grid" id="cardsGrid">
+                <div id="cardsGrid" class="cards-grid">
                     <!-- Cards will be loaded here -->
                 </div>
-            </section>
+            </div>
         </div>
 
         <!-- Cart Page -->
         <div id="cartPage" class="page">
-            <section class="cart-section">
-                <div class="section-header">
-                    <h2 class="section-title">Shopping Cart</h2>
-                    <p style="color: var(--text-secondary);">Review your selected cards</p>
+            <div class="cart-container">
+                <div class="cart-header">
+                    <h1>Shopping Cart</h1>
                 </div>
-
-                <div class="cart-container">
+                <div class="cart-content">
                     <div class="cart-items" id="cartItems">
                         <!-- Cart items will be loaded here -->
                     </div>
-                    
                     <div class="cart-summary">
-                        <h3 class="summary-title">Order Summary</h3>
+                        <div class="summary-title">Order Summary</div>
                         <div class="summary-row">
-                            <span>Items (<span id="itemCount">0</span>)</span>
-                            <span id="subtotal">$0.00</span>
+                            <span class="summary-label">Items (<span id="itemCount">0</span>)</span>
+                            <span class="summary-value" id="subtotal">$0.00</span>
                         </div>
                         <div class="summary-row">
-                            <span>Processing Fee</span>
-                            <span id="processingFee">$0.00</span>
+                            <span class="summary-label">Processing Fee</span>
+                            <span class="summary-value" id="processingFee">$0.00</span>
                         </div>
                         <div class="summary-row">
-                            <span>Tax</span>
-                            <span id="tax">$0.00</span>
+                            <span class="summary-label">Tax</span>
+                            <span class="summary-value" id="tax">$0.00</span>
                         </div>
-                        <div class="summary-row total">
+                        <div class="summary-total">
                             <span>Total</span>
                             <span id="total">$0.00</span>
                         </div>
-                        <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="proceedToCheckout()">
-                            <i class="fas fa-lock"></i> Proceed to Checkout
-                        </button>
-                        <button class="btn btn-outline" style="width: 100%; margin-top: 0.5rem;" onclick="clearCart()">
-                            <i class="fas fa-trash"></i> Clear Cart
-                        </button>
+                        <div class="summary-actions">
+                            <button class="btn btn-primary" onclick="proceedToCheckout()">
+                                <i class="fas fa-lock"></i> Proceed to Checkout
+                            </button>
+                            <button class="btn btn-outline" onclick="clearCart()">
+                                <i class="fas fa-trash"></i> Clear Cart
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </section>
+            </div>
         </div>
 
         <!-- Checkout Page -->
         <div id="checkoutPage" class="page">
-            <section class="checkout-section">
-                <div class="section-header">
-                    <h2 class="section-title">Checkout</h2>
-                    <p style="color: var(--text-secondary);">Complete your purchase</p>
+            <div class="checkout-container">
+                <div class="checkout-header">
+                    <h1>Checkout</h1>
                 </div>
-
-                <div class="checkout-container">
-                    <div class="checkout-items" id="checkoutItems">
-                        <!-- Items will be loaded here -->
-                    </div>
-
-                    <div class="checkout-summary">
-                        <h3 class="summary-title">Order Summary</h3>
-                        <div class="summary-row">
-                            <span>Subtotal</span>
-                            <span id="checkoutSubtotal">$0.00</span>
-                        </div>
-                        <div class="summary-row">
-                            <span>Processing Fee</span>
-                            <span id="checkoutProcessingFee">$0.00</span>
-                        </div>
-                        <div class="summary-row">
-                            <span>Tax</span>
-                            <span id="checkoutTax">$0.00</span>
-                        </div>
-                        <div class="summary-row total">
-                            <span>Total</span>
-                            <span id="checkoutTotal">$0.00</span>
-                        </div>
-                    </div>
-
-                    <form onsubmit="processCheckout(event)">
-                        <div class="form-group">
-                            <label class="form-label">Email Address</label>
-                            <input type="email" class="form-input" placeholder="your@email.com" required>
-                        </div>
-
-                        <h3 style="margin: 2rem 0 1rem;">Select Payment Method</h3>
-                        <div class="payment-methods">
-                            <div class="payment-method" onclick="selectPayment(this, 'upi')">
-                                <i class="fas fa-qrcode"></i>
-                                <h4>UPI Payment</h4>
-                                <p>Scan QR code</p>
+                <div class="checkout-content">
+                    <form class="checkout-form" onsubmit="processCheckout(event)">
+                        <div class="form-section">
+                            <h3>Contact Information</h3>
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input type="email" placeholder="your@email.com" required>
                             </div>
-                            <div class="payment-method" onclick="selectPayment(this, 'crypto')">
-                                <i class="fab fa-bitcoin"></i>
-                                <h4>Crypto</h4>
-                                <p>Bitcoin, ETH, USDT</p>
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input type="tel" placeholder="+1234567890" required>
                             </div>
                         </div>
-
-                        <div id="qrSection" class="qr-section">
-                            <h3>Scan QR Code to Pay</h3>
-                            <div class="qr-code">
-                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=viralchauhan457-1@okhdfcbank&pn=CardVault&am=0&cu=INR" alt="UPI QR Code">
+                        <div class="form-section">
+                            <h3>Payment Method</h3>
+                            <div class="payment-methods">
+                                <div class="payment-method" onclick="selectPayment(this, 'upi')">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    <h4>UPI</h4>
+                                    <p>Instant payment</p>
+                                </div>
+                                <div class="payment-method" onclick="selectPayment(this, 'crypto')">
+                                    <i class="fas fa-coins"></i>
+                                    <h4>Crypto</h4>
+                                    <p>Bitcoin, ETH, USDT</p>
+                                </div>
                             </div>
-                            <div class="upi-id">
-                                <input type="text" value="viralchauhan457-1@okhdfcbank" readonly id="upiIdInput">
-                                <button type="button" class="btn btn-outline" id="copyBtn" onclick="copyUpiId()">
-                                    <i class="fas fa-copy"></i> Copy
-                                </button>
+                            <div id="qrSection" class="qr-section">
+                                <div class="qr-code">
+                                    <img src="https://z-cdn-media.chatglm.cn/files/afc82b2d-4ff9-4cfb-87d7-846aa1c2c994.jpg?auth_key=1874509647-417ca0138068436ea9e3ac72d680770a-0-044e4f6ebcf497ed041ee0da2e531e67" alt="Google Pay QR Code">
+                                </div>
+                                <div class="upi-id">
+                                    <span class="upi-id-text">viralchauhan457-1@okhdfcbank</span>
+                                    <button type="button" id="copyBtn" onclick="copyUpiId()">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
                             </div>
                         </div>
-
+                        <div class="form-section">
+                            <h3>Order Summary</h3>
+                            <div id="checkoutItems">
+                                <!-- Items will be loaded here -->
+                            </div>
+                            <div class="summary-row">
+                                <span class="summary-label">Subtotal</span>
+                                <span class="summary-value" id="checkoutSubtotal">$0.00</span>
+                            </div>
+                            <div class="summary-row">
+                                <span class="summary-label">Processing Fee</span>
+                                <span class="summary-value" id="checkoutProcessingFee">$0.00</span>
+                            </div>
+                            <div class="summary-row">
+                                <span class="summary-label">Tax</span>
+                                <span class="summary-value" id="checkoutTax">$0.00</span>
+                            </div>
+                            <div class="summary-total">
+                                <span>Total</span>
+                                <span id="checkoutTotal">$0.00</span>
+                            </div>
+                        </div>
                         <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 2rem;">
-                            <i class="fas fa-check"></i> Complete Order
+                            <i class="fas fa-lock"></i> Complete Payment
                         </button>
                     </form>
                 </div>
-            </section>
+            </div>
         </div>
 
         <!-- Orders Page -->
         <div id="ordersPage" class="page">
-            <section class="orders-section">
-                <div class="section-header">
-                    <h2 class="section-title">My Orders</h2>
-                    <p style="color: var(--text-secondary);">Track your order history</p>
+            <div class="orders-container">
+                <div class="orders-header">
+                    <h1>My Orders</h1>
                 </div>
-
-                <div class="orders-grid" id="ordersGrid">
+                <div id="ordersGrid" class="orders-grid">
                     <!-- Orders will be loaded here -->
                 </div>
-            </section>
+            </div>
         </div>
     </main>
 
-    <!-- Auth Modal -->
-    <div id="authModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Welcome to CardVault</h2>
-                <button class="modal-close" onclick="closeAuthModal()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="auth-tabs">
-                    <button class="auth-tab active" onclick="switchAuthTab('signin')">Sign In</button>
-                    <button class="auth-tab" onclick="switchAuthTab('signup')">Sign Up</button>
-                </div>
-                
-                <form class="auth-form active" onsubmit="handleSignIn(event)">
-                    <div class="form-group">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-input" placeholder="your@email.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Password</label>
-                        <input type="password" class="form-input" placeholder="••••••••" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%;">
-                        <i class="fas fa-sign-in-alt"></i> Sign In
-                    </button>
-                </form>
-                
-                <form class="auth-form" onsubmit="handleSignUp(event)">
-                    <div class="form-group">
-                        <label class="form-label">Full Name</label>
-                        <input type="text" class="form-input" placeholder="John Doe" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-input" placeholder="your@email.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Password</label>
-                        <input type="password" class="form-input" placeholder="••••••••" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%;">
-                        <i class="fas fa-user-plus"></i> Create Account
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Payment Modal -->
-    <div id="paymentModal" class="modal payment-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Complete Your Payment</h2>
-                <button class="modal-close" onclick="cancelPayment()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="payment-icon">
-                    <i class="fas fa-qrcode"></i>
-                </div>
-                <div class="payment-amount">₹<span id="modalAmount">0.00</span></div>
-                <div class="payment-amount-usd">($<span id="modalAmountUSD">0.00</span> USD)</div>
-                
-                <div class="payment-info">
-                    <h4>Payment Instructions</h4>
-                    <ul class="payment-steps">
-                        <li><i class="fas fa-check"></i> Scan the QR code with any UPI app</li>
-                        <li><i class="fas fa-check"></i> Enter the exact amount shown above</li>
-                        <li><i class="fas fa-check"></i> Complete the payment</li>
-                        <li><i class="fas fa-check"></i> Your cards will be delivered instantly</li>
-                    </ul>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>CardVault</h3>
+                <p>Your trusted source for premium virtual cards</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-outline" onclick="cancelPayment()">
-                    <i class="fas fa-times"></i> Cancel
-                </button>
-                <button class="btn btn-primary" onclick="confirmPayment()">
-                    <i class="fas fa-check"></i> I've Paid
-                </button>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="#" onclick="showPage('home')">Home</a><br>
+                <a href="#" onclick="showPage('cards')">Browse Cards</a><br>
+                <a href="#" onclick="showPage('orders')">My Orders</a><br>
+                <a href="#" onclick="showAuthModal()">Sign In</a>
+            </div>
+            <div class="footer-section">
+                <h3>Support</h3>
+                <a href="#">FAQ</a><br>
+                <a href="#">Contact Us</a><br>
+                <a href="#">Terms of Service</a><br>
+                <a href="#">Privacy Policy</a>
+            </div>
+            <div class="footer-section">
+                <h3>Payment Methods</h3>
+                <p><i class="fas fa-mobile-alt"></i> UPI</p>
+                <p><i class="fab fa-bitcoin"></i> Cryptocurrency</p>
+                <p><i class="fas fa-credit-card"></i> All Major Cards</p>
             </div>
         </div>
-    </div>
-
-    <!-- Confirmation Dialog -->
-    <div id="confirmDialog" class="modal">
-        <div class="modal-content" style="max-width: 400px;">
-            <div class="modal-header">
-                <h2 class="modal-title">Cancel Payment?</h2>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure you want to cancel this payment? Your order will not be processed.</p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-outline" onclick="closeConfirmDialog()">
-                    Keep Payment
-                </button>
-                <button class="btn btn-secondary" onclick="confirmCancelPayment()">
-                    Yes, Cancel
-                </button>
-            </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 CardVault. All rights reserved.</p>
         </div>
-    </div>
+    </footer>
 
     <!-- Chat Widget -->
     <div class="chat-widget">
         <div class="chat-window" id="chatWindow">
             <div class="chat-header">
-                <h4>
-                    <i class="fas fa-comments"></i>
-                    Customer Support
-                </h4>
+                <h3>Customer Support</h3>
                 <button class="chat-close" onclick="toggleChat()">
                     <i class="fas fa-times"></i>
                 </button>
@@ -1785,62 +1940,122 @@
                 <div class="chat-message">
                     <div class="message-avatar">CS</div>
                     <div class="message-bubble">
-                        Welcome to CardVault! How can I help you today?
+                        Hello! How can I help you today?
                     </div>
                 </div>
             </div>
             <div class="chat-input">
-                <input type="text" placeholder="Type your message..." id="chatInput" onkeypress="handleChatInput(event)">
+                <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="handleChatInput(event)">
                 <button onclick="sendMessage()">
                     <i class="fas fa-paper-plane"></i>
                 </button>
             </div>
         </div>
-        <button class="chat-button" onclick="toggleChat()">
+        <div class="chat-button" onclick="toggleChat()">
             <i class="fas fa-comments"></i>
-        </button>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Welcome to CardVault</h2>
+                <button class="modal-close" onclick="closeAuthModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchAuthTab('signin')">Sign In</button>
+                <button class="auth-tab" onclick="switchAuthTab('signup')">Sign Up</button>
+            </div>
+            <form class="auth-form active" onsubmit="handleSignIn(event)">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+            </form>
+            <form class="auth-form" onsubmit="handleSignUp(event)">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" placeholder="Create a password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content payment-modal">
+            <div class="modal-header">
+                <h2>Complete Your Payment</h2>
+                <button class="modal-close" onclick="closePaymentModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="payment-qr">
+                <img src="https://z-cdn-media.chatglm.cn/files/afc82b2d-4ff9-4cfb-87d7-846aa1c2c994.jpg?auth_key=1874509647-417ca0138068436ea9e3ac72d680770a-0-044e4f6ebcf497ed041ee0da2e531e67" alt="Google Pay QR Code">
+                <div class="payment-amount">₹<span id="modalAmount">0.00</span></div>
+                <div class="payment-amount-usd">($<span id="modalAmountUSD">0.00</span> USD)</div>
+            </div>
+            <div class="payment-instructions">
+                <h4>Payment Instructions:</h4>
+                <ol>
+                    <li>Scan the QR code with your UPI app</li>
+                    <li>Enter the exact amount shown above</li>
+                    <li>Complete the payment</li>
+                    <li>Your cards will be delivered instantly</li>
+                </ol>
+            </div>
+            <div class="payment-actions">
+                <button class="btn btn-secondary" onclick="cancelPayment()">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Dialog -->
+    <div id="confirmDialog" class="modal">
+        <div class="modal-content confirm-dialog">
+            <div class="modal-header">
+                <h2>Cancel Payment?</h2>
+                <button class="modal-close" onclick="closeConfirmDialog()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <p>Are you sure you want to cancel the payment? Your order will not be processed.</p>
+            <div class="confirm-actions">
+                <button class="btn btn-secondary" onclick="closeConfirmDialog()">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+                <button class="btn btn-outline" onclick="confirmCancelPayment()">
+                    <i class="fas fa-times"></i> Yes, Cancel
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- Toast Container -->
-    <div class="toast-container" id="toastContainer"></div>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>CardVault</h3>
-                <p style="color: var(--text-secondary); margin-top: 1rem;">Your trusted source for premium virtual cards with instant delivery.</p>
-            </div>
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="#" onclick="showPage('home')">Home</a></li>
-                    <li><a href="#" onclick="showPage('cards')">Browse Cards</a></li>
-                    <li><a href="#" onclick="showPage('orders')">My Orders</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Support</h3>
-                <ul>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Connect</h3>
-                <ul>
-                    <li><a href="#"><i class="fab fa-telegram"></i> Telegram</a></li>
-                    <li><a href="#"><i class="fab fa-whatsapp"></i> WhatsApp</a></li>
-                    <li><a href="#"><i class="fas fa-envelope"></i> Email</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 CardVault. All rights reserved.</p>
-        </div>
-    </footer>
+    <div id="toastContainer" class="toast-container"></div>
 
     <script>
         // App State
@@ -1851,43 +2066,43 @@
             currentSort: 'name'
         };
 
-        // Real Cards Data
+        // Sample Card Data
         const realCards = [
-            { id: 1, name: 'Platinum Elite', holder: 'John Smith', network: 'visa', limit: 1500, price: 49.99, valid: '3 Months', inStock: true, rating: 4.8, reviews: 2341 },
-            { id: 2, name: 'Gold Premium', holder: 'Sarah Johnson', network: 'mastercard', limit: 1000, price: 29.99, valid: '2 Months', inStock: true, rating: 4.6, reviews: 1823 },
-            { id: 3, name: 'Silver Standard', holder: 'Michael Brown', network: 'amex', limit: 750, price: 19.99, valid: '1 Month', inStock: true, rating: 4.4, reviews: 945 },
-            { id: 4, name: 'Diamond Luxury', holder: 'Emily Davis', network: 'visa', limit: 2000, price: 79.99, valid: '6 Months', inStock: false, rating: 4.9, reviews: 3210 },
-            { id: 5, name: 'Ruby Exclusive', holder: 'David Wilson', network: 'mastercard', limit: 1750, price: 69.99, valid: '5 Months', inStock: true, rating: 4.7, reviews: 2876 },
-            { id: 6, name: 'Sapphire Pro', holder: 'Jessica Martinez', network: 'amex', limit: 1250, price: 39.99, valid: '3 Months', inStock: true, rating: 4.5, reviews: 1543 },
-            { id: 7, name: 'Emerald Business', holder: 'Robert Anderson', network: 'visa', limit: 3000, price: 99.99, valid: '12 Months', inStock: true, rating: 4.8, reviews: 4123 },
-            { id: 8, name: 'Pearl Classic', holder: 'Lisa Thompson', network: 'mastercard', limit: 500, price: 14.99, valid: '1 Month', inStock: true, rating: 4.2, reviews: 654 },
-            { id: 9, name: 'Opal Premium', holder: 'William Garcia', network: 'amex', limit: 900, price: 24.99, valid: '2 Months', inStock: false, rating: 4.3, reviews: 876 },
-            { id: 10, name: 'Titanium Ultimate', holder: 'Maria Rodriguez', network: 'visa', limit: 2500, price: 89.99, valid: '8 Months', inStock: true, rating: 4.9, reviews: 3654 },
-            { id: 11, name: 'Crystal Clear', holder: 'James Lee', network: 'mastercard', limit: 1100, price: 34.99, valid: '3 Months', inStock: true, rating: 4.6, reviews: 1987 },
-            { id: 12, name: 'Onyx Black', holder: 'Jennifer White', network: 'amex', limit: 1800, price: 74.99, valid: '6 Months', inStock: true, rating: 4.8, reviews: 2987 },
-            { id: 13, name: 'Crimson Red', holder: 'Richard Harris', network: 'visa', limit: 1300, price: 44.99, valid: '4 Months', inStock: false, rating: 4.5, reviews: 1432 },
-            { id: 14, name: 'Azure Blue', holder: 'Linda Clark', network: 'mastercard', limit: 850, price: 22.99, valid: '2 Months', inStock: true, rating: 4.3, reviews: 765 },
-            { id: 15, name: 'Ivory White', holder: 'Charles Lewis', network: 'amex', limit: 1600, price: 64.99, valid: '5 Months', inStock: true, rating: 4.7, reviews: 2543 },
-            { id: 16, name: 'Violet Purple', holder: 'Patricia Walker', network: 'visa', limit: 950, price: 26.99, valid: '2 Months', inStock: true, rating: 4.4, reviews: 987 },
-            { id: 17, name: 'Golden Sunset', holder: 'Christopher Hall', network: 'mastercard', limit: 1450, price: 54.99, valid: '4 Months', inStock: false, rating: 4.6, reviews: 1876 },
-            { id: 18, name: 'Ocean Blue', holder: 'Nancy Allen', network: 'amex', limit: 1150, price: 36.99, valid: '3 Months', inStock: true, rating: 4.5, reviews: 1234 },
-            { id: 19, name: 'Forest Green', holder: 'Daniel Young', network: 'visa', limit: 1650, price: 69.99, valid: '5 Months', inStock: true, rating: 4.7, reviews: 2765 },
-            { id: 20, name: 'Rose Pink', holder: 'Karen King', network: 'mastercard', limit: 750, price: 19.99, valid: '1 Month', inStock: true, rating: 4.2, reviews: 543 },
-            { id: 21, name: 'Midnight Black', holder: 'Paul Wright', network: 'amex', limit: 1950, price: 84.99, valid: '7 Months', inStock: false, rating: 4.8, reviews: 3210 },
-            { id: 22, name: 'Sunshine Yellow', holder: 'Helen Lopez', network: 'visa', limit: 800, price: 21.99, valid: '2 Months', inStock: true, rating: 4.3, reviews: 876 },
-            { id: 23, name: 'Arctic White', holder: 'Mark Hill', network: 'mastercard', limit: 1350, price: 47.99, valid: '4 Months', inStock: true, rating: 4.6, reviews: 1654 },
-            { id: 24, name: 'Cherry Red', holder: 'Sandra Scott', network: 'amex', limit: 1050, price: 32.99, valid: '3 Months', inStock: true, rating: 4.5, reviews: 1432 },
-            { id: 25, name: 'Sky Blue', holder: 'Kevin Green', network: 'visa', limit: 1200, price: 41.99, valid: '3 Months', inStock: false, rating: 4.6, reviews: 1876 },
-            { id: 26, name: 'Chocolate Brown', holder: 'Betty Adams', network: 'mastercard', limit: 900, price: 24.99, valid: '2 Months', inStock: true, rating: 4.4, reviews: 987 },
-            { id: 27, name: 'Mint Green', holder: 'Donald Baker', network: 'amex', limit: 1500, price: 33.99, valid: '3 Months', inStock: true, rating: 4.6, reviews: 1078 },
-            { id: 28, name: 'Aquamarine Standard', holder: 'Deborah Nelson', network: 'visa', limit: 850, price: 15.99, valid: '1 Month', inStock: true, rating: 4.2, reviews: 412 },
-            { id: 29, name: 'Morganite Elite', holder: 'Ronald Carter', network: 'mastercard', limit: 1250, price: 25.99, valid: '2 Months', inStock: false, rating: 4.5, reviews: 723 },
-            { id: 30, name: 'Zircon Luxury', holder: 'Ashley Mitchell', network: 'amex', limit: 1450, price: 29.99, valid: '3 Months', inStock: true, rating: 4.6, reviews: 956 },
-            { id: 31, name: 'Ametrine Premium', holder: 'George Perez', network: 'visa', limit: 1300, price: 28.99, valid: '2 Months', inStock: true, rating: 4.5, reviews: 845 },
-            { id: 32, name: 'Moonstone Elite', holder: 'Kimberly Roberts', network: 'mastercard', limit: 1100, price: 20.99, valid: '2 Months', inStock: true, rating: 4.3, reviews: 523 },
-            { id: 33, name: 'Labradorite Luxury', holder: 'Edward Turner', network: 'amex', limit: 1700, price: 41.99, valid: '4 Months', inStock: false, rating: 4.8, reviews: 1456 },
-            { id: 34, name: 'Hematite Premium', holder: 'Donna Phillips', network: 'visa', limit: 950, price: 17.99, valid: '1 Month', inStock: true, rating: 4.3, reviews: 434 },
-            { id: 35, name: 'Malachite Elite', holder: 'Frank Campbell', network: 'mastercard', limit: 1400, price: 32.99, valid: '3 Months', inStock: true, rating: 4.6, reviews: 1123 },
+            { id: 1, name: 'Platinum Plus', holder: 'John Smith', network: 'visa', limit: 5000, price: 89.99, valid: '3 Years', inStock: true, rating: 4.8, reviews: 2341 },
+            { id: 2, name: 'Gold Elite', holder: 'Sarah Johnson', network: 'mastercard', limit: 3500, price: 69.99, valid: '2 Years', inStock: true, rating: 4.7, reviews: 1876 },
+            { id: 3, name: 'Silver Premium', holder: 'Mike Wilson', network: 'amex', limit: 2500, price: 49.99, valid: '2 Years', inStock: true, rating: 4.6, reviews: 1234 },
+            { id: 4, name: 'Diamond Pro', holder: 'Emily Davis', network: 'visa', limit: 10000, price: 149.99, valid: '5 Years', inStock: false, rating: 4.9, reviews: 3421 },
+            { id: 5, name: 'Titanium Business', holder: 'Robert Brown', network: 'mastercard', limit: 15000, price: 199.99, valid: '5 Years', inStock: true, rating: 4.8, reviews: 2156 },
+            { id: 6, name: 'Ruby Exclusive', holder: 'Lisa Anderson', network: 'amex', limit: 7500, price: 119.99, valid: '3 Years', inStock: true, rating: 4.7, reviews: 1876 },
+            { id: 7, name: 'Emerald Luxury', holder: 'David Martinez', network: 'visa', limit: 8000, price: 129.99, valid: '4 Years', inStock: true, rating: 4.8, reviews: 2234 },
+            { id: 8, name: 'Sapphire Premium', holder: 'Jennifer Taylor', network: 'mastercard', limit: 6000, price: 99.99, valid: '3 Years', inStock: false, rating: 4.6, reviews: 1543 },
+            { id: 9, name: 'Pearl Elite', holder: 'James Thomas', network: 'amex', limit: 4500, price: 79.99, valid: '2 Years', inStock: true, rating: 4.7, reviews: 1765 },
+            { id: 10, name: 'Opal Special', holder: 'Maria Garcia', network: 'visa', limit: 3000, price: 59.99, valid: '2 Years', inStock: true, rating: 4.5, reviews: 987 },
+            { id: 11, name: 'Crystal Clear', holder: 'William Rodriguez', network: 'mastercard', limit: 4000, price: 69.99, valid: '2 Years', inStock: true, rating: 4.6, reviews: 1234 },
+            { id: 12, name: 'Onyx Black', holder: 'Patricia Lee', network: 'amex', limit: 5500, price: 89.99, valid: '3 Years', inStock: false, rating: 4.8, reviews: 1987 },
+            { id: 13, name: 'Crimson Red', holder: 'Christopher Walker', network: 'visa', limit: 3500, price: 64.99, valid: '2 Years', inStock: true, rating: 4.6, reviews: 1456 },
+            { id: 14, name: 'Ocean Blue', holder: 'Nancy Hall', network: 'mastercard', limit: 5000, price: 84.99, valid: '3 Years', inStock: true, rating: 4.7, reviews: 1678 },
+            { id: 15, name: 'Forest Green', holder: 'Daniel Allen', network: 'amex', limit: 4200, price: 74.99, valid: '2 Years', inStock: true, rating: 4.5, reviews: 1123 },
+            { id: 16, name: 'Sunset Orange', holder: 'Karen Young', network: 'visa', limit: 3800, price: 69.99, valid: '2 Years', inStock: false, rating: 4.6, reviews: 1345 },
+            { id: 17, name: 'Midnight Purple', holder: 'Paul Hernandez', network: 'mastercard', limit: 6000, price: 94.99, valid: '3 Years', inStock: true, rating: 4.8, reviews: 1789 },
+            { id: 18, name: 'Rose Gold', holder: 'Susan King', network: 'amex', limit: 4800, price: 79.99, valid: '2 Years', inStock: true, rating: 4.7, reviews: 1567 },
+            { id: 19, name: 'Arctic White', holder: 'Mark Wright', network: 'visa', limit: 5200, price: 87.99, valid: '3 Years', inStock: true, rating: 4.6, reviews: 1432 },
+            { id: 20, name: 'Volcanic Red', holder: 'Betty Lopez', network: 'mastercard', limit: 4500, price: 77.99, valid: '2 Years', inStock: false, rating: 4.5, reviews: 1234 },
+            { id: 21, name: 'Sky Blue', holder: 'Joseph Hill', network: 'amex', limit: 3900, price: 67.99, valid: '2 Years', inStock: true, rating: 4.6, reviews: 1456 },
+            { id: 22, name: 'Mint Green', holder: 'Dorothy Scott', network: 'visa', limit: 4100, price: 71.99, valid: '2 Years', inStock: true, rating: 4.7, reviews: 1567 },
+            { id: 23, name: 'Coral Pink', holder: 'Thomas Green', network: 'mastercard', limit: 3600, price: 65.99, valid: '2 Years', inStock: true, rating: 4.5, reviews: 1234 },
+            { id: 24, name: 'Thunder Gray', holder: 'Helen Adams', network: 'amex', limit: 5400, price: 83.99, valid: '3 Years', inStock: false, rating: 4.8, reviews: 1678 },
+            { id: 25, name: 'Golden Yellow', holder: 'Charles Baker', network: 'visa', limit: 4300, price: 73.99, valid: '2 Years', inStock: true, rating: 4.6, reviews: 1345 },
+            { id: 26, name: 'Lavender Dream', holder: 'Sandra Nelson', network: 'mastercard', limit: 4700, price: 78.99, valid: '2 Years', inStock: true, rating: 4.7, reviews: 1456 },
+            { id: 27, name: 'Chocolate Brown', holder: 'Jason Carter', network: 'amex', limit: 5000, price: 85.99, valid: '3 Years', inStock: true, rating: 4.6, reviews: 1567 },
+            { id: 28, name: 'Ice Silver', holder: 'Ashley Mitchell', network: 'visa', limit: 4600, price: 76.99, valid: '2 Years', inStock: false, rating: 4.5, reviews: 1234 },
+            { id: 29, name: 'Fire Red', holder: 'Kevin Perez', network: 'mastercard', limit: 4900, price: 81.99, valid: '3 Years', inStock: true, rating: 4.7, reviews: 1456 },
+            { id: 30, name: 'Ocean Deep', holder: 'Michelle Roberts', network: 'amex', limit: 5300, price: 86.99, valid: '3 Years', inStock: true, rating: 4.8, reviews: 1678 },
+            { id: 31, name: 'Space Black', holder: 'Brian Turner', network: 'visa', limit: 5800, price: 91.99, valid: '3 Years', inStock: true, rating: 4.6, reviews: 1345 },
+            { id: 32, name: 'Royal Blue', holder: 'Amanda Phillips', network: 'mastercard', limit: 4400, price: 75.99, valid: '2 Years', inStock: false, rating: 4.5, reviews: 1234 },
+            { id: 33, name: 'Forest Mist', holder: 'George Campbell', network: 'amex', limit: 5100, price: 82.99, valid: '3 Years', inStock: true, rating: 4.7, reviews: 1456 },
+            { id: 34, name: 'Sunset Glow', holder: 'Kimberly Parker', network: 'visa', limit: 3700, price: 66.99, valid: '2 Years', inStock: true, rating: 4.6, reviews: 1345 },
+            { id: 35, name: 'Arctic Frost', holder: 'Frank Campbell', network: 'mastercard', limit: 1400, price: 32.99, valid: '3 Months', inStock: true, rating: 4.6, reviews: 1123 },
             { id: 36, name: 'Lapis Lazuli Luxury', holder: 'Jennifer Parker', network: 'amex', limit: 1800, price: 45.99, valid: '5 Months', inStock: true, rating: 4.8, reviews: 1678 },
             { id: 37, name: 'Carnelian Premium', holder: 'Larry Evans', network: 'visa', limit: 1000, price: 19.99, valid: '2 Months', inStock: false, rating: 4.4, reviews: 678 },
             { id: 38, name: 'Agate Elite', holder: 'Betty Edwards', network: 'mastercard', limit: 1200, price: 24.99, valid: '2 Months', inStock: true, rating: 4.5, reviews: 789 },
